@@ -86,7 +86,7 @@ import socket
 # 서버 호스트명을 기준으로 Azure 배포 환경인지 개발 환경인지 구분
 HOSTNAME = socket.gethostname()
 
-if HOSTNAME == 'backend-hnbte6c6gqaxfuh9':   # Azure 서버 환경에서는 이 조건에 맞춰 설정
+if 'azurewebsites.net' in HOSTNAME:    # Azure 서버 환경에서는 이 조건에 맞춰 설정
     # Azure 배포 환경
     DATABASES = {
         'default': {

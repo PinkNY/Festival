@@ -50,34 +50,40 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write
+      id-token: write  # JWT 요청에 필요함
 
     steps:
-      # 1. 빌드 작업에서 생성된 아티팩트 다운로드
+      # 1. Azure 로그인 추가 (퍼블리시 프로필이 아닌 경우)
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+
+      # 2. 빌드 작업에서 생성된 아티팩트 다운로드
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: python-app
 
-      # 2. 배포를 위한 압축 해제
+      # 3. 배포를 위한 압축 해제
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      # 3. Azure Web App으로 배포 (퍼블리시 프로필 사용)
+      # 4. Azure Web App으로 배포 (퍼블리시 프로필 사용)
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'backend'
+          app-name: 'backend'  # Azure App Service 이름
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
 
-      # 4. 배포 후 마이그레이션 실행
+      # 5. 배포 후 마이그레이션 실행
       - name: Run Django migrations
         run: |
           source venv/bin/activate
           python manage.py migrate
 
-      # 5. 배포 확인 (선택 사항)
+      # 6. 배포 확인 (선택 사항)
       - name: Verify Deployment
         run: |
           curl -v https://backend.azurewebsites.net

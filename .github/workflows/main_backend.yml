@@ -1,13 +1,11 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
-
 name: Build and deploy Django app to Azure Web App - backend
 
 on:
   push:
     branches:
       - main
+    paths:
+      - 'backend/**'  # 백엔드 파일 변경 시에만 실행
   workflow_dispatch:
 
 jobs:
@@ -30,11 +28,9 @@ jobs:
           python -m venv venv
           source venv/bin/activate
 
-      # 4. 의존성 설치
+      # 4. 의존성 설치 (requirements.txt 파일 경로 확인)
       - name: Install dependencies
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
+        run: pip install -r backend/requirements.txt  # 경로가 루트가 아닌 경우 수정
 
       # 5. 배포를 위한 zip 파일 생성
       - name: Zip artifact for deployment

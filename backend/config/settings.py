@@ -91,7 +91,7 @@ if 'azurewebsites.net' in HOSTNAME:    # Azure 서버 환경에서는 이 조건
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'teamdatabase',  # Azure MySQL 데이터베이스 이름
+            'NAME': 'default_db',  # Azure MySQL 데이터베이스 이름
             'USER': 'skdudgns',  # Azure MySQL 서버 관리자 로그인
             'PASSWORD': '9P@ssw0rd',  # Azure MySQL 비밀번호
             'HOST': 'teamdatabase.mysql.database.azure.com',  # Azure MySQL 호스트

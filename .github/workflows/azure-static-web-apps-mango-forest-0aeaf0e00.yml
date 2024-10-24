@@ -4,10 +4,13 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'frontend/**'  # 프론트엔드 파일 변경 시에만 실행
   pull_request:
-    types: [opened, synchronize, reopened, closed]
     branches:
       - main
+    paths:
+      - 'frontend/**'  # PR에 대한 변경 시에도 프론트엔드 파일만 반응
 
 jobs:
   build_and_deploy_job:

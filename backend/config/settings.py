@@ -25,12 +25,15 @@ SECRET_KEY = 'django-insecure-m%6ebyrv)19fyt90w+pz0dt+%u#no4oi@x9$_lp5xn-*678*kg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'api',
+    'corsheaders',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware', 
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -75,9 +79,29 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'default_db',  # default_db 이름 설정
+        'USER': 'root',  # MySQL 사용자명
+        'PASSWORD': '1234',  # MySQL 비밀번호
+        'HOST': 'localhost',  # MySQL 서버 주소 (localhost 또는 IP 주소)
+        'PORT': '3306',  # MySQL 포트 (기본: 3306)
+    },
+    'festival_db': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'festival_db',  # festival_db 이름 설정
+        'USER': 'root',  # MySQL 사용자명
+        'PASSWORD': '1234',  # MySQL 비밀번호
+        'HOST': 'localhost',  # MySQL 서버 주소
+        'PORT': '3306',
+    },
+    'user_db': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'user_db',  # user_db 이름 설정
+        'USER': 'root',  # MySQL 사용자명
+        'PASSWORD': '1234',  # MySQL 비밀번호
+        'HOST': 'localhost',  # MySQL 서버 주소
+        'PORT': '3306',
+    },
 }
 
 
@@ -120,4 +144,23 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CORS Headers Settings (모든 도메인 허용, 필요에 따라 제한 가능)
+CORS_ORIGIN_ALLOW_ALL = True
+
+# Django REST Framework 기본 설정 (옵션)
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
+# Database routers
+DATABASE_ROUTERS = ['api.db_routers.MyDBRouter']
+  # 라우터 파일 경로 지정

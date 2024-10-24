@@ -1,5 +1,7 @@
+// src/App.js
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider, useAuth } from "./AuthContext";
 
 import MainPage from "./pages/components/Main";
 import Navbar from './pages/components/Nav';
@@ -9,20 +11,29 @@ import NoticeBoard from "./pages/components/NoticeBoard";
 import NoticeDetail from "./pages/components/NoticeDetail";
 import FestivalList from './pages/components/List';
 
-function App() {
-  return (
-    <Router>
-      <Navbar />
+const App = () => {
+  const AuthRoutes = () => {
+    const { isLoggedIn } = useAuth();
+    return (
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={isLoggedIn ? <Navigate to="/" /> : <LoginPage />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/notice' element={<NoticeBoard />} />
         <Route path='/notice-detail' element={<NoticeDetail />} />
         <Route path="/list" element={<FestivalList />} />
       </Routes>
-    </Router>
+    );
+  };
+
+  return (
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <AuthRoutes />
+      </Router>
+    </AuthProvider>
   );
-}
+};
 
 export default App;

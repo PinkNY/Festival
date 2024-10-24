@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'backend/**'  # 백엔드 파일 변경 시에만 실행
+      - 'backend/**'  # 백엔드 관련 파일이 변경될 때만 실행
   workflow_dispatch:
 
 jobs:
@@ -28,9 +28,9 @@ jobs:
           python -m venv venv
           source venv/bin/activate
 
-      # 4. 의존성 설치 (requirements.txt 파일 경로 확인)
+      # 4. 의존성 설치 (backend/requirements.txt 확인)
       - name: Install dependencies
-        run: pip install -r backend/requirements.txt  # 경로가 루트가 아닌 경우 수정
+        run: pip install -r backend/requirements.txt
 
       # 5. 배포를 위한 zip 파일 생성
       - name: Zip artifact for deployment
@@ -50,7 +50,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write  # JWT 요청에 필요함
+      id-token: write
 
     steps:
       # 1. 빌드 작업에서 생성된 아티팩트 다운로드
@@ -68,8 +68,8 @@ jobs:
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'backend'  # Azure App Service 이름
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # GitHub Secrets에 저장된 퍼블리시 프로필
+          app-name: 'backend'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
 
       # 4. 배포 후 마이그레이션 실행
       - name: Run Django migrations
@@ -80,4 +80,4 @@ jobs:
       # 5. 배포 확인 (선택 사항)
       - name: Verify Deployment
         run: |
-          curl -v https://backend.azurewebsites.net  # 배포 후 앱이 정상적으로 작동하는지 확인
+          curl -v https://backend.azurewebsites.net

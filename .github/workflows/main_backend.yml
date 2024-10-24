@@ -29,7 +29,6 @@ jobs:
         run: |
           source venv/bin/activate
           pip install -r backend/requirements.txt  # 경로 수정
-
       # Optional: Add step to run Django tests here (pytest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
@@ -71,3 +70,15 @@ jobs:
         with:
           app-name: 'backend'
           package: './backend'  # backend 폴더 배포
+
+      # 환경 변수를 설정하는 부분 추가
+      - name: Set environment variables
+        run: |
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+          echo "DB_NAME=teamdatabase" >> $GITHUB_ENV
+          echo "DB_USER=skdudgns" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.AZURE_DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "DB_HOST=teamdatabase.mysql.database.azure.com" >> $GITHUB_ENV
+          echo "DB_PORT=3306" >> $GITHUB_ENV
+          echo "CORS_ALLOWED_ORIGINS=https://mango-forest-0aeaf0e00.5.azurestaticapps.net" >> $GITHUB_ENV
+          echo "CSRF_TRUSTED_ORIGINS=https://mango-forest-0aeaf0e00.5.azurestaticapps.net" >> $GITHUB_ENV

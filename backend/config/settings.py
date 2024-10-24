@@ -86,7 +86,7 @@ import socket
 # 서버 호스트명을 기준으로 Azure 배포 환경인지 개발 환경인지 구분
 HOSTNAME = socket.gethostname()
 
-if 'azurewebsites.net' in HOSTNAME:    # Azure 서버 환경에서는 이 조건에 맞춰 설정
+if 'azurewebsites.net' in HOSTNAME:  # Azure 서버 환경에서는 이 조건에 맞춰 설정
     # Azure 배포 환경
     DATABASES = {
         'default': {
@@ -96,6 +96,9 @@ if 'azurewebsites.net' in HOSTNAME:    # Azure 서버 환경에서는 이 조건
             'PASSWORD': '9P@ssw0rd',  # Azure MySQL 비밀번호
             'HOST': 'teamdatabase.mysql.database.azure.com',  # Azure MySQL 호스트
             'PORT': '3306',  # MySQL 기본 포트
+            'OPTIONS': {
+                'ssl': {'ssl-mode': 'DISABLED'},  # SSL 사용하지 않도록 설정 (필요한 경우)
+            },
         },
         'festival_db': {
             'ENGINE': 'django.db.backends.mysql',
@@ -104,6 +107,9 @@ if 'azurewebsites.net' in HOSTNAME:    # Azure 서버 환경에서는 이 조건
             'PASSWORD': '9P@ssw0rd',  # Azure MySQL 비밀번호
             'HOST': 'teamdatabase.mysql.database.azure.com',  # Azure MySQL 호스트
             'PORT': '3306',
+            'OPTIONS': {
+                'ssl': {'ssl-mode': 'DISABLED'},  # SSL 사용하지 않도록 설정 (필요한 경우)
+            },
         },
         'user_db': {
             'ENGINE': 'django.db.backends.mysql',
@@ -112,6 +118,9 @@ if 'azurewebsites.net' in HOSTNAME:    # Azure 서버 환경에서는 이 조건
             'PASSWORD': '9P@ssw0rd',  # Azure MySQL 비밀번호
             'HOST': 'teamdatabase.mysql.database.azure.com',  # Azure MySQL 호스트
             'PORT': '3306',
+            'OPTIONS': {
+                'ssl': {'ssl-mode': 'DISABLED'},  # SSL 사용하지 않도록 설정 (필요한 경우)
+            },
         }
     }
 else:
@@ -142,6 +151,7 @@ else:
             'PORT': '3306',
         }
     }
+
 
 
 # Password validation

@@ -9,28 +9,20 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
 from pathlib import Path
+import os
+import socket
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Environment Variables
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-m%6ebyrv)19fyt90w+pz0dt+%u#no4oi@x9$_lp5xn-*678*kg')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+# Set DEBUG to False for production
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-m%6ebyrv)19fyt90w+pz0dt+%u#no4oi@x9$_lp5xn-*678*kg'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    'backend-hnbte6c6gqaxfuh9.koreacentral-01.azurewebsites.net',  # Azure App Service 도메인
-]
-
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
 # Application definition
 
@@ -77,86 +69,76 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-import socket
-
-# 서버 호스트명을 기준으로 Azure 배포 환경인지 개발 환경인지 구분
+# Database configuration
 HOSTNAME = socket.gethostname()
 
-if 'azurewebsites.net' in HOSTNAME:  # Azure 서버 환경에서는 이 조건에 맞춰 설정
+if 'azurewebsites.net' in HOSTNAME:
     # Azure 배포 환경
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'default_db',  # Azure MySQL 데이터베이스 이름
-            'USER': 'skdudgns',  # Azure MySQL 서버 관리자 로그인
-            'PASSWORD': '9P@ssw0rd',  # Azure MySQL 비밀번호
-            'HOST': 'teamdatabase.mysql.database.azure.com',  # Azure MySQL 호스트
-            'PORT': '3306',  # MySQL 기본 포트
+            'NAME': os.getenv('DB_NAME', 'default_db'),
+            'USER': os.getenv('DB_USER', 'skdudgns'),
+            'PASSWORD': os.getenv('DB_PASSWORD', '9P@ssw0rd'),
+            'HOST': os.getenv('DB_HOST', 'teamdatabase.mysql.database.azure.com'),
+            'PORT': os.getenv('DB_PORT', '3306'),
             'OPTIONS': {
-                'ssl': {'ssl-mode': 'DISABLED'},  # SSL 사용하지 않도록 설정 (필요한 경우)
+                'ssl': {'ssl-mode': 'DISABLED'},
             },
         },
         'festival_db': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'festival_db',  # Azure festival_db 이름
-            'USER': 'skdudgns',  # Azure MySQL 사용자명
-            'PASSWORD': '9P@ssw0rd',  # Azure MySQL 비밀번호
-            'HOST': 'teamdatabase.mysql.database.azure.com',  # Azure MySQL 호스트
-            'PORT': '3306',
+            'NAME': os.getenv('FESTIVAL_DB_NAME', 'festival_db'),
+            'USER': os.getenv('DB_USER', 'skdudgns'),
+            'PASSWORD': os.getenv('DB_PASSWORD', '9P@ssw0rd'),
+            'HOST': os.getenv('DB_HOST', 'teamdatabase.mysql.database.azure.com'),
+            'PORT': os.getenv('DB_PORT', '3306'),
             'OPTIONS': {
-                'ssl': {'ssl-mode': 'DISABLED'},  # SSL 사용하지 않도록 설정 (필요한 경우)
+                'ssl': {'ssl-mode': 'DISABLED'},
             },
         },
         'user_db': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'user_db',  # Azure user_db 이름
-            'USER': 'skdudgns',  # Azure MySQL 사용자명
-            'PASSWORD': '9P@ssw0rd',  # Azure MySQL 비밀번호
-            'HOST': 'teamdatabase.mysql.database.azure.com',  # Azure MySQL 호스트
-            'PORT': '3306',
+            'NAME': os.getenv('USER_DB_NAME', 'user_db'),
+            'USER': os.getenv('DB_USER', 'skdudgns'),
+            'PASSWORD': os.getenv('DB_PASSWORD', '9P@ssw0rd'),
+            'HOST': os.getenv('DB_HOST', 'teamdatabase.mysql.database.azure.com'),
+            'PORT': os.getenv('DB_PORT', '3306'),
             'OPTIONS': {
-                'ssl': {'ssl-mode': 'DISABLED'},  # SSL 사용하지 않도록 설정 (필요한 경우)
+                'ssl': {'ssl-mode': 'DISABLED'},
             },
-        }
+        },
     }
 else:
     # 로컬 개발 환경
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'default_db',  # 개발 서버의 default_db 이름
-            'USER': 'root',  # 로컬 MySQL 사용자명
-            'PASSWORD': '1234',  # 로컬 MySQL 비밀번호
-            'HOST': 'localhost',  # 로컬 MySQL 호스트
+            'NAME': 'default_db',
+            'USER': 'root',
+            'PASSWORD': '1234',
+            'HOST': 'localhost',
             'PORT': '3306',
         },
         'festival_db': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'festival_db',  # 개발 서버의 festival_db 이름
-            'USER': 'root',  # 로컬 MySQL 사용자명
-            'PASSWORD': '1234',  # 로컬 MySQL 비밀번호
-            'HOST': 'localhost',  # 로컬 MySQL 호스트
+            'NAME': 'festival_db',
+            'USER': 'root',
+            'PASSWORD': '1234',
+            'HOST': 'localhost',
             'PORT': '3306',
         },
         'user_db': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'user_db',  # 개발 서버의 user_db 이름
-            'USER': 'root',  # 로컬 MySQL 사용자명
-            'PASSWORD': '1234',  # 로컬 MySQL 비밀번호
-            'HOST': 'localhost',  # 로컬 MySQL 호스트
+            'NAME': 'user_db',
+            'USER': 'root',
+            'PASSWORD': '1234',
+            'HOST': 'localhost',
             'PORT': '3306',
-        }
+        },
     }
 
-
-
 # Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -172,45 +154,23 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
-# Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Static files
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Azure에 배포 시 필요
 
 # CORS and CSRF settings
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    'https://backend-hnbte6c6gqaxfuh9.koreacentral-01.azurewebsites.net',
-    'http://localhost:3000',  # 로컬 React 앱 주소
-    'https://mango-forest-0aeaf0e00.5.azurestaticapps.net', 
-    # 필요한 다른 프론트엔드 도메인을 여기에 추가
-]
+CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://backend-hnbte6c6gqaxfuh9.koreacentral-01.azurewebsites.net',
-    'https://mango-forest-0aeaf0e00.5.azurestaticapps.net'
-]
-# Django REST Framework 기본 설정 (옵션)
+# Django REST Framework 기본 설정
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
@@ -223,4 +183,3 @@ REST_FRAMEWORK = {
 
 # Database routers
 DATABASE_ROUTERS = ['api.db_routers.MyDBRouter']
-  # 라우터 파일 경로 지정

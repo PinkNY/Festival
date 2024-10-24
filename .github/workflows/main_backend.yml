@@ -1,13 +1,11 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
-
 name: Build and deploy Django app to Azure Web App - backend
 
 on:
   push:
     branches:
       - main
+    paths:
+      - 'backend/**'  # backend 디렉터리 내 변경 사항에 대해서만 실행
   workflow_dispatch:
 
 jobs:
@@ -15,37 +13,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. GitHub 리포지토리에서 소스 코드 체크아웃
       - uses: actions/checkout@v4
 
-      # 2. Python 버전 설정
       - name: Set up Python version
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      # 3. 가상환경 생성 및 시작
       - name: Create and start virtual environment
         run: |
           python -m venv venv
           source venv/bin/activate
-
-      # 4. 의존성 설치
+      
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
+          source venv/bin/activate
+          pip install -r backend/requirements.txt  # 경로 수정
 
-      # 5. 배포를 위한 zip 파일 생성
+      # Optional: Add step to run Django tests here (pytest, Django test suites, etc.)
+
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: zip -r release.zip backend -x '*.git*' -x 'venv/*'  # backend 폴더만 압축
 
-      # 6. 배포 작업을 위한 zip 파일 업로드
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
-          name: python-app
-          path: release.zip
+          name: django-app
+          path: |
+            release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -54,34 +49,25 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write  # JWT 요청에 필요함
+      id-token: write
 
     steps:
-      # 1. 빌드 작업에서 생성된 아티팩트 다운로드
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: python-app
+          name: django-app
 
-      # 2. 배포를 위한 압축 해제
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      # 3. Azure Web App으로 배포 (퍼블리시 프로필 사용)
-      - name: Deploy to Azure Web App
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_BACKEND }}  # 백엔드용으로 생성된 Secret 사용
+
+      - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'backend'  # Azure App Service 이름
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # GitHub Secrets에 저장된 퍼블리시 프로필
-
-      # 4. 배포 후 마이그레이션 실행
-      - name: Run Django migrations
-        run: |
-          source venv/bin/activate
-          python manage.py migrate
-
-      # 5. 배포 확인 (선택 사항)
-      - name: Verify Deployment
-        run: |
-          curl -v https://backend.azurewebsites.net  # 배포 후 앱이 정상적으로 작동하는지 확인
+          app-name: 'backend'
+          package: './backend'  # backend 폴더 배포

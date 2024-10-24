@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-m%6ebyrv)19fyt90w+pz0dt+%u#no4oi@x9$_lp5xn-*678*kg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'backend-hnbte6c6gqaxfuh9.koreacentral-01.azurewebsites.net',  # Azure App Service 도메인
+]
 
 
 # Application definition
@@ -82,7 +86,7 @@ import socket
 # 서버 호스트명을 기준으로 Azure 배포 환경인지 개발 환경인지 구분
 HOSTNAME = socket.gethostname()
 
-if 'azure.com' in HOSTNAME:  # Azure 서버 환경에서는 이 조건에 맞춰 설정
+if HOSTNAME == 'backend-hnbte6c6gqaxfuh9':   # Azure 서버 환경에서는 이 조건에 맞춰 설정
     # Azure 배포 환경
     DATABASES = {
         'default': {
@@ -182,9 +186,20 @@ STATIC_URL = 'static/'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS Headers Settings (모든 도메인 허용, 필요에 따라 제한 가능)
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS and CSRF settings
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    'https://backend-hnbte6c6gqaxfuh9.koreacentral-01.azurewebsites.net',
+    'http://localhost:3000',  # 로컬 React 앱 주소
+    'https://mango-forest-0aeaf0e00.5.azurestaticapps.net', 
+    # 필요한 다른 프론트엔드 도메인을 여기에 추가
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://backend-hnbte6c6gqaxfuh9.koreacentral-01.azurewebsites.net',
+    'https://mango-forest-0aeaf0e00.5.azurestaticapps.net'
+]
 # Django REST Framework 기본 설정 (옵션)
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

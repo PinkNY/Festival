@@ -31,7 +31,8 @@
       "react-app/jest"
     ],
     "rules": {
-      "jsx-a11y/alt-text": "off",      "no-unused-vars": "warn"
+      "jsx-a11y/alt-text": "off",
+      "no-unused-vars": "warn"
     }
   },
   "browserslist": {

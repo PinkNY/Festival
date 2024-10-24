@@ -69,5 +69,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'backendtest'
+          app-name: 'backend'
           package: './backend'  # backend 폴더 배포

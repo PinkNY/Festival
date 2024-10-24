@@ -77,32 +77,67 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'default_db',  # default_db 이름 설정
-        'USER': 'root',  # MySQL 사용자명
-        'PASSWORD': '1234',  # MySQL 비밀번호
-        'HOST': 'localhost',  # MySQL 서버 주소 (localhost 또는 IP 주소)
-        'PORT': '3306',  # MySQL 포트 (기본: 3306)
-    },
-    'festival_db': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'festival_db',  # festival_db 이름 설정
-        'USER': 'root',  # MySQL 사용자명
-        'PASSWORD': '1234',  # MySQL 비밀번호
-        'HOST': 'localhost',  # MySQL 서버 주소
-        'PORT': '3306',
-    },
-    'user_db': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'user_db',  # user_db 이름 설정
-        'USER': 'root',  # MySQL 사용자명
-        'PASSWORD': '1234',  # MySQL 비밀번호
-        'HOST': 'localhost',  # MySQL 서버 주소
-        'PORT': '3306',
-    },
-}
+import socket
+
+# 서버 호스트명을 기준으로 Azure 배포 환경인지 개발 환경인지 구분
+HOSTNAME = socket.gethostname()
+
+if 'azure.com' in HOSTNAME:  # Azure 서버 환경에서는 이 조건에 맞춰 설정
+    # Azure 배포 환경
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'teamdatabase',  # Azure MySQL 데이터베이스 이름
+            'USER': 'skdudgns',  # Azure MySQL 서버 관리자 로그인
+            'PASSWORD': '9P@ssw0rd',  # Azure MySQL 비밀번호
+            'HOST': 'teamdatabase.mysql.database.azure.com',  # Azure MySQL 호스트
+            'PORT': '3306',  # MySQL 기본 포트
+        },
+        'festival_db': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'festival_db',  # Azure festival_db 이름
+            'USER': 'skdudgns',  # Azure MySQL 사용자명
+            'PASSWORD': '9P@ssw0rd',  # Azure MySQL 비밀번호
+            'HOST': 'teamdatabase.mysql.database.azure.com',  # Azure MySQL 호스트
+            'PORT': '3306',
+        },
+        'user_db': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'user_db',  # Azure user_db 이름
+            'USER': 'skdudgns',  # Azure MySQL 사용자명
+            'PASSWORD': '9P@ssw0rd',  # Azure MySQL 비밀번호
+            'HOST': 'teamdatabase.mysql.database.azure.com',  # Azure MySQL 호스트
+            'PORT': '3306',
+        }
+    }
+else:
+    # 로컬 개발 환경
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'default_db',  # 개발 서버의 default_db 이름
+            'USER': 'root',  # 로컬 MySQL 사용자명
+            'PASSWORD': '1234',  # 로컬 MySQL 비밀번호
+            'HOST': 'localhost',  # 로컬 MySQL 호스트
+            'PORT': '3306',
+        },
+        'festival_db': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'festival_db',  # 개발 서버의 festival_db 이름
+            'USER': 'root',  # 로컬 MySQL 사용자명
+            'PASSWORD': '1234',  # 로컬 MySQL 비밀번호
+            'HOST': 'localhost',  # 로컬 MySQL 호스트
+            'PORT': '3306',
+        },
+        'user_db': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'user_db',  # 개발 서버의 user_db 이름
+            'USER': 'root',  # 로컬 MySQL 사용자명
+            'PASSWORD': '1234',  # 로컬 MySQL 비밀번호
+            'HOST': 'localhost',  # 로컬 MySQL 호스트
+            'PORT': '3306',
+        }
+    }
 
 
 # Password validation

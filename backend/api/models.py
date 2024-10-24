@@ -9,7 +9,6 @@ class ActivityLog(models.Model):
 
     class Meta:
         db_table = 'activity_logs'
-        app_label = 'default'
 
 
 class GlobalSetting(models.Model):
@@ -18,7 +17,6 @@ class GlobalSetting(models.Model):
 
     class Meta:
         db_table = 'global_settings'
-        app_label = 'default'
 
 
 class Statistic(models.Model):
@@ -28,7 +26,6 @@ class Statistic(models.Model):
 
     class Meta:
         db_table = 'statistics'
-        app_label = 'default'
 
 
 # Models for festival_db
@@ -47,7 +44,6 @@ class Festival(models.Model):
 
     class Meta:
         db_table = 'festivals'
-        app_label = 'festival'
 
 
 # Models for user_db
@@ -61,4 +57,3 @@ class User(models.Model):
 
     class Meta:
         db_table = 'users'
-        app_label = 'user'

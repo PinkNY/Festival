@@ -1,39 +1,30 @@
-# backend/config/settings/base.py
-
-import environ
+import os
 from pathlib import Path
 
-# 초기화
-env = environ.Env()
-environ.Env.read_env()  # .env 파일 읽기
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE_DIR 설정
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Environment Variables
-SECRET_KEY = env('SECRET_KEY', default='django-insecure-sdsv&gcfvv6)20nh#w5#seyukshj#gyoyg!dbz2y91(!u-%$b)')
-DEBUG = env.bool('DEBUG', default=False)
-ALLOWED_HOSTS = env('ALLOWED_HOSTS', default='').split(',')
+# Django 기본 설정
+SECRET_KEY = os.getenv('SECRET_KEY')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
-# Application definition
 INSTALLED_APPS = [
-    'api',
-    'corsheaders',
-    'rest_framework',
-    'rest_framework_simplejwt',  # JWT 인증을 위한 패키지
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
+    'rest_framework',
+    'api',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # CORS 추가
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -42,7 +33,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
-# TEMPLATES 설정
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -61,16 +51,62 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# REST framework settings
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
+# Database 설정
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
+    },
+    'festival_db': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('FESTIVAL_DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
+    },
+    'user_db': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('USER_DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
+    },
 }
 
-# Static files
+# Password validation
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+# Internationalization
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# CORS 설정
+CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
+
+# CSRF 설정
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')

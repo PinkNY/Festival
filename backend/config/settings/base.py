@@ -11,7 +11,7 @@ environ.Env.read_env()  # .env 파일 읽기
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Environment Variables
-SECRET_KEY = env('SECRET_KEY', default='django-insecure-default-key')
+SECRET_KEY = env('SECRET_KEY', default='django-insecure-sdsv&gcfvv6)20nh#w5#seyukshj#gyoyg!dbz2y91(!u-%$b)')
 DEBUG = env.bool('DEBUG', default=False)
 ALLOWED_HOSTS = env('ALLOWED_HOSTS', default='').split(',')
 

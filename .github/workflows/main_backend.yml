@@ -40,6 +40,7 @@ jobs:
           name: django-app
           path: |
             release.zip
+
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -70,13 +71,13 @@ jobs:
           app-name: 'backend'
           package: './backend'  # backend 폴더 배포
 
-      # 환경 변수를 설정하는 부분 추가
+      # 환경 변수를 설정하는 부분 수정
       - name: Set environment variables
         run: |
           az webapp config appsettings set --name backend --resource-group TeamService --settings \
             SECRET_KEY=${{ secrets.SECRET_KEY }} \
-            DB_NAME=teamdatabase \
-            DB_USER=skdudgns \
+            DB_NAME=${{ secrets.DB_NAME }} \
+            DB_USER=${{ secrets.DB_USER }} \
             DB_PASSWORD=${{ secrets.AZURE_DB_PASSWORD }} \
             DB_HOST=teamdatabase.mysql.database.azure.com \
             DB_PORT=3306 \

@@ -29,7 +29,17 @@ jobs:
         run: |
           source venv/bin/activate
           pip install -r backend/requirements.txt  # 경로 수정
-      # Optional: Add step to run Django tests here (pytest, Django test suites, etc.)
+
+      - name: Create .env file
+        run: |
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> backend/.env
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> backend/.env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> backend/.env
+          echo "DB_PASSWORD=${{ secrets.AZURE_DB_PASSWORD }}" >> backend/.env
+          echo "DB_HOST=teamdatabase.mysql.database.azure.com" >> backend/.env
+          echo "DB_PORT=3306" >> backend/.env
+          echo "CORS_ALLOWED_ORIGINS=https://mango-forest-0aeaf0e00.5.azurestaticapps.net" >> backend/.env
+          echo "CSRF_TRUSTED_ORIGINS=https://mango-forest-0aeaf0e00.5.azurestaticapps.net" >> backend/.env
 
       - name: Zip artifact for deployment
         run: zip -r release.zip backend -x '*.git*' -x 'venv/*'  # backend 폴더만 압축
@@ -70,19 +80,6 @@ jobs:
         with:
           app-name: 'backend'
           package: './backend'  # backend 폴더 배포
-
-      # 환경 변수를 설정하는 부분 수정
-      - name: Set environment variables
-        run: |
-          az webapp config appsettings set --name backend --resource-group TeamService --settings \
-            SECRET_KEY=${{ secrets.SECRET_KEY }} \
-            DB_NAME=${{ secrets.DB_NAME }} \
-            DB_USER=${{ secrets.DB_USER }} \
-            DB_PASSWORD=${{ secrets.AZURE_DB_PASSWORD }} \
-            DB_HOST=teamdatabase.mysql.database.azure.com \
-            DB_PORT=3306 \
-            CORS_ALLOWED_ORIGINS=https://mango-forest-0aeaf0e00.5.azurestaticapps.net \
-            CSRF_TRUSTED_ORIGINS=https://mango-forest-0aeaf0e00.5.azurestaticapps.net
 
       - name: Delay for stability
         run: sleep 30  # 30초 대기

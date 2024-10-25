@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'backend/**'
+      - 'backend/**'  # backend 디렉터리 내 변경 사항에 대해서만 실행
   workflow_dispatch:
 
 jobs:
@@ -24,10 +24,15 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-          pip install -r backend/requirements.txt
+      
+      - name: Install dependencies
+        run: |
+          source venv/bin/activate
+          pip install -r backend/requirements.txt  # 경로 수정
+      # Optional: Add step to run Django tests here (pytest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip backend/* -x '*.git*' -x 'venv/*'
+        run: zip -r release.zip backend -x '*.git*' -x 'venv/*'  # backend 폴더만 압축
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
@@ -56,27 +61,27 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_BACKEND }}
-
-      - name: Set environment variables
-        run: |
-          az webapp config appsettings set --name backend --resource-group TeamService --settings \
-          SECRET_KEY=${{ secrets.SECRET_KEY }} \
-          DB_NAME=teamdatabase \
-          DB_USER=skdudgns \
-          DB_PASSWORD=${{ secrets.AZURE_DB_PASSWORD }} \
-          DB_HOST=teamdatabase.mysql.database.azure.com \
-          DB_PORT=3306 \
-          CORS_ALLOWED_ORIGINS=https://mango-forest-0aeaf0e00.5.azurestaticapps.net \
-          CSRF_TRUSTED_ORIGINS=https://mango-forest-0aeaf0e00.5.azurestaticapps.net
+          creds: ${{ secrets.AZURE_CREDENTIALS_BACKEND }}  # 백엔드용으로 생성된 Secret 사용
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
           app-name: 'backend'
-          package: './backend'
+          package: './backend'  # backend 폴더 배포
 
-      - name: Collect static files
+      # 환경 변수를 설정하는 부분 추가
+      - name: Set environment variables
         run: |
-          az webapp run --name backend --resource-group <your-resource-group-name> --command "python manage.py collectstatic --noinput"
+          az webapp config appsettings set --name backend --resource-group TeamService --settings \
+            SECRET_KEY=${{ secrets.SECRET_KEY }} \
+            DB_NAME=teamdatabase \
+            DB_USER=skdudgns \
+            DB_PASSWORD=${{ secrets.AZURE_DB_PASSWORD }} \
+            DB_HOST=teamdatabase.mysql.database.azure.com \
+            DB_PORT=3306 \
+            CORS_ALLOWED_ORIGINS=https://mango-forest-0aeaf0e00.5.azurestaticapps.net \
+            CSRF_TRUSTED_ORIGINS=https://mango-forest-0aeaf0e00.5.azurestaticapps.net
+
+      - name: Delay for stability
+        run: sleep 30  # 30초 대기

@@ -42,6 +42,9 @@ export const Button = styled.button`
   ${(props) =>
     props.primary &&
     `
+    width: 80px;
+    height: 35px;
+    font-size: 15px;
     background-color: #3b82f6;
     color: white;
     &:hover {

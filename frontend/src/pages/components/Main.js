@@ -2,8 +2,8 @@ import React from 'react';
 import { PageWrapper, MainContent, HalfBox } from '../styles/MainSt';
 import Notice from './Notice';
 import Hotlist from './Hot';
-import MapContainer from './Map';
 import Chatbot from '../Chatbot';
+import KakaoMap from './Map';
 
 export default function MainPage() {
   return (
@@ -14,7 +14,7 @@ export default function MainPage() {
           <Hotlist />
           <Hotlist />
         </HalfBox>
-        <MapContainer />
+        <KakaoMap />
       </MainContent>
       <Chatbot />
     </PageWrapper>

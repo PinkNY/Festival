@@ -60,7 +60,7 @@ jobs:
 
       - name: Set environment variables
         run: |
-          az webapp config appsettings set --name backend --resource-group <your-resource-group-name> --settings \
+          az webapp config appsettings set --name backend --resource-group TeamService --settings \
           SECRET_KEY=${{ secrets.SECRET_KEY }} \
           DB_NAME=teamdatabase \
           DB_USER=skdudgns \

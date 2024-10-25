@@ -1,6 +1,7 @@
 # backend/config/settings/production.py
 
 from .base import *
+import os
 
 DEBUG = False  # 배포 시 디버그 모드
 
@@ -50,3 +51,23 @@ CORS_ALLOWED_ORIGINS = [
 # Static files
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# backend/config/settings/production.py
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'django_project.log'),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

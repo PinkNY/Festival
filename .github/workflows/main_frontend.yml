@@ -4,6 +4,13 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'frontend/**'  # frontend 디렉터리 내 변경 사항에 대해서만 실행
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'frontend/**'  # frontend 디렉터리 내 변경 사항에 대해서만 실행
   workflow_dispatch:
 
 jobs:
@@ -20,7 +27,7 @@ jobs:
         with:
           node-version: '20.x'
 
-      # npm 설치, 빌드 실행
+      # npm 설치 및 빌드 실행
       - name: npm install and build
         run: |
           cd frontend
@@ -57,11 +64,11 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      # Azure에 로그인 (Publish Profile 사용)
+      # Azure에 로그인 (프론트엔드용 Credentials 사용)
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          creds: ${{ secrets.AZURE_CREDENTIALS_FRONTEND }}  # 프론트엔드용 Secret 사용
 
       # Azure 웹앱으로 배포
       - name: 'Deploy to Azure Web App'

@@ -64,7 +64,7 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      # Azure에 로그인 (프론트엔드용 Credentials 사용)
+      # Azure에 로그인 (프론트엔드용 서비스 주체 자격 증명 사용)
       - name: Login to Azure
         uses: azure/login@v1
         with:

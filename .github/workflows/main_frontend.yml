@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '20.x'
 
-      # npm 설치, 빌드 실행 (테스트는 일단 제외)
+      # npm 설치, 빌드 실행
       - name: npm install and build
         run: |
           cd frontend
@@ -57,11 +57,15 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
+      # Azure에 로그인 (Publish Profile 사용)
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+
       # Azure 웹앱으로 배포
       - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
+        uses: azure/webapps-deploy@v2
         with:
           app-name: 'frontend'  # 실제 생성한 Azure 웹앱 이름으로 변경
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Azure Publish Profile을 사용하여 로그인 및 배포
           package: '.'

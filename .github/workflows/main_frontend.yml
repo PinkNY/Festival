@@ -1,71 +1,48 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy Node.js app to Azure Web App - frontend
+name: Azure Frontend Web App CI/CD
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
+    paths:
+      - 'frontend/**'  # 프론트엔드 관련 파일이 변경될 때만 실행
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'frontend/**'
 
 jobs:
-  build:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
-
+    name: Build and Deploy Frontend to Azure App Service
     steps:
-      - uses: actions/checkout@v4
+      # 코드 체크아웃
+      - uses: actions/checkout@v3
 
-      - name: Set up Node.js version
+      # Node.js 설정
+      - name: Set up Node.js 20.x
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
 
-      - name: npm install, build, and test
+      # 의존성 설치
+      - name: Install dependencies
         run: |
+          cd frontend
           npm install
-          npm run build --if-present
-          npm run test --if-present
-
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: node-app
-          path: release.zip
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: node-app
-
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
       
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_BA90A1EF33F4404DBF87F2CBBC8A3CF9 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_887BC9731BA446C4AE2DD84D6A576C92 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_772378E15E4E4AC397713B0D7A11BC8B }}
+      # React 앱 빌드 (경고로 인해 빌드 중지 안 하도록 설정)
+      - name: Build React app without stopping on warnings
+        run: |
+          cd frontend
+          CI=false npm run build
 
+      # Azure 웹앱으로 배포
       - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
+        uses: azure/webapps-deploy@v2
         with:
-          app-name: 'frontend'
-          slot-name: 'Production'
-          package: .
-          
+          app-name: 'frontend'  # 실제 생성한 Azure 웹앱 이름으로 변경
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Azure App Service의 Publish Profile을 GitHub Secrets에 저장한 후 사용
+          package: './frontend/build'

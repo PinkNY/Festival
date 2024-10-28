@@ -62,10 +62,12 @@ export const TopContainer = styled.div`
 export const MiddleContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 80vh;
-  align-items: center;
-  justify-content: center;
+  height: 100vh;
   font-size: 30px;
 
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  
   border: 3px solid black;
 `;

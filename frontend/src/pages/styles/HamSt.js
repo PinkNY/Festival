@@ -69,5 +69,5 @@ export const MiddleContainer = styled.div`
   justify-content: flex-start;
   flex-direction: column;
   
-  border: 3px solid black;
+  // border: 3px solid black; 
 `;

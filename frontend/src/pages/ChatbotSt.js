@@ -5,10 +5,11 @@ export const ChatbotWindow = styled.div`
   position: fixed;
   bottom: 5rem;
   right: 1rem;
-  width: 20rem;
+  width: 26rem;
   height: 24rem;
   background-color: white;
-  border: 1px solid #e5e7eb;
+  // border: 5px solid #e5e7eb;
+  border: 3px solid #3b82f6;
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   padding: 1rem;

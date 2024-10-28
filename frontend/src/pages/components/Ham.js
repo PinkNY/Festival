@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { X, Bell } from 'lucide-react';
 import { MobileMenu, Button, TopContainer, MiddleContainer } from '../styles/HamSt'; // 필요한 스타일 임포트
+import Chatbot from '../Chatbot';
 
 const Ham = ({ menuOpen, toggleMenu }) => {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ const Ham = ({ menuOpen, toggleMenu }) => {
         <p style={{ cursor: 'pointer' }} onClick={handleListClick}>축제 목록</p>
         <p style={{ cursor: 'pointer' }} onClick={handleNoticeClick}>공지사항</p>
       </MiddleContainer>
+      <Chatbot />
     </MobileMenu>
   );
 };

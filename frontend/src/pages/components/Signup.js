@@ -214,7 +214,7 @@ const SignUp = () => {
         const formattedGender = formValues.gender === "male" ? "M" : "F";
         
         // date_of_birth를 8자리로 변환 (예: 19900101)
-        const dateOfBirth = `${formValues.birthYear}${formValues.birthMonth.padStart(2, "0")}${formValues.birthDay.padStart(2, "0")}`;
+        const dateOfBirth = `${formValues.birthYear}-${formValues.birthMonth.padStart(2, "0")}-${formValues.birthDay.padStart(2, "0")}`;
   
         // 백엔드에 맞는 필드로 매핑된 데이터 생성
         const signupData = {
@@ -228,7 +228,7 @@ const SignUp = () => {
   
         // 서버로 데이터 전송
         const response = await axios.post('/api/signup', signupData);
-        if (response.status === 200) {
+        if (response.status === 200 || response.status === 201) {
           navigate('/login'); // 성공 시 로그인 페이지로 이동
         }
       } catch (error) {

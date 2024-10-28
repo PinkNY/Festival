@@ -206,12 +206,20 @@ const SignUp = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      navigate("/login");
+      try {
+        const response = await axios.post('/api/signup', formValues);
+        if (response.status === 200) {
+          navigate('/login'); // 성공 시 로그인 페이지로 이동
+        }
+      } catch (error) {
+        console.error("회원가입 중 오류가 발생했습니다.", error);
+      }
     }
   };
+  
 
   return (
     <Container>

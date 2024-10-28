@@ -16,7 +16,6 @@ export const CardHeader = styled.div`
   padding: 1rem;
 
   border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 8px;
 `;
 
 export const CardTitle = styled.h2`
@@ -44,4 +43,13 @@ export const MapPlaceholder = styled.div`
   ${media.tablet} {
     height: 24rem;
   }
+`;
+
+export const PositionLabel = styled.div`
+  padding: 5px;
+  background-color: #f0f0f0;
+  color: #0066cc;
+  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 `;

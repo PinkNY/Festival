@@ -1,15 +1,18 @@
+// Navbar.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bell, Menu } from 'lucide-react';
+import { useAuth } from "../../AuthContext"; // AuthContext에서 useAuth 가져오기
 
 import { Nav, NavContent, Logo, NavButtons, Button, SearchCon } from '../styles/NavSt';
 import SearchBar from "./Search";
 import Ham from "./Ham";
 
-const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
+const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const navigate = useNavigate();
+  const { isLoggedIn, logout } = useAuth(); // useAuth 훅으로 로그인 상태와 로그아웃 함수 가져오기
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -21,11 +24,11 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const handleLogoClick = () => {
     navigate('/');
   };
+
   const handleLoginClick = () => {
     if (isLoggedIn) {
       // 로그아웃 처리
-      setIsLoggedIn(false);
-      // 토큰 삭제등의 로그아웃 로직 추가
+      logout(); // AuthContext의 로그아웃 함수 호출
     } else {
       //  로그인 페이지로 이동
       navigate('/login');

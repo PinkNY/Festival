@@ -210,7 +210,24 @@ const SignUp = () => {
     e.preventDefault();
     if (validate()) {
       try {
-        const response = await axios.post('/api/signup', formValues);
+        // gender를 'M' 또는 'F'로 변환
+        const formattedGender = formValues.gender === "male" ? "M" : "F";
+        
+        // date_of_birth를 8자리로 변환 (예: 19900101)
+        const dateOfBirth = `${formValues.birthYear}${formValues.birthMonth.padStart(2, "0")}${formValues.birthDay.padStart(2, "0")}`;
+  
+        // 백엔드에 맞는 필드로 매핑된 데이터 생성
+        const signupData = {
+          username: formValues.personalId || formValues.hostId, // 개인 또는 호스트의 아이디 사용
+          password: formValues.personalPassword || formValues.hostPassword, // 개인 또는 호스트의 비밀번호 사용
+          name: formValues.name || formValues.representativeName, // 개인의 이름 또는 대표자명 사용
+          email: formValues.personalEmail || formValues.hostEmail, // 개인 또는 호스트의 이메일 사용
+          gender: formattedGender,
+          date_of_birth: dateOfBirth,
+        };
+  
+        // 서버로 데이터 전송
+        const response = await axios.post('/api/signup', signupData);
         if (response.status === 200) {
           navigate('/login'); // 성공 시 로그인 페이지로 이동
         }
@@ -219,6 +236,7 @@ const SignUp = () => {
       }
     }
   };
+  
   
 
   return (

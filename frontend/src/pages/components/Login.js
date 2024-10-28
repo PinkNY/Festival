@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../AuthContext';
 
 import { PageContainer, LoginContainer, Title, TabContainer, Tab, Form, Input, CheckboxContainer, Checkbox, CheckboxLabel, LoginButton, LinkContainer, Link, ErrorMessage } from '../styles/LoginSt';
 
@@ -11,6 +12,11 @@ const LoginPage = () => {
   const [saveId, setSaveId] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
+
+  // 사용자가 로그인 페이지에 오기 전에 있었던 경로 정보
+  const from = location.state?.from?.pathname || '/';
 
   const handleSignupClick = () => {
     navigate('/signup');
@@ -20,13 +26,15 @@ const LoginPage = () => {
     e.preventDefault();
     setErrorMessage('');
     try {
-      const response = await axios.post('backendtest-d8g0eqczavdveda7.koreacentral-01.azurewebsites.net/api/login/user', {
+      const response = await axios.post('https://backendtest-d8g0eqczavdveda7.koreacentral-01.azurewebsites.net/api/login/user', {
         username, password,
       });
 
       if (response.status === 200) {
-        // 로그인 성공 시 메인 페이지로 이동
-        navigate('/');
+        // AuthContext를 사용하여 로그인 상태 업데이트
+        login(username, password);
+        // 로그인 성공 시 이전에 있던 경로로 이동
+        navigate(from, { replace: true });
       }
     } catch (error) {
       // 로그인 실패 시 오류 메시지 출력

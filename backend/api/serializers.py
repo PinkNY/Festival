@@ -2,6 +2,7 @@
 
 from rest_framework import serializers
 from .models import ActivityLog, Festival, User  # 필요한 모델만 임포트
+from django.contrib.auth.hashers import make_password #비밀번호 해싱
 
 class ActivityLogSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,3 +18,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'  # 모든 필드 포함
+    
+    def create(self, validated_data):
+        validated_data['password'] = make_password(validated_data['password'])
+        return super(UserSerializer, self).create(validated_data)
+    

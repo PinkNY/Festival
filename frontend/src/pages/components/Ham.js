@@ -10,6 +10,12 @@ const Ham = ({ menuOpen, toggleMenu }) => {
   const handleLoginClick = () => {
     navigate('/login');
   };
+  const handleListClick = () => {
+    navigate('/list')
+  }
+  const handleNoticeClick = () => {
+    navigate('/notice')
+  }
 
   return (
     <MobileMenu open={menuOpen}>
@@ -24,8 +30,8 @@ const Ham = ({ menuOpen, toggleMenu }) => {
       </Button>
       <MiddleContainer>
         <p>내 정보</p>
-        <p>축제 목록</p>
-        <p>공지사항</p>
+        <p style={{ cursor: 'pointer' }} onClick={handleListClick}>축제 목록</p>
+        <p style={{ cursor: 'pointer' }} onClick={handleNoticeClick}>공지사항</p>
       </MiddleContainer>
     </MobileMenu>
   );

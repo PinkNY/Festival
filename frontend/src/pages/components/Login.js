@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../../AuthContext';
 
 import { PageContainer, LoginContainer, Title, TabContainer, Tab, Form, Input, CheckboxContainer, Checkbox, CheckboxLabel, LoginButton, LinkContainer, Link, ErrorMessage } from '../styles/LoginSt';
 
@@ -26,7 +26,7 @@ const LoginPage = () => {
     e.preventDefault();
     setErrorMessage('');
     try {
-      const response = await axios.post('https://backendtest-d8g0eqczavdveda7.koreacentral-01.azurewebsites.net/api/login/user', {
+      const response = await axios.post('http://127.0.0.1:8000/api/login/api/login/', {
         username, password,
       });
 

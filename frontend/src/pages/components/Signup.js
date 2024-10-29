@@ -74,7 +74,7 @@ const SignUp = () => {
   // 아이디 중복 여부 확인 함수
   const checkUserIdAvailability = async (userId) => {
     try {
-      const response = await axios.get(`/api/check-user-id?user_id=${userId}`);
+      const response = await axios.get(`http://127.0.0.1:8000/api/check-user-id?user_id=${userId}`);
       return response.data.exists;
     } catch (error) {
       console.error("아이디 중복 확인 중 오류가 발생했습니다.", error);
@@ -227,7 +227,7 @@ const SignUp = () => {
         };
   
         // 서버로 데이터 전송
-        const response = await axios.post('/api/signup', signupData);
+        const response = await axios.post('http://127.0.0.1:8000/api/signup/', signupData);
         if (response.status === 200 || response.status === 201 ) {
           navigate('/login'); // 성공 시 로그인 페이지로 이동
         }

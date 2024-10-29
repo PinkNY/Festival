@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { X, Bell } from 'lucide-react';
@@ -7,19 +7,38 @@ import Chatbot from '../Chatbot';
 
 const Ham = ({ menuOpen, toggleMenu }) => {
   const navigate = useNavigate();
+  const menuRef = useRef(null);
+
+  // 메뉴 외부를 클릭하면 메뉴를 닫는 기능
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // 메뉴가 열려 있을 때만 외부 클릭을 감지하여 메뉴를 닫음
+      if (menuOpen && menuRef.current && !menuRef.current.contains(event.target)) {
+        toggleMenu();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuOpen, toggleMenu]);
 
   const handleLoginClick = () => {
+    toggleMenu(); // 메뉴 닫기
     navigate('/login');
   };
   const handleListClick = () => {
+    toggleMenu();
     navigate('/list')
   }
   const handleNoticeClick = () => {
+    toggleMenu();
     navigate('/notice')
   }
 
   return (
-    <MobileMenu open={menuOpen}>
+    <MobileMenu open={menuOpen} ref={menuRef}>
       <TopContainer>
         <Button ghost>
           <Bell size={25} />

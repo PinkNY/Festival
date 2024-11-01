@@ -55,6 +55,7 @@ export const TopContainer = styled.div`
   align-items: center;
   justify-content: flex-end;
   height: 90px;
+  z-index: 999;
 
   // border: 3px solid black;
 `;
@@ -64,6 +65,7 @@ export const MiddleContainer = styled.div`
   width: 100%;
   height: 100vh;
   font-size: 30px;
+  z-index: 999;
 
   align-items: center;
   justify-content: flex-start;

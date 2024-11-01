@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import { Card, CardHeader, CardTitle, CardContent, FestivalCard, FestivalGrid, MoreCard } from '../styles/HotSt';
 import Modal from '../Modal';
@@ -8,6 +9,8 @@ const Hotlist = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFestival, setSelectedFestival] = useState(null);
   const [initialPosition, setInitialPosition] = useState({ x: 0, y: 0 });
+  const [topClickFestivals, setTopClickFestivals] = useState([]);
+  const [topSearchFestivals, setTopSearchFestivals] = useState([]);
   const cardRefs = useRef([]);
 
   const navigate = useNavigate();
@@ -15,13 +18,30 @@ const Hotlist = () => {
     navigate('/list');
   };
 
-  const topFestivals = [
-    { id: 1, name: "서울 랜턴 페스티벌", location: "서울", date: "2024-10-01" },
-    { id: 2, name: "부산 불꽃 축제", location: "부산", date: "2024-10-15" },
-    { id: 3, name: "전주 비빔밥 축제", location: "전주", date: "2024-09-20" },
-    { id: 4, name: "진주 남강유등축제", location: "진주", date: "2024-10-01" },
-    { id: 5, name: "보령 머드축제", location: "보령", date: "2024-07-15" },
-  ];
+  useEffect(() => {
+    // 클릭 수 기준 상위 5개 축제 데이터를 가져옵니다.
+    const fetchClickFestivals = async () => {
+      try {
+        const response = await axios.get("/api/festivals?sort=view_count&order=desc&limit=5");
+        setTopClickFestivals(response.data); // 백엔드에서 가져온 데이터를 상태에 저장합니다.
+      } catch (error) {
+        console.error("Failed to fetch click festivals:", error);
+      }
+    };
+
+    // 검색 수 기준 상위 5개 축제 데이터를 가져옵니다.
+    const fetchSearchFestivals = async () => {
+      try {
+        const response = await axios.get("/api/festivals?sort=search_count&order=desc&limit=5");
+        setTopSearchFestivals(response.data); // 백엔드에서 가져온 데이터를 상태에 저장합니다.
+      } catch (error) {
+        console.error("Failed to fetch search festivals:", error);
+      }
+    };
+
+    fetchClickFestivals();
+    fetchSearchFestivals();
+  }, []);
 
   const openModal = (festival, index) => {
     const cardElement = cardRefs.current[index];
@@ -45,20 +65,20 @@ const Hotlist = () => {
     <>
       <Card>
         <CardHeader>
-          <CardTitle>인기 축제 Top 5</CardTitle>
+          <CardTitle>인기 축제 Top 5 (클릭 수 기준)</CardTitle>
         </CardHeader>
         <CardContent>
           <FestivalGrid>
-            {topFestivals.map((festival, index) => (
+            {topClickFestivals.map((festival, index) => (
               <FestivalCard
                 key={festival.id}
                 ref={(el) => (cardRefs.current[index] = el)}
                 onClick={() => openModal(festival, index)}
               >
                 <CardContent>
-                  <img src="./AppleFesta.jpeg" style={{ width: '200px', height: '150px' }} alt='AppleImage' />
-                  <h3 style={{ fontWeight: 'bold', fontSize: '1.125rem', marginBottom: '0.5rem' }}>{festival.name}</h3>
-                  <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>{festival.date}</p>
+                  <img src={festival.image || "./AppleFesta.jpeg"} style={{ width: '200px', height: '150px' }} alt='FestivalImage' />
+                  <h3 style={{ fontWeight: 'bold', fontSize: '1.125rem', marginBottom: '0.5rem' }}>{festival.title}</h3>
+                  <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>{festival.start_date} - {festival.end_date}</p>
                 </CardContent>
               </FestivalCard>
             ))}
@@ -68,7 +88,6 @@ const Hotlist = () => {
           </FestivalGrid>
         </CardContent>
       </Card>
-
       <Modal isOpen={isModalOpen} onClose={closeModal} festival={selectedFestival} initialPosition={initialPosition} />
     </>
   );

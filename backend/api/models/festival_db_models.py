@@ -1,5 +1,3 @@
-# api/models/festival_db_models.py
-
 from django.db import models
 
 class Festival(models.Model):
@@ -12,6 +10,7 @@ class Festival(models.Model):
     view_count = models.IntegerField(default=0, blank=True, null=True)
     search_count = models.IntegerField(default=0, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
+    imageUrl = models.CharField(max_length=500, blank=True, null=True)  # imageUrl 필드 추가
 
     class Meta:
         db_table = 'festivals'

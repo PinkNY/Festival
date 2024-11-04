@@ -74,7 +74,7 @@ const SignUp = () => {
   // 아이디 중복 여부 확인 함수
   const checkUserIdAvailability = async (userId) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/check-user-id?user_id=${userId}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/check-user-id/?user_id=${userId}`);
       return response.data.exists;
     } catch (error) {
       console.error("아이디 중복 확인 중 오류가 발생했습니다.", error);

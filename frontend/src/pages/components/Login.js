@@ -26,7 +26,7 @@ const LoginPage = () => {
     e.preventDefault();
     setErrorMessage('');
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/login/', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/login/`, {
         username, password,
       });
 

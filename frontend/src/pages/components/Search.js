@@ -24,7 +24,7 @@ const SearchBar = () => {
     setError(null);
 
     try {
-      const response = await axios.get(`/api/festivals?query=${searchQuery}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/festivals/?query=${searchQuery}`);
       // 검색 결과와 검색어를 상태로 전달하여 '/list'로 리다이렉트
       navigate('/list', { state: { results: response.data, query: searchQuery } });
     } catch (err) {

@@ -16,7 +16,7 @@ const NoticeBoard = () => {
     // 공지사항 목록을 백엔드에서 가져오는 함수
     const fetchNotices = async () => {
       try {
-        const response = await axios.get('/api/notices');
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/notice/`);
         setNotices(response.data);
         setLoading(false);
       } catch (err) {

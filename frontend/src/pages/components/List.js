@@ -24,7 +24,7 @@ const FestivalList = () => {
       const fetchFestivals = async () => {
         setLoading(true);
         try {
-          const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/festivals?filter=${filter}`); // 필터링된 데이터 가져오기
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/festivals/?filter=${filter}`); // 필터링된 데이터 가져오기
           setFestivals(response.data);
         } catch (error) {
           console.error('축제 정보를 불러오는 중 오류 발생:', error);

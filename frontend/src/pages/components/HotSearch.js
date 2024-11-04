@@ -5,11 +5,10 @@ import axios from "axios";
 import { Card, CardHeader, CardTitle, CardContent, FestivalCard, FestivalGrid, MoreCard } from '../styles/HotSt';
 import Modal from '../Modal';
 
-const Hotlist = () => {
+const Searchlist = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFestival, setSelectedFestival] = useState(null);
   const [initialPosition, setInitialPosition] = useState({ x: 0, y: 0 });
-  const [topClickFestivals, setTopClickFestivals] = useState([]);
   const [topSearchFestivals, setTopSearchFestivals] = useState([]);
   const cardRefs = useRef([]);
 
@@ -19,27 +18,16 @@ const Hotlist = () => {
   };
 
   useEffect(() => {
-    // 클릭 수 기준 상위 5개 축제 데이터를 가져옵니다.
-    const fetchClickFestivals = async () => {
-      try {
-        const response = await axios.get("/api/festivals?sort=view_count&order=desc&limit=5");
-        setTopClickFestivals(response.data); // 백엔드에서 가져온 데이터를 상태에 저장합니다.
-      } catch (error) {
-        console.error("Failed to fetch click festivals:", error);
-      }
-    };
-
     // 검색 수 기준 상위 5개 축제 데이터를 가져옵니다.
     const fetchSearchFestivals = async () => {
       try {
-        const response = await axios.get("/api/festivals?sort=search_count&order=desc&limit=5");
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/festivals/?sort=search_count&order=desc&limit=5`);
         setTopSearchFestivals(response.data); // 백엔드에서 가져온 데이터를 상태에 저장합니다.
       } catch (error) {
         console.error("Failed to fetch search festivals:", error);
       }
     };
 
-    fetchClickFestivals();
     fetchSearchFestivals();
   }, []);
 
@@ -65,11 +53,11 @@ const Hotlist = () => {
     <>
       <Card>
         <CardHeader>
-          <CardTitle>인기 축제 Top 5 (클릭 수 기준)</CardTitle>
+          <CardTitle>인기 축제 Top 5 (검색 수 기준)</CardTitle>
         </CardHeader>
         <CardContent>
           <FestivalGrid>
-            {topClickFestivals.map((festival, index) => (
+            {topSearchFestivals.map((festival, index) => (
               <FestivalCard
                 key={festival.id}
                 ref={(el) => (cardRefs.current[index] = el)}
@@ -93,4 +81,4 @@ const Hotlist = () => {
   );
 };
 
-export default Hotlist;
+export default Searchlist;

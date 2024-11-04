@@ -1,7 +1,8 @@
 import React from 'react';
 import { PageWrapper, MainContent, HalfBox } from '../styles/MainSt';
 import Notice from './Notice';
-import Hotlist from './Hot';
+import Clicklist from './HotClick';
+import Searchlist from './HotSearch';
 import KakaoMap from './Map';
 
 export default function MainPage() {
@@ -10,8 +11,8 @@ export default function MainPage() {
       <MainContent>
         <Notice />
         <HalfBox>
-          <Hotlist />
-          <Hotlist />
+          <Clicklist />
+          <Searchlist />
         </HalfBox>
         <KakaoMap />
       </MainContent>

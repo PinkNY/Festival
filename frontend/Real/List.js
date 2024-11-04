@@ -12,7 +12,7 @@ const FestivalList = () => {
   
   const [festivals, setFestivals] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('view_count');
+  const [filter, setFilter] = useState('popular');
 
   useEffect(() => {
     if (searchResults) {
@@ -24,10 +24,10 @@ const FestivalList = () => {
       const fetchFestivals = async () => {
         setLoading(true);
         try {
-          const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/festivals?filter=${filter}`); // 필터링된 데이터 가져오기
+          const response = await axios.get(`/api/festivals?filter=${filter}`); // 필터링된 데이터 가져오기
           setFestivals(response.data);
         } catch (error) {
-          console.error('축제 정보를 불러오는 중 오류 발생:', error);
+          console.error('Error fetching festivals:', error);
         } finally {
           setLoading(false);
         }
@@ -49,7 +49,7 @@ const FestivalList = () => {
         </SectionTitle>
         <FilterContainer>
           <FilterSelect value={filter} onChange={handleFilterChange} disabled={!!searchResults}>
-            <option value="view_count">인기순</option>
+            <option value="popular">인기순</option>
             <option value="alphabetical">가나다순</option>
             <option value="ongoing">진행중</option>
           </FilterSelect>
@@ -63,17 +63,13 @@ const FestivalList = () => {
                 <FestivalCard href={festival.id ? `/festival/${festival.id}` : '#'} key={index}>
                   <FestivalImage
                     src={festival.imageUrl || '/placeholder.svg'}
-                    alt={festival.title || '내용없음'}
+                    alt={festival.name || '내용없음'}
                     width={200}
                     height={200}
                   />
                   <FestivalInfo>
-                    <FestivalName>{festival.title || '내용없음'}</FestivalName>
-                    <FestivalDate>
-                      {festival.start_date && festival.end_date ? 
-                        `${festival.start_date} ~ ${festival.end_date}` : 
-                        '내용없음'}
-                    </FestivalDate>
+                    <FestivalName>{festival.name || '내용없음'}</FestivalName>
+                    <FestivalDate>{festival.date || '내용없음'}</FestivalDate>
                   </FestivalInfo>
                 </FestivalCard>
               ))

@@ -14,6 +14,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 import logging
+from rest_framework import permissions
 
 logger = logging.getLogger(__name__)
 
@@ -23,9 +24,21 @@ class ActivityLogList(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]  # 인증된 사용자만 접근 가능
 
 class FestivalList(generics.ListCreateAPIView):
-    queryset = Festival.objects.all()
     serializer_class = FestivalSerializer
-    permission_classes = [IsAuthenticated]  # 인증된 사용자만 접근 가능
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        # 기본적으로 모든 축제를 가져옵니다.
+        queryset = Festival.objects.all()
+
+        # 요청 파라미터에서 filter 값을 가져옵니다.
+        filter_type = self.request.query_params.get('filter')
+
+        # 필터 타입이 'alphabetical'인 경우 축제 이름 기준으로 정렬합니다.
+        if filter_type == 'alphabetical':
+            queryset = queryset.order_by('title')  # 축제 이름을 기준으로 가나다순 정렬
+
+        return queryset
 
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
@@ -75,3 +88,35 @@ class CheckAuthView(APIView):
 
     def get(self, request):
         return Response({'message': 'User is authenticated'}, status=status.HTTP_200_OK)
+
+
+# #축제뷰
+# class SortedFestivalsView(APIView):
+#     permission_classes = [permissions.AllowAny]
+
+#     def get(self, request):
+#         sort_field = request.GET.get('sort', 'view_count')
+#         order = request.GET.get('order', 'desc')
+#         limit = int(request.GET.get('limit', 5))
+
+#         if order == 'desc':
+#             sort_field = f'-{sort_field}'
+
+#         festivals = Festival.objects.all().order_by(sort_field)[:limit]
+#         serializer = FestivalSerializer(festivals, many=True)
+#         return Response(serializer.data)
+
+# class SortedFestivalsSearch(APIView):
+#     permission_classes = [permissions.AllowAny]
+
+#     def get(self, request):
+#         sort_field = request.GET.get('sort', 'search_count')
+#         order = request.GET.get('order', 'desc')
+#         limit = int(request.GET.get('limit', 5))
+
+#         if order == 'desc':
+#             sort_field = f'-{sort_field}'
+
+#         festivals = Festival.objects.all().order_by(sort_field)[:limit]
+#         serializer = FestivalSerializer(festivals, many=True)
+#         return Response(serializer.data)

@@ -8,6 +8,8 @@ from .views import (
     LoginView, 
     LogoutView, 
     CheckAuthView,
+    # SortedFestivalsView,
+    # SortedFestivalsSearch,
 )
 
 urlpatterns = [
@@ -24,4 +26,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('check-auth/', CheckAuthView.as_view(), name='check_auth'),
+
+    # path('festivals_view/', SortedFestivalsView.as_view(), name='sorted_festivals_view'),
+    # path('festivals_search/', SortedFestivalsSearch.as_view(), name='sorted_festivals_search'),
 ]

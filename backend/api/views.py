@@ -1,55 +1,39 @@
-import logging
-from datetime import timedelta
-from django.contrib.auth import authenticate
+import jwt
+import datetime
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, generics
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import status
+from django.contrib.auth.hashers import check_password
+from django.conf import settings
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated  # JWT 인증을 위해 추가
+from .models import ActivityLog, Festival, User  # 필요한 모델만 임포트
+from .serializers import ActivityLogSerializer, FestivalSerializer, UserSerializer  # 직렬화기 임포트
+from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import ActivityLog, Festival, User
-from .serializers import ActivityLogSerializer, FestivalSerializer, UserSerializer
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+import logging
 
 logger = logging.getLogger(__name__)
 
-class ApiRootView(APIView):
-    permission_classes = [AllowAny]
-
-    def get(self, request):
-        return Response({
-            "message": "Welcome to the API. Available endpoints:",
-            "activity_logs": "/api/activity_logs/",
-            "festivals": "/api/festivals/",
-            "users": "/api/users/",
-            "signup": "/api/signup/",
-            "login": "/api/login/",
-            "logout": "/api/logout/",
-            "check_auth": "/api/check-auth/",
-            "token_obtain": "/api/token/",
-            "token_refresh": "/api/token/refresh/",
-        })
-
-# 활동 로그 API
 class ActivityLogList(generics.ListCreateAPIView):
     queryset = ActivityLog.objects.all()
     serializer_class = ActivityLogSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]  # 인증된 사용자만 접근 가능
 
-# 축제 리스트 API
 class FestivalList(generics.ListCreateAPIView):
     queryset = Festival.objects.all()
     serializer_class = FestivalSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]  # 인증된 사용자만 접근 가능
 
-# 사용자 리스트 API
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]  # 인증된 사용자만 접근 가능
 
-# 회원가입 뷰
+# 회원가입 뷰 (클래스 기반)
 class SignupView(APIView):
-    permission_classes = [AllowAny]
-
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -58,39 +42,32 @@ class SignupView(APIView):
         return Response({'error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 # 로그인 뷰
+@method_decorator(csrf_exempt, name='dispatch')
 class LoginView(APIView):
-    permission_classes = [AllowAny]
-
     def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
+        data = request.data
+        username = data.get('username')
+        password = data.get('password')
         
-        user = authenticate(request, username=username, password=password)
-        if user:
-            refresh = RefreshToken.for_user(user)
-            return Response({
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-            }, status=status.HTTP_200_OK)
-        else:
+        try:
+            user = User.objects.get(username=username)
+            if check_password(password, user.password):
+                refresh = RefreshToken.for_user(user)
+                return Response({
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token),
+                }, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        except User.DoesNotExist:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
-# 로그아웃 뷰 (Refresh Token 블랙리스트 처리)
+# 로그아웃 뷰 (JWT 방식에서는 주로 클라이언트 측에서 토큰을 삭제하는 방식)
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        try:
-            refresh_token = request.data.get("refresh")
-            if refresh_token:
-                token = RefreshToken(refresh_token)
-                token.blacklist()  # 블랙리스트에 추가
-                return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
-            else:
-                return Response({'error': 'Refresh token missing'}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
-            logger.error(f"Logout error: {e}")
-            return Response({'error': 'Logout failed'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
 
 # 로그인 상태 확인 뷰
 class CheckAuthView(APIView):

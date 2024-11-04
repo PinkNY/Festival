@@ -23,7 +23,7 @@ const ModalContent = styled.div`
   width: 400px;
   max-width: 90%;
   transform: ${(props) =>
-    props.initialPosition ? `translate(${props.initialPosition.x}px, ${props.initialPosition.y}px) scale(0)` : 'scale(0)'};
+    props.$initialPosition ? `translate(${props.$initialPosition.x}px, ${props.$initialPosition.y}px) scale(0)` : 'scale(0)'};
   transition: transform 0.5s ease-in-out;
   transform-origin: center center;
 
@@ -50,13 +50,14 @@ const Modal = ({ isOpen, onClose, festivalId, initialPosition }) => {
     if (isOpen && festivalId) {
       // 모달이 열릴 때 페스티벌 데이터 가져오기
       axios
-        .get(`/api/festivals/${festivalId}`)
+        .get(`${process.env.REACT_APP_API_URL}/api/festivals/${festivalId}`)
         .then((response) => {
-          setFestival(response.data);
+          console.log('Festival data:', response.data); // 응답 데이터 확인
+          setFestival(response.data.festival);
         })
         .catch((error) => {
           console.error('Error fetching festival data:', error);
-          setFestival(null); // 데이터 가져오기 실패 시 festival을 null로 설정
+          setFestival(null);
         });
     }
   }, [isOpen, festivalId]);
@@ -79,20 +80,23 @@ const Modal = ({ isOpen, onClose, festivalId, initialPosition }) => {
     <ModalWrapper onClick={onClose}>
       <ModalContent
         className={isAnimating ? 'open' : ''}
-        initialPosition={initialPosition}
+        $initialPosition={initialPosition} // 수정: Transient Prop으로 변경
         onClick={(e) => e.stopPropagation()}
       >
         <CloseButton onClick={onClose}>&times;</CloseButton>
         {festival ? (
           <>
-            <h2>축제명: {festival.name}</h2>
-            <p>축제 기간: {festival.period}</p>
-            <p>공식사이트: <a href={festival.officialSite} target="_blank" rel="noopener noreferrer">{festival.officialSite}</a></p>
-            <img src={festival.poster} alt="축제 포스터" style={{ width: '100%', borderRadius: '8px', marginTop: '1rem' }} />
-            <p>태그: {festival.tags.join(', ')}</p>
+            <h2>축제명: {festival.title || '제목 없음'}</h2>
+            <p>
+              축제 기간: {festival.start_date && festival.end_date 
+                ? `${festival.start_date} ~ ${festival.end_date}` 
+                : '내용없음'}
+            </p>
+            <img src={festival.imageUrl} alt="축제 포스터" style={{ width: '100%', borderRadius: '8px', marginTop: '1rem' }} />
+            <p>태그: {festival.tags && festival.tags.join(', ')}</p>
           </>
         ) : (
-          <p>정보를 불러올 수 없습니다.</p>
+          <p>로딩 중입니다...</p> // 로딩 중인 경우 로딩 메시지 표시
         )}
       </ModalContent>
     </ModalWrapper>

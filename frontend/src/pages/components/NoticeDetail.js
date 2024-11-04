@@ -14,7 +14,7 @@ const NoticeDetail = () => {
     // 데이터를 가져오는 함수
     const fetchNotice = async () => {
       try {
-        const response = await axios.get(`/api/notices/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/notices/${id}`);
         setNotice(response.data);
         setLoading(false);
       } catch (err) {

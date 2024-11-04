@@ -18,11 +18,17 @@ const Searchlist = () => {
   };
 
   useEffect(() => {
-    // 검색 수 기준 상위 5개 축제 데이터를 가져옵니다.
+    // 모든 축제 데이터를 가져온 후 search_count 기준으로 정렬하고 상위 5개만 선택합니다.
     const fetchSearchFestivals = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/festivals/?sort=search_count&order=desc&limit=5`);
-        setTopSearchFestivals(response.data); // 백엔드에서 가져온 데이터를 상태에 저장합니다.
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/festivals/`);
+        
+        // 데이터를 search_count 기준으로 내림차순 정렬하고 상위 5개만 선택
+        const sortedFestivals = response.data
+          .sort((a, b) => b.search_count - a.search_count)
+          .slice(0, 5);
+
+        setTopSearchFestivals(sortedFestivals);
       } catch (error) {
         console.error("Failed to fetch search festivals:", error);
       }
@@ -64,7 +70,7 @@ const Searchlist = () => {
                 onClick={() => openModal(festival, index)}
               >
                 <CardContent>
-                  <img src={festival.image || "./AppleFesta.jpeg"} style={{ width: '200px', height: '150px' }} alt='FestivalImage' />
+                  <img src={festival.imageUrl || "./AppleFesta.jpeg"} style={{ width: '200px', height: '150px' }} alt='FestivalImage' />
                   <h3 style={{ fontWeight: 'bold', fontSize: '1.125rem', marginBottom: '0.5rem' }}>{festival.title}</h3>
                   <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>{festival.start_date} - {festival.end_date}</p>
                 </CardContent>

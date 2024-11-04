@@ -58,7 +58,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database 설정
 DATABASES = {
-    'default': {},
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DEFAULT_DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
+    },
     'default_db': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.getenv('DEFAULT_DB_NAME'),
@@ -84,6 +91,7 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
     },
 }
+
 
 
 # Password validation

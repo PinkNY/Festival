@@ -20,8 +20,10 @@ const ModalContent = styled.div`
   background: white;
   padding: 2rem;
   border-radius: 8px;
-  width: 400px;
+  width: 500px;
   max-width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
   transform: ${(props) =>
     props.$initialPosition ? `translate(${props.$initialPosition.x}px, ${props.$initialPosition.y}px) scale(0)` : 'scale(0)'};
   transition: transform 0.5s ease-in-out;
@@ -42,62 +44,149 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
-const Modal = ({ isOpen, onClose, festivalId, initialPosition }) => {
-  const [festival, setFestival] = useState(null);
-  const [isAnimating, setIsAnimating] = useState(false);
+const TopSection = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
 
-  useEffect(() => {
-    if (isOpen && festivalId) {
-      // 모달이 열릴 때 페스티벌 데이터 가져오기
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/api/festivals/${festivalId}`)
-        .then((response) => {
-          console.log('Festival data:', response.data); // 응답 데이터 확인
-          setFestival(response.data.festival);
-        })
-        .catch((error) => {
-          console.error('Error fetching festival data:', error);
-          setFestival(null);
-        });
-    }
-  }, [isOpen, festivalId]);
+const ImageWrapper = styled.div`
+  flex: 1;
+  img {
+    width: 100%;
+    border-radius: 8px;
+  }
+`;
+
+const InfoWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const BottomSection = styled.div`
+  margin-top: 1.5rem;
+`;
+
+const CommentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+  gap: 1rem;
+`;
+
+const CommentID = styled.p`
+  flex: 0 0 80px; /* 아이디 영역 고정 너비 */
+  font-weight: bold;
+`;
+
+const CommentRating = styled.p`
+  flex: 0 0 40px; /* 평점 영역 고정 너비 */
+  text-align: center;
+`;
+
+const CommentText = styled.p`
+  flex: 1; /* 댓글 영역 */
+  word-break: break-word; /* 댓글이 길면 줄바꿈 */
+`;
+
+const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
+  const [comments, setComments] = useState([]);
+  const [hashtags, setHashtags] = useState([]);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (isOpen) {
-      setIsAnimating(false); // 애니메이션 초기화
-      setTimeout(() => {
-        setIsAnimating(true); // 짧은 딜레이 후 애니메이션 시작
-      }, 50); // 50ms 딜레이로 확실하게 비동기적으로 처리
+      document.body.style.overflow = 'hidden'; // 모달이 열릴 때 배경 스크롤 비활성화
     } else {
-      setIsAnimating(false); // 모달이 닫힐 때 상태 초기화
-      setFestival(null); // 모달이 닫힐 때 festival 상태 초기화
+      document.body.style.overflow = 'auto'; // 모달이 닫힐 때 배경 스크롤 활성화
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto'; // 컴포넌트가 언마운트될 때 원래 상태로 복구
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen && festival) {
+      setIsLoading(true);
+      const fetchAdditionalData = async () => {
+        try {
+          const commentsUrl = `${process.env.REACT_APP_API_URL}/api/comments/?festa_id=${festival.id}`;
+          const commentsResponse = await axios.get(commentsUrl);
+          setComments(commentsResponse.data.comments || commentsResponse.data);
+
+          const hashtagsUrl = `${process.env.REACT_APP_API_URL}/api/hashtags/?festa_id=${festival.id}`;
+          const hashtagsResponse = await axios.get(hashtagsUrl);
+          setHashtags(hashtagsResponse.data.hashtags || hashtagsResponse.data);
+        } catch (error) {
+          console.error('Error fetching additional data:', error);
+          setComments([]);
+          setHashtags([]);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      fetchAdditionalData();
+    } else {
+      setComments([]);
+      setHashtags([]);
+      setIsLoading(false);
+    }
+  }, [isOpen, festival]);
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsAnimating(false);
+      setTimeout(() => {
+        setIsAnimating(true);
+      }, 50);
+    } else {
+      setIsAnimating(false);
     }
   }, [isOpen]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !festival) return null;
 
   return (
     <ModalWrapper onClick={onClose}>
       <ModalContent
         className={isAnimating ? 'open' : ''}
-        $initialPosition={initialPosition} // 수정: Transient Prop으로 변경
+        $initialPosition={initialPosition}
         onClick={(e) => e.stopPropagation()}
       >
         <CloseButton onClick={onClose}>&times;</CloseButton>
-        {festival ? (
-          <>
-            <h2>축제명: {festival.title || '제목 없음'}</h2>
-            <p>
-              축제 기간: {festival.start_date && festival.end_date 
-                ? `${festival.start_date} ~ ${festival.end_date}` 
-                : '내용없음'}
-            </p>
-            <img src={festival.imageUrl} alt="축제 포스터" style={{ width: '100%', borderRadius: '8px', marginTop: '1rem' }} />
-            <p>태그: {festival.tags && festival.tags.join(', ')}</p>
-          </>
-        ) : (
-          <p>로딩 중입니다...</p> // 로딩 중인 경우 로딩 메시지 표시
-        )}
+        <TopSection>
+          <ImageWrapper>
+            <img src={festival.imageUrl} alt="축제 포스터" />
+          </ImageWrapper>
+          <InfoWrapper>
+            <h2>{festival.title || '제목 없음'}</h2>
+            <p>{festival.start_date && festival.end_date ? `${festival.start_date} ~ ${festival.end_date}` : '내용 없음'}</p>
+            <p>{hashtags.length > 0 ? hashtags.slice(0, 5).map((tag) => `#${tag.tag}`).join(' ') : '태그 없음'}</p>
+          </InfoWrapper>
+        </TopSection>
+        <BottomSection>
+          <h3>댓글</h3>
+          {isLoading ? (
+            <p>로딩 중입니다...</p>
+          ) : comments.length > 0 ? (
+            comments.slice(0, 5).map((comment) => (
+              <CommentWrapper key={comment.id}>
+                <CommentID>{comment.username}</CommentID>
+                <CommentRating>{comment.rating}</CommentRating>
+                <CommentText>{comment.comment}</CommentText>
+              </CommentWrapper>
+            ))
+          ) : (
+            <p>댓글이 없습니다.</p>
+          )}
+        </BottomSection>
       </ModalContent>
     </ModalWrapper>
   );

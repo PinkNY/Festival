@@ -38,6 +38,8 @@ const Clicklist = () => {
   }, []);
 
   const openModal = (festival, index) => {
+    console.log("Selected Festival ID:", festival.id); // festival ID가 제대로 전달되는지 확인하는 부분
+
     const cardElement = cardRefs.current[index];
     if (cardElement) {
       const rect = cardElement.getBoundingClientRect();

@@ -33,12 +33,17 @@ jobs:
           cd frontend
           npm install typescript@4.9.5
           npm install --legacy-peer-deps
+
+      - name: Create .env file
+        run: |
+          echo "REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}" >> frontend/.env
+          echo "PORT=3008" >> frontend/.env  # 필요한 경우 추가 설정
       
       - name: Build React app without stopping on warnings
         run: |
           cd frontend
           CI=false npm run build
-      
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1

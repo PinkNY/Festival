@@ -39,17 +39,42 @@ class FestivalList(generics.ListCreateAPIView):
             queryset = queryset.order_by('title')  # 축제 이름을 기준으로 가나다순 정렬
 
         return queryset
+    
 # 축제 댓글
 class CommentListCreateView(generics.ListCreateAPIView):
-    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated]  # 인증된 사용자만 접근 가능
+    permission_classes = [permissions.AllowAny]  # 인증된 사용자만 접근 가능
 
-# 해시
+    def get_queryset(self):
+        # 기본적으로 모든 댓글을 가져옵니다.
+        queryset = Comment.objects.all()
+
+        # 요청 파라미터에서 filter 값을 가져옵니다.
+        filter_type = self.request.query_params.get('filter')
+
+        # 필터 타입이 'recent'인 경우 최신 댓글 순으로 정렬합니다.
+        if filter_type == 'recent':
+            queryset = queryset.order_by('-id')  # id를 기준으로 내림차순 정렬 (최신 순)
+
+        return queryset
+
+# 해시태그
 class HashtagListCreateView(generics.ListCreateAPIView):
-    queryset = Hashtag.objects.all()
     serializer_class = HashtagSerializer
-    permission_classes = [IsAuthenticated]  # 인증된 사용자만 접근 가능
+    permission_classes = [permissions.AllowAny]  # 인증된 사용자만 접근 가능
+
+    def get_queryset(self):
+        # 기본적으로 모든 해시태그를 가져옵니다.
+        queryset = Hashtag.objects.all()
+
+        # 요청 파라미터에서 filter 값을 가져옵니다.
+        filter_type = self.request.query_params.get('filter')
+
+        # 필터 타입이 'alphabetical'인 경우 해시태그 이름 기준으로 정렬합니다.
+        if filter_type == 'alphabetical':
+            queryset = queryset.order_by('tag')  # 해시태그(tag)를 기준으로 알파벳순 정렬
+
+        return queryset
 
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()

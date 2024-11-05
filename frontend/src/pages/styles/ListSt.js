@@ -44,17 +44,20 @@ export const FestivalImage = styled.img`
 
 export const FestivalInfo = styled.div`
   padding: 1rem;
+  text-decoration: none;
 `;
 
 export const FestivalName = styled.h3`
   font-weight: 600;
   font-size: 1rem;
   margin-bottom: 0.5rem;
+  text-decoration: none;
 `;
 
 export const FestivalDate = styled.p`
   font-size: 0.875rem;
   color: #6b7280;
+  text-decoration: none;
 `;
 
 export const MoreButton = styled.button`

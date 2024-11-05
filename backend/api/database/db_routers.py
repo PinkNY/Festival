@@ -10,6 +10,8 @@ class MyDBRouter:
                 return 'festival_db'
             elif model.__name__ == 'User':
                 return 'user_db'
+            elif model.__name__ in ['Comment', 'Hashtag']:  # 추가된 부분
+                return 'festival_db'  # Comment와 Hashtag는 festival_db로 설정
             else:
                 return 'default'
         return 'default'
@@ -21,6 +23,8 @@ class MyDBRouter:
                 return 'festival_db'
             elif model.__name__ == 'User':
                 return 'user_db'
+            elif model.__name__ in ['Comment', 'Hashtag']:  # 추가된 부분
+                return 'festival_db'  # Comment와 Hashtag는 festival_db로 설정
             else:
                 return 'default'
         return 'default'
@@ -34,8 +38,8 @@ class MyDBRouter:
     def allow_migrate(self, db, app_label, model_name=None, **hints):
         """Ensure models migrate only to their appropriate databases."""
         if app_label == 'api':
-            if model_name == 'festival':
-                return db == 'festival_db'
+            if model_name in ['festival', 'comment', 'hashtag']:  # 추가된 부분
+                return db == 'festival_db'  # Comment와 Hashtag를 festival_db에 추가
             elif model_name == 'user':
                 return db == 'user_db'
             elif model_name in ['activitylog', 'globalsetting', 'statistic']:

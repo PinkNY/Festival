@@ -1,24 +1,13 @@
 # backend/api/serializers.py
 
 from rest_framework import serializers
-from .models import ActivityLog, Festival, User, Comment, Hashtag, GlobalSetting, Statistic  # 필요한 모델 임포트
+from .models import ActivityLog, Festival, User, Comment, Hashtag  # 필요한 모델 임포트
 from django.contrib.auth.hashers import make_password  # 비밀번호 해싱
 
 class ActivityLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = ActivityLog
         fields = '__all__'  # 모든 필드 포함
-        
-class GlobalSettingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = GlobalSetting
-        fields = '__all__' # 모든 필드 포함
-        
-        
-class StatisticSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Statistic
-        fields = '__all__' # 모든 필드 포함
 
 class FestivalSerializer(serializers.ModelSerializer):
     class Meta:

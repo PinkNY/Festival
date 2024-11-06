@@ -37,6 +37,7 @@ jobs:
       - name: Create .env file
         run: |
           echo "REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}" >> frontend/.env
+          echo "REACT_APP_KAKAO_API_KEY=${{ secrets.REACT_APP_KAKAO_API_KEY }}" >> frontend/.env
           echo "PORT=3008" >> frontend/.env  # 필요한 경우 추가 설정
       
       - name: Build React app without stopping on warnings

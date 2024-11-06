@@ -10,12 +10,16 @@ from .views import (
     CheckAuthView,
     CommentListCreateView, 
     HashtagListCreateView,
+    GlobalSettingListCreateView,
+    StatisticListCreateView,
     # SortedFestivalsView,
     # SortedFestivalsSearch,
 )
 
 urlpatterns = [
     path('activity_logs/', ActivityLogList.as_view(), name='activity_logs_list'),
+    path('global_settings/', GlobalSettingListCreateView.as_view(), name='global_settings_list_create'),
+    path('statistics/', StatisticListCreateView.as_view(), name='statistics_list_create'),
     path('festivals/', FestivalList.as_view(), name='festival_list'),
     path('users/', UserList.as_view(), name='user_list'),
     path('comments/', CommentListCreateView.as_view(), name='comment_list_create'), #댓글

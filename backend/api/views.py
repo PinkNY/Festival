@@ -7,8 +7,8 @@ from django.contrib.auth.hashers import check_password
 from django.conf import settings
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated  # JWT 인증을 위해 추가
-from .models import ActivityLog, Festival, User, Comment, Hashtag  # 필요한 모델만 임포트
-from .serializers import ActivityLogSerializer, FestivalSerializer, UserSerializer, CommentSerializer, HashtagSerializer  # 직렬화기 임포트
+from .models import ActivityLog, Festival, User, Comment, Hashtag, GlobalSetting, Statistic  # 필요한 모델만 임포트
+from .serializers import ActivityLogSerializer, FestivalSerializer, UserSerializer, CommentSerializer, HashtagSerializer, GlobalSettingSerializer, StatisticSerializer  # 직렬화기 임포트
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.views.decorators.csrf import csrf_exempt
@@ -21,7 +21,17 @@ logger = logging.getLogger(__name__)
 class ActivityLogList(generics.ListCreateAPIView):
     queryset = ActivityLog.objects.all()
     serializer_class = ActivityLogSerializer
-    permission_classes = [IsAuthenticated]  # 인증된 사용자만 접근 가능
+    permission_classes = [permissions.IsAuthenticated]  # 인증된 사용자만 접근 가능
+    
+class GlobalSettingListCreateView(generics.ListCreateAPIView):
+    queryset = GlobalSetting.objects.all()
+    serializer_class = GlobalSettingSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+class StatisticListCreateView(generics.ListCreateAPIView):
+    queryset = Statistic.objects.all()
+    serializer_class = StatisticSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 class FestivalList(generics.ListCreateAPIView):
     serializer_class = FestivalSerializer

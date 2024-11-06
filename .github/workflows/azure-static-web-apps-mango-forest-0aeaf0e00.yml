@@ -5,12 +5,13 @@ on:
     branches:
       - main
     paths:
-      - 'frontend/**'  # 프론트엔드 관련 파일이 변경될 때만 실행
+      - 'frontend/**'
   pull_request:
     branches:
       - main
     paths:
       - 'frontend/**'
+  workflow_dispatch:  # 수동 실행 트리거 추가
 
 jobs:
   build_and_deploy_job:
@@ -38,8 +39,8 @@ jobs:
         run: |
           echo "REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}" >> frontend/.env
           echo "REACT_APP_KAKAO_API_KEY=${{ secrets.REACT_APP_KAKAO_API_KEY }}" >> frontend/.env
-          echo "PORT=3008" >> frontend/.env  # 필요한 경우 추가 설정
-      
+          echo "PORT=3008" >> frontend/.env
+
       - name: Build React app without stopping on warnings
         run: |
           cd frontend

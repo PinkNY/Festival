@@ -33,13 +33,20 @@ jobs:
       - name: Create .env file
         run: |
           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> backend/.env
+          echo "DEBUG=False" >> backend/.env
+          echo "ALLOWED_HOSTS=backend-hnbte6c6gqaxfuh9.koreacentral-01.azurewebsites.net,.azurewebsites.net" >> backend/.env
+          echo "PROD_API_URL=https://backend-hnbte6c6gqaxfuh9.koreacentral-01.azurewebsites.net" >> backend/.env
           echo "DB_NAME=${{ secrets.DB_NAME }}" >> backend/.env
           echo "DB_USER=${{ secrets.DB_USER }}" >> backend/.env
           echo "DB_PASSWORD=${{ secrets.AZURE_DB_PASSWORD }}" >> backend/.env
           echo "DB_HOST=teamdatabase.mysql.database.azure.com" >> backend/.env
           echo "DB_PORT=3306" >> backend/.env
+          echo "DEFAULT_DB_NAME=default_db" >> backend/.env
+          echo "FESTIVAL_DB_NAME=festival_db" >> backend/.env
+          echo "USER_DB_NAME=user_db" >> backend/.env
           echo "CORS_ALLOWED_ORIGINS=https://mango-forest-0aeaf0e00.5.azurestaticapps.net" >> backend/.env
-          echo "CSRF_TRUSTED_ORIGINS=https://mango-forest-0aeaf0e00.5.azurestaticapps.net" >> backend/.env
+          echo "CSRF_TRUSTED_ORIGINS=https://mango-forest-0aeaf0e00.5.azurestaticapps.net,https://backend-hnbte6c6gqaxfuh9.koreacentral-01.azurewebsites.net" >> backend/.env
+          echo "DJANGO_SETTINGS_MODULE=config.settings.production" >> backend/.env
 
       - name: Zip artifact for deployment
         run: zip -r release.zip backend -x '*.git*' -x 'venv/*'  # backend 폴더만 압축

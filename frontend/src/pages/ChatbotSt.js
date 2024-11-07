@@ -5,8 +5,8 @@ export const ChatbotWindow = styled.div`
   position: fixed;
   bottom: 5rem;
   right: 1rem;
-  width: 26rem;
-  height: 24rem;
+  width: 40%;
+  height: 60%;
   background-color: white;
   // border: 5px solid #e5e7eb;
   border: 3px solid #3b82f6;
@@ -15,6 +15,7 @@ export const ChatbotWindow = styled.div`
   padding: 1rem;
   display: flex;
   flex-direction: column;
+  z-index: 9999;
 
   ${media.mobile} {
     width: 70vw;

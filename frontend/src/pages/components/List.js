@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Modal from '../Modal'; // Modal 컴포넌트를 import
 
 import {
@@ -21,8 +21,6 @@ const FestivalList = () => {
   // 모달 관련 상태 추가
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFestival, setSelectedFestival] = useState(null);
-
-  const navigate = useNavigate();
 
   // 축제 카드 클릭 시 호출되는 함수
   const handleCardClick = (festival) => {

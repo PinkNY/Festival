@@ -6,20 +6,21 @@ export const Card = styled.div`
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   overflow: hidden;
-
+  border: 3px solid black;
+  
   margin-bottom: 16px;
 `;
 
 export const CardHeader = styled.div`
   background-color: #3b82f6;
   color: white;
-  padding: 1rem;
+  padding: 0.5rem;
 
   border-bottom: 1px solid #e0e0e0;
 `;
 
 export const CardTitle = styled.h2`
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   display: flex;
   justify-content: center;

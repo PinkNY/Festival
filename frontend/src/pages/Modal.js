@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import Chatbot from './Chatbot';
+import KakaoMap from './components/Map';
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -225,10 +227,12 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
             </ImageWrapper>
           </LeftSection>
           <RightSection>
+            <Chatbot />
             <Tabs>
               <Tab isActive={activeTab === 'content'} onClick={() => setActiveTab('content')}>내용</Tab>
               <Tab isActive={activeTab === 'info'} onClick={() => setActiveTab('info')}>정보</Tab>
               <Tab isActive={activeTab === 'comments'} onClick={() => setActiveTab('comments')}>댓글</Tab>
+              <Tab isActive={activeTab === 'map'} onClick={() => setActiveTab('map')}>위치</Tab>
             </Tabs>
             <TabContent isActive={activeTab === 'content'}>
               <h2>{festival.title || '제목 없음'}</h2>
@@ -273,6 +277,9 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
               ) : (
                 <p>댓글이 없습니다.</p>
               )}
+            </TabContent>
+            <TabContent isActive={activeTab === 'map'}>
+              <KakaoMap address={festival.adress} />
             </TabContent>
           </RightSection>
         </ContentWrapper>

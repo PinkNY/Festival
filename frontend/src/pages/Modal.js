@@ -159,16 +159,21 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
 
   useEffect(() => {
     if (isOpen && festival) {
+      console.log('Festival ID:', festival.id);
       setIsLoading(true);
       const fetchAdditionalData = async () => {
         try {
-          const commentsUrl = `${process.env.REACT_APP_API_URL}/api/comments/?festa_id=${festival.id}`;
+          const commentsUrl = `${process.env.REACT_APP_API_URL}/api/comments/?festa=${festival.id}`;
+          console.log('Comments URL:', commentsUrl);
+          console.log('Festival ID:', festival.id);
           const commentsResponse = await axios.get(commentsUrl);
-          setComments(commentsResponse.data.comments || commentsResponse.data);
+          console.log('Comments Response:', commentsResponse.data);
+          setComments(commentsResponse.data.filter(comment => Number(comment.festa) === Number(festival.id)));
 
-          const hashtagsUrl = `${process.env.REACT_APP_API_URL}/api/hashtags/?festa_id=${festival.id}`;
+          const hashtagsUrl = `${process.env.REACT_APP_API_URL}/api/hashtags/?festa=${festival.id}`;
           const hashtagsResponse = await axios.get(hashtagsUrl);
-          setHashtags(hashtagsResponse.data.hashtags || hashtagsResponse.data);
+          console.log('Hashtags Response:', hashtagsResponse.data);
+          setHashtags(hashtagsResponse.data.filter(hashtag => Number(hashtag.festa) === Number(festival.id)));
         } catch (error) {
           console.error('Error fetching additional data:', error);
           setComments([]);

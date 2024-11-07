@@ -233,7 +233,7 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
             <TabContent isActive={activeTab === 'content'}>
               <h2>{festival.title || '제목 없음'}</h2>
               <p>{festival.start_date && festival.end_date ? `${festival.start_date} ~ ${festival.end_date}` : '내용 없음'}</p>
-              <p>{hashtags.length > 0 ? hashtags.slice(0, 5).map((tag) => `#${tag.tag}`).join(' ') : '태그 없음'}</p>
+              <p>{hashtags.length > 0 ? hashtags.map((tag, index) => `${index === 0 ? `#${tag.tag.replace(/^#+/, '')}` : `#${tag.tag}`}`).join(' ') : '태그 없음'}</p>
             </TabContent>
             <TabContent isActive={activeTab === 'info'}>
               <h2>{festival.title || '제목 없음'}</h2>

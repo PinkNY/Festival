@@ -20,9 +20,10 @@ const ModalContent = styled.div`
   background: white;
   padding: 2rem;
   border-radius: 8px;
-  width: 500px;
+  width: 800px;
   max-width: 90%;
   max-height: 90%;
+  height: 50%;
   overflow-y: auto;
   transform: ${(props) =>
     props.$initialPosition ? `translate(${props.$initialPosition.x}px, ${props.$initialPosition.y}px) scale(0)` : 'scale(0)'};
@@ -44,28 +45,54 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
-const TopSection = styled.div`
+const ContentWrapper = styled.div`
   display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  height: 100%;
+`;
+
+const LeftSection = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const RightSection = styled.div`
+  flex: 2;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
+  overflow-y: auto;
 `;
 
 const ImageWrapper = styled.div`
-  flex: 1;
+  width: 100%;
   img {
     width: 100%;
     border-radius: 8px;
   }
 `;
 
-const InfoWrapper = styled.div`
-  flex: 1;
+const Tabs = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
+  margin-bottom: 1rem;
 `;
 
-const BottomSection = styled.div`
-  margin-top: 1.5rem;
+const Tab = styled.button`
+  padding: 0.5rem 1rem;
+  border: none;
+  background: ${(props) => (props.isActive ? '#333' : '#eee')};
+  color: ${(props) => (props.isActive ? 'white' : 'black')};
+  cursor: pointer;
+  border-radius: 4px;
+`;
+
+const TabContent = styled.div`
+  display: ${(props) => (props.isActive ? 'block' : 'none')};
+  flex: 1;
 `;
 
 const CommentWrapper = styled.div`
@@ -93,11 +120,30 @@ const CommentText = styled.p`
   word-break: break-word; /* 댓글이 길면 줄바꿈 */
 `;
 
+const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+`;
+
+const PaginationButton = styled.button`
+  padding: 0.5rem;
+  border: none;
+  background: ${(props) => (props.isActive ? '#333' : '#eee')};
+  color: ${(props) => (props.isActive ? 'white' : 'black')};
+  cursor: pointer;
+  border-radius: 4px;
+`;
+
 const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
   const [comments, setComments] = useState([]);
   const [hashtags, setHashtags] = useState([]);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('content');
+  const [commentsPage, setCommentsPage] = useState(1);
+  const COMMENTS_PER_PAGE = 3;
 
   useEffect(() => {
     if (isOpen) {
@@ -151,6 +197,12 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
     }
   }, [isOpen]);
 
+  const totalPages = Math.ceil(comments.length / COMMENTS_PER_PAGE);
+
+  const handlePageChange = (pageNumber) => {
+    setCommentsPage(pageNumber);
+  };
+
   if (!isOpen || !festival) return null;
 
   return (
@@ -161,32 +213,64 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <CloseButton onClick={onClose}>&times;</CloseButton>
-        <TopSection>
-          <ImageWrapper>
-            <img src={festival.imageUrl} alt="축제 포스터" />
-          </ImageWrapper>
-          <InfoWrapper>
-            <h2>{festival.title || '제목 없음'}</h2>
-            <p>{festival.start_date && festival.end_date ? `${festival.start_date} ~ ${festival.end_date}` : '내용 없음'}</p>
-            <p>{hashtags.length > 0 ? hashtags.slice(0, 5).map((tag) => `#${tag.tag}`).join(' ') : '태그 없음'}</p>
-          </InfoWrapper>
-        </TopSection>
-        <BottomSection>
-          <h3>댓글</h3>
-          {isLoading ? (
-            <p>로딩 중입니다...</p>
-          ) : comments.length > 0 ? (
-            comments.slice(0, 5).map((comment) => (
-              <CommentWrapper key={comment.id}>
-                <CommentID>{comment.username}</CommentID>
-                <CommentRating>{comment.rating}</CommentRating>
-                <CommentText>{comment.comment}</CommentText>
-              </CommentWrapper>
-            ))
-          ) : (
-            <p>댓글이 없습니다.</p>
-          )}
-        </BottomSection>
+        <ContentWrapper>
+          <LeftSection>
+            <ImageWrapper>
+              <img src={festival.imageUrl} alt="축제 포스터" />
+            </ImageWrapper>
+          </LeftSection>
+          <RightSection>
+            <Tabs>
+              <Tab isActive={activeTab === 'content'} onClick={() => setActiveTab('content')}>내용</Tab>
+              <Tab isActive={activeTab === 'info'} onClick={() => setActiveTab('info')}>정보</Tab>
+              <Tab isActive={activeTab === 'comments'} onClick={() => setActiveTab('comments')}>댓글</Tab>
+            </Tabs>
+            <TabContent isActive={activeTab === 'content'}>
+              <h2>{festival.title || '제목 없음'}</h2>
+              <p>{festival.start_date && festival.end_date ? `${festival.start_date} ~ ${festival.end_date}` : '내용 없음'}</p>
+              <p>{hashtags.length > 0 ? hashtags.slice(0, 5).map((tag) => `#${tag.tag}`).join(' ') : '태그 없음'}</p>
+            </TabContent>
+            <TabContent isActive={activeTab === 'info'}>
+              <h2>{festival.title || '제목 없음'}</h2>
+              <p>입장료: {festival.entry_fee || '정보 없음'}</p>
+              <p>주소: {festival.address || '주소 없음'}</p>
+              {festival.official_site_url && (
+                <p>
+                  공식 사이트: <a href={festival.official_site_url} target="_blank" rel="noopener noreferrer">{festival.official_site_url}</a>
+                </p>
+              )}
+            </TabContent>
+            <TabContent isActive={activeTab === 'comments'}>
+              <h3>댓글</h3>
+              {isLoading ? (
+                <p>로딩 중입니다...</p>
+              ) : comments.length > 0 ? (
+                <>
+                  {comments.slice((commentsPage - 1) * COMMENTS_PER_PAGE, commentsPage * COMMENTS_PER_PAGE).map((comment) => (
+                    <CommentWrapper key={comment.id}>
+                      <CommentID>{comment.username}</CommentID>
+                      <CommentRating>{comment.rating}</CommentRating>
+                      <CommentText>{comment.comment}</CommentText>
+                    </CommentWrapper>
+                  ))}
+                  <PaginationWrapper>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                      <PaginationButton
+                        key={index + 1}
+                        isActive={commentsPage === index + 1}
+                        onClick={() => handlePageChange(index + 1)}
+                      >
+                        {index + 1}
+                      </PaginationButton>
+                    ))}
+                  </PaginationWrapper>
+                </>
+              ) : (
+                <p>댓글이 없습니다.</p>
+              )}
+            </TabContent>
+          </RightSection>
+        </ContentWrapper>
       </ModalContent>
     </ModalWrapper>
   );

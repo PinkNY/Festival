@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Modal from '../Modal'; // Modal 컴포넌트를 import
+
 import {
   PageContainer, Main, SectionTitle, FestivalGrid, FestivalCard, FestivalImage,
   FestivalInfo, FestivalName, FestivalDate, MoreButton, FilterContainer, FilterSelect
@@ -13,8 +15,26 @@ const FestivalList = () => {
   const [festivals, setFestivals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('view_count');
-  const [page, setPage] = useState(1); // 페이지 상태 추가
-  const [hasMore, setHasMore] = useState(true); // 더 불러올 데이터가 있는지 여부
+  const [page, setPage] = useState(1); 
+  const [hasMore, setHasMore] = useState(true);
+  
+  // 모달 관련 상태 추가
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedFestival, setSelectedFestival] = useState(null);
+
+  const navigate = useNavigate();
+
+  // 축제 카드 클릭 시 호출되는 함수
+  const handleCardClick = (festival) => {
+    setSelectedFestival(festival); // 선택한 축제 정보 저장
+    setIsModalOpen(true); // 모달 열기
+  };
+
+  // 모달 닫기 함수
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedFestival(null); // 축제 정보 초기화
+  };
 
   useEffect(() => {
     const fetchFestivals = async (pageNum = 1) => {
@@ -25,10 +45,7 @@ const FestivalList = () => {
         );
         const newFestivals = response.data;
         
-        // 첫 페이지인 경우 덮어쓰고, 아닐 경우 새 데이터 추가
         setFestivals(prev => (pageNum === 1 ? newFestivals : [...prev, ...newFestivals]));
-        
-        // 새로 불러온 데이터가 8개 미만일 때만 더 이상 데이터가 없다고 판단
         setHasMore(newFestivals.length === 8);
       } catch (error) {
         console.error('축제 정보를 불러오는 중 오류 발생:', error);
@@ -38,22 +55,22 @@ const FestivalList = () => {
     };
 
     if (!searchResults) {
-      fetchFestivals(page); // 페이지 번호로 데이터 요청
+      fetchFestivals(page);
     } else {
       setFestivals(searchResults);
       setLoading(false);
-      setHasMore(false); // 검색 결과가 있으면 더 이상 로드하지 않음
+      setHasMore(false);
     }
   }, [filter, searchResults, page]);
 
   const handleFilterChange = (e) => {
     setFilter(e.target.value);
-    setPage(1); // 필터 변경 시 페이지 초기화
-    setHasMore(true); // 필터 변경 시 hasMore 초기화
+    setPage(1);
+    setHasMore(true);
   };
 
   const handleLoadMore = () => {
-    setPage(prevPage => prevPage + 1); // 페이지 증가
+    setPage(prevPage => prevPage + 1);
   };
 
   return (
@@ -75,7 +92,10 @@ const FestivalList = () => {
           ) : (
             festivals.length > 0 ? (
               festivals.map((festival, index) => (
-                <FestivalCard href={festival.id ? `/festival/${festival.id}` : '#'} key={index}>
+                <FestivalCard
+                  key={index}
+                  onClick={() => handleCardClick(festival)} // 클릭 시 모달 열기
+                >
                   <FestivalImage
                     src={festival.imageUrl || '/placeholder.svg'}
                     alt={festival.title || '내용없음'}
@@ -83,7 +103,7 @@ const FestivalList = () => {
                     height={200}
                   />
                   <FestivalInfo>
-                  <FestivalName>{festival.title || '내용없음'}</FestivalName>
+                    <FestivalName>{festival.title || '내용없음'}</FestivalName>
                     <FestivalDate>
                       {festival.start_date && festival.end_date ? 
                         `${festival.start_date} ~ ${festival.end_date}` : 
@@ -101,6 +121,15 @@ const FestivalList = () => {
           <MoreButton onClick={handleLoadMore}>더 보기</MoreButton>
         )}
       </Main>
+
+      {/* 모달 컴포넌트 추가 */}
+      {isModalOpen && selectedFestival && (
+        <Modal 
+          isOpen={isModalOpen} 
+          onClose={closeModal} 
+          festival={selectedFestival}
+        />
+      )}
     </PageContainer>
   );
 };

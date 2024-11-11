@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // React Router의 useNavigate 훅 사용
-import { SearchWrapper, SearchInput, SearchIcon, Button, ErrorMessage, LoadingSpinner } from "../styles/SearchSt"; // 필요한 스타일 추가
+import { useNavigate } from 'react-router-dom';
+import { SearchWrapper, SearchInput, SearchIcon, Button, ErrorMessage, LoadingSpinner } from "../styles/SearchSt";
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -30,7 +30,7 @@ const SearchBar = () => {
   
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/festivals/?query=${searchQuery}`
+        `${process.env.REACT_APP_API_URL}/api/hashtags/?query=${searchQuery}`
       );
       navigate('/list', { state: { results: response.data, query: searchQuery } });
     } catch (err) {
@@ -40,7 +40,13 @@ const SearchBar = () => {
       setLoading(false);
     }
   };
-  
+
+  // Enter 키가 눌렸을 때 handleSearch 함수 호출
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   return (
     <SearchWrapper>
@@ -49,14 +55,12 @@ const SearchBar = () => {
         placeholder="축제 검색..." 
         value={searchQuery} 
         onChange={(e) => setSearchQuery(e.target.value)} 
+        onKeyDown={handleKeyDown} // Enter 키 이벤트 추가
       />
       <SearchIcon size={20} />
       <Button onClick={handleSearch}>검색</Button>
 
-      {/* 로딩 상태를 나타내기 */}
       {loading && <LoadingSpinner>검색 중...</LoadingSpinner>}
-
-      {/* 오류 메시지를 나타내기 */}
       {error && <ErrorMessage>{error}</ErrorMessage>}
     </SearchWrapper>
   );

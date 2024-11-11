@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import Modal from '../Modal'; // Modal 컴포넌트를 import
+import Modal from '../Modal';
 
 import {
   PageContainer, Main, SectionTitle, FestivalGrid, FestivalCard, FestivalImage,
@@ -52,12 +52,13 @@ const FestivalList = () => {
       }
     };
 
+    // 검색 결과가 없으면 전체 축제 목록 불러오기
     if (!searchResults) {
       fetchFestivals(page);
     } else {
       setFestivals(searchResults);
       setLoading(false);
-      setHasMore(false);
+      setHasMore(false); // 검색 결과에서는 '더 보기' 비활성화
     }
   }, [filter, searchResults, page]);
 
@@ -115,7 +116,7 @@ const FestivalList = () => {
             )
           )}
         </FestivalGrid>
-        {hasMore && !loading && (
+        {!searchResults && hasMore && !loading && (
           <MoreButton onClick={handleLoadMore}>더 보기</MoreButton>
         )}
       </Main>

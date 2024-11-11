@@ -30,7 +30,7 @@ const SearchBar = () => {
   
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/hashtags/?query=${searchQuery}`
+        `${process.env.REACT_APP_API_URL}/api/hashtags/search/?query=${searchQuery}`
       );
       navigate('/list', { state: { results: response.data, query: searchQuery } });
     } catch (err) {

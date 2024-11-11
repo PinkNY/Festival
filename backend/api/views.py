@@ -40,6 +40,22 @@ class FestivalList(generics.ListCreateAPIView):
 
         return queryset
     
+#축제 카운트 뷰
+class FestivalDetailView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, pk):
+        try:
+            festival = Festival.objects.get(pk=pk)
+            # 조회수 증가
+            festival.view_count += 1
+            festival.save()
+
+            serializer = FestivalSerializer(festival)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Festival.DoesNotExist:
+            return Response({'error': 'Festival not found'}, status=status.HTTP_404_NOT_FOUND)
+    
 # 축제 댓글
 class CommentListCreateView(generics.ListCreateAPIView):
     serializer_class = CommentSerializer

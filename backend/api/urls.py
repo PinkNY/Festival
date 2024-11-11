@@ -10,6 +10,7 @@ from .views import (
     CheckAuthView,
     CommentListCreateView, 
     HashtagListCreateView,
+    FestivalDetailView,
     # SortedFestivalsView,
     # SortedFestivalsSearch,
 )
@@ -20,6 +21,7 @@ urlpatterns = [
     path('users/', UserList.as_view(), name='user_list'),
     path('comments/', CommentListCreateView.as_view(), name='comment_list_create'), #댓글
     path('hashtags/', HashtagListCreateView.as_view(), name='hashtag_list_create'), #해시
+    path('festivals/<int:pk>/', FestivalDetailView.as_view(), name='festival-detail'), # 조회회
     
     # JWT 관련 URL 추가
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # JWT 발급

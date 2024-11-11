@@ -14,18 +14,24 @@ const SearchBar = () => {
       setError("검색어를 입력해주세요.");
       return;
     }
-
+  
+    if (!/^[가-힣]+$/.test(searchQuery.trim())) {
+      setError("검색어는 한글만 입력해주세요.");
+      return;
+    }
+  
     if (searchQuery.trim().length < 2) {
       setError("검색어는 두 글자 이상 입력해주세요.");
       return;
     }
-
+  
     setLoading(true);
     setError(null);
-
+  
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/festivals/?query=${searchQuery}`);
-      // 검색 결과와 검색어를 상태로 전달하여 '/list'로 리다이렉트
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/festivals/?query=${searchQuery}`
+      );
       navigate('/list', { state: { results: response.data, query: searchQuery } });
     } catch (err) {
       console.error(err);
@@ -34,6 +40,7 @@ const SearchBar = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <SearchWrapper>

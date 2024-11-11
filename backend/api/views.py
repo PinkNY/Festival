@@ -15,6 +15,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 import logging
 from rest_framework import permissions
+from django.db.models import Q
 
 logger = logging.getLogger(__name__)
 
@@ -91,6 +92,30 @@ class HashtagListCreateView(generics.ListCreateAPIView):
             queryset = queryset.order_by('tag')  # 해시태그(tag)를 기준으로 알파벳순 정렬
 
         return queryset
+
+#검색뷰
+class FestivalSearchView(APIView):
+    def get(self, request):
+        query = request.GET.get('query', '')
+
+        if query:
+            # 1. 해시태그 DB에서 title 또는 tag에 검색어가 포함된 해시태그 조회
+            hashtags = Hashtag.objects.filter(
+                Q(title__icontains=query) | Q(tag__icontains=query)
+            )
+            
+            # 2. 검색된 해시태그에서 관련된 festa_id 목록 추출
+            festival_ids = hashtags.values_list('festa_id', flat=True)
+            
+            # 3. festivals DB에서 festival_ids에 해당하는 페스티벌 조회
+            festivals = Festival.objects.filter(id__in=festival_ids)
+            
+            # 4. 조회된 페스티벌 데이터를 직렬화하여 반환
+            serialized_festivals = FestivalSerializer(festivals, many=True)
+            return Response(serialized_festivals.data, status=status.HTTP_200_OK)
+
+        # 검색어가 없으면 빈 배열 반환
+        return Response([], status=status.HTTP_200_OK)
 
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()

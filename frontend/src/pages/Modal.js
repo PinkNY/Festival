@@ -244,17 +244,17 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
             </Tabs>
             <TabContent isActive={activeTab === 'content'}>
               <h2>{festival.title || '제목 없음'}</h2>
-              <p>{festival.start_date && festival.end_date ? `${festival.start_date} ~ ${festival.end_date}` : '내용 없음'}</p>
+              <div style={{ display: 'flex', gap: '10px', margin: '10px 0' }}>
+                {festival.intro_image1 && <img src={festival.intro_image1} alt='Introduction 1' style={{ width: '150px', height: 'auto' }} />}
+                {festival.intro_image2 && <img src={festival.intro_image2} alt='Introduction 2' style={{ width: '150px', height: 'auto' }} />}
+                {festival.intro_image3 && <img src={festival.intro_image3} alt='Introduction 3' style={{ width: '150px', height: 'auto' }} />}
+              </div>
               <p>{festival.introduction || '소개 없음'}</p>
               <p>{hashtags.length > 0 ? hashtags.map((tag, index) => `${index === 0 ? `#${tag.tag.replace(/^#+/, '')}` : `#${tag.tag}`}`).join(' ') : '태그 없음'}</p>
             </TabContent>
             <TabContent isActive={activeTab === 'info'}>
               <h2>{festival.title || '제목 없음'}</h2>
-              <div style={{ display: 'flex', gap: '10px', margin: '10px 0' }}>
-                {festival.intro_image1 && <img src={festival.intro_image1} alt='Introduction Image 1' style={{ width: '150px', height: 'auto' }} />}
-                {festival.intro_image2 && <img src={festival.intro_image2} alt='Introduction Image 2' style={{ width: '150px', height: 'auto' }} />}
-                {festival.intro_image3 && <img src={festival.intro_image3} alt='Introduction Image 3' style={{ width: '150px', height: 'auto' }} />}
-              </div>
+              <p>{festival.start_date && festival.end_date ? `${festival.start_date} ~ ${festival.end_date}` : '내용 없음'}</p>
               <p>입장료: {festival.entry_fee || '정보 없음'}</p>
               <p>주소: {festival.address || '주소 없음'}</p>
               {festival.official_site_url && (

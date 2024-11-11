@@ -1,101 +1,106 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { FaLocationCrosshairs } from "react-icons/fa6";
-import { Card, CardHeader, CardTitle } from '../styles/MapSt';
+import { Card } from '../styles/MapSt';
 import axios from 'axios';
 
 const KakaoMap = ({ address }) => {
-  const mapRef = useRef(null); // 지도 객체를 관리할 useRef 사용
+  const mapRef = useRef(null);
+
+  // 주소를 좌표로 변환하는 함수
+  const geocodeAddress = useCallback(async (address) => {
+    console.log("Attempting to geocode address:", address); // 변환할 주소를 확인
+
+    try {
+      const response = await axios.get(
+        `https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURIComponent(address)}`,
+        { headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_API_KEY}` } }
+      );
+      console.log("Geocode API response:", response); // Kakao API 응답 확인
+
+      if (response.data.documents.length > 0) {
+        const { x, y } = response.data.documents[0];
+        console.log("Geocoded coordinates:", y, x); // 변환된 좌표를 확인
+        initializeMap(y, x); // 변환된 좌표로 지도를 초기화
+      } else {
+        console.warn('주소를 찾을 수 없습니다.');
+        initializeMap(37.5665, 126.9780); // 기본 위치 (서울 시청)
+      }
+    } catch (error) {
+      console.error('좌표 변환 오류:', error);
+      initializeMap(37.5665, 126.9780); // 오류 발생 시 기본 위치
+    }
+  }, []);
+
+  // 현재 위치를 가져와 지도 초기화
+  const getCurrentLocation = useCallback(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          initializeMap(latitude, longitude);
+        },
+        () => initializeMap(37.5665, 126.9780) // 권한 거부 시 기본 위치
+      ); 
+    } else {
+      initializeMap(37.5665, 126.9780); // Geolocation API 사용 불가 시 기본 위치
+    }
+  }, []);
+
+  const initializeMap = useCallback((latitude, longitude) => {
+    if (isNaN(latitude) || isNaN(longitude)) {
+      console.warn("Invalid coordinates procided");
+      return; // 유효하지 않은 좌표가 제공된 경우 함수 종료
+    }
+
+    // if (mapRef, current) {
+    //   console.log("Map is already initialized");
+    //   return; // 이미 초기화된 경우 함수 종료
+    // }
+
+    console.log("Initializing map with coordinates:", latitude, longitude); // 초기화 할 좌표 확인
+
+    const mapContainer = document.getElementById('map');
+
+    if (!mapContainer) {
+      console.warn("Map container not found");
+      return;
+    }
+
+    const options = {
+      center: new window.kakao.maps.LatLng(latitude, longitude),
+      level: 3,
+    };
+    mapRef.current = new window.kakao.maps.Map(mapContainer, options);
+    displayMarker(new window.kakao.maps.LatLng(latitude, longitude), '<div style="padding:5px;">현재 위치</div>');
+  }, []);
 
   useEffect(() => {
-    // 주소를 좌표로 변환하는 함수
-    const geocodeAddress = async (address) => {
-      try {
-        const response = await axios.get(
-          `https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURIComponent(address)}`,
-          {
-            headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_API_KEY}` }
-          }
-        );
-
-        if (response.data.documents.length > 0) {
-          const { x, y } = response.data.documents[0];
-          initializeMap(y, x); // 변환된 좌표로 지도를 초기화
-        } else {
-          console.warn('주소를 찾을 수 없습니다.');
-          initializeMap(37.5665, 126.9780); // 기본 위치 설정 (서울 시청)
-        }
-      } catch (error) {
-        console.error('좌표 변환 오류:', error);
-        initializeMap(37.5665, 126.9780); // 기본 위치 설정 (서울 시청)
-      }
-    };
-
-    // 사용자의 현재 위치를 가져오거나 주소로 좌표를 변환하여 지도를 초기화합니다.
-    const initializeMap = (latitude, longitude) => {
+    // Kakao Maps 스크립트 로드
+    if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement('script');
-      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&autoload=true`;
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_API_KEY}&autoload=false`;
       script.async = true;
       document.head.appendChild(script);
 
       script.onload = () => {
-        if (window.kakao && window.kakao.maps) {
-          window.kakao.maps.load(() => {
-            try {
-              const mapContainer = document.getElementById('map');
-              const options = {
-                center: new window.kakao.maps.LatLng(latitude, longitude),
-                level: 3,
-              };
-              mapRef.current = new window.kakao.maps.Map(mapContainer, options);
-              displayMarker(new window.kakao.maps.LatLng(latitude, longitude), '<div style="padding:5px;">현재 위치</div>');
-            } catch (error) {
-              console.error('Kakao Map 생성 중 오류 발생:', error);
-            }
-          });
-        } else {
-          console.error("Kakao Maps API가 로드되지 않았습니다.");
-        }
+        window.kakao.maps.load(() => {
+          if (address) {
+            geocodeAddress(address);
+          } else {
+            getCurrentLocation();
+          }
+        });
       };
-
-      script.onerror = () => {
-        console.error("Kakao Map 스크립트 로드에 실패했습니다.");
-      };
-
-      return () => {
-        document.head.removeChild(script);
-      };
-    };
-
-    if (address) {
-      geocodeAddress(address); // 주소를 좌표로 변환하여 지도 초기화
-    } else if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const lat = position.coords.latitude;
-          const lon = position.coords.longitude;
-          initializeMap(lat, lon); // 현재 위치를 기준으로 지도 초기화
-        },
-        () => initializeMap(37.5665, 126.9780) // 위치 권한 거부 시 서울 시청 좌표로 지도 초기화
-      );
     } else {
-      initializeMap(37.5665, 126.9780); // Geolocation API를 사용할 수 없을 때 기본 위치로 초기화
+      if (address) {
+        geocodeAddress(address);
+      } else {
+        getCurrentLocation();
+      }
     }
-  }, [address]);
+  }, [address, geocodeAddress, getCurrentLocation]);
 
-  const moveToCurrentLocation = () => {
-    if (!mapRef.current) return;
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const locPosition = new window.kakao.maps.LatLng(position.coords.latitude, position.coords.longitude);
-          displayMarker(locPosition, '<div style="padding:5px;">현재 내 위치</div>');
-        },
-        () => alert("현재 위치를 가져올 수 없습니다.")
-      );
-    }
-  };
-
+  // 마커 표시 함수
   const displayMarker = (locPosition, message) => {
     if (!mapRef.current) return;
 
@@ -110,14 +115,13 @@ const KakaoMap = ({ address }) => {
     });
 
     infowindow.open(mapRef.current, marker);
-    mapRef.current.setCenter(locPosition);
   };
 
   return (
     <Card>
       <div id="map" style={{ width: '100%', height: '300px', position: 'relative' }}>
         <FaLocationCrosshairs
-          onClick={moveToCurrentLocation}
+          onClick={getCurrentLocation}
           style={{
             position: 'absolute',
             top: '10px',

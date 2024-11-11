@@ -163,18 +163,26 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
     if (isOpen && festival) {
       console.log('Festival ID:', festival.id);
       setIsLoading(true);
+
+      // 조회수 증가 API 호출
+      const increaseViewCount = async () => {
+        try {
+          await axios.get(`${process.env.REACT_APP_API_URL}/api/festivals/${festival.id}/?t=${new Date().getTime()}`);
+        } catch (error) {
+          console.error('Error increasing view count:', error);
+        }
+      };
+
+      increaseViewCount(); // 조회수 증가 함수 호출
+
       const fetchAdditionalData = async () => {
         try {
           const commentsUrl = `${process.env.REACT_APP_API_URL}/api/comments/?festa=${festival.id}`;
-          console.log('Comments URL:', commentsUrl);
-          console.log('Festival ID:', festival.id);
           const commentsResponse = await axios.get(commentsUrl);
-          console.log('Comments Response:', commentsResponse.data);
           setComments(commentsResponse.data.filter(comment => Number(comment.festa) === Number(festival.id)));
 
           const hashtagsUrl = `${process.env.REACT_APP_API_URL}/api/hashtags/?festa=${festival.id}`;
           const hashtagsResponse = await axios.get(hashtagsUrl);
-          console.log('Hashtags Response:', hashtagsResponse.data);
           setHashtags(hashtagsResponse.data.filter(hashtag => Number(hashtag.festa) === Number(festival.id)));
         } catch (error) {
           console.error('Error fetching additional data:', error);
@@ -237,10 +245,16 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
             <TabContent isActive={activeTab === 'content'}>
               <h2>{festival.title || '제목 없음'}</h2>
               <p>{festival.start_date && festival.end_date ? `${festival.start_date} ~ ${festival.end_date}` : '내용 없음'}</p>
+              <p>{festival.introduction || '소개 없음'}</p>
               <p>{hashtags.length > 0 ? hashtags.map((tag, index) => `${index === 0 ? `#${tag.tag.replace(/^#+/, '')}` : `#${tag.tag}`}`).join(' ') : '태그 없음'}</p>
             </TabContent>
             <TabContent isActive={activeTab === 'info'}>
               <h2>{festival.title || '제목 없음'}</h2>
+              <div style={{ display: 'flex', gap: '10px', margin: '10px 0' }}>
+                {festival.intro_image1 && <img src={festival.intro_image1} alt='Introduction Image 1' style={{ width: '150px', height: 'auto' }} />}
+                {festival.intro_image2 && <img src={festival.intro_image2} alt='Introduction Image 2' style={{ width: '150px', height: 'auto' }} />}
+                {festival.intro_image3 && <img src={festival.intro_image3} alt='Introduction Image 3' style={{ width: '150px', height: 'auto' }} />}
+              </div>
               <p>입장료: {festival.entry_fee || '정보 없음'}</p>
               <p>주소: {festival.address || '주소 없음'}</p>
               {festival.official_site_url && (

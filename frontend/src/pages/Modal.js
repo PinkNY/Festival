@@ -145,6 +145,8 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('content');
   const [commentsPage, setCommentsPage] = useState(1);
+  const [mapKey, setMapKey] = useState(0);
+
   const COMMENTS_PER_PAGE = 3;
 
   useEffect(() => {
@@ -218,6 +220,13 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
     setCommentsPage(pageNumber);
   };
 
+  const handleTabClick = (tabName) => {
+    setActiveTab(tabName);
+    if (tabName === 'map') {
+      setMapKey((prevKey) => prevKey + 1);
+    }
+  }
+
   if (!isOpen || !festival) return null;
 
   return (
@@ -240,7 +249,7 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
               <Tab isActive={activeTab === 'content'} onClick={() => setActiveTab('content')}>내용</Tab>
               <Tab isActive={activeTab === 'info'} onClick={() => setActiveTab('info')}>정보</Tab>
               <Tab isActive={activeTab === 'comments'} onClick={() => setActiveTab('comments')}>댓글</Tab>
-              <Tab isActive={activeTab === 'map'} onClick={() => setActiveTab('map')}>위치</Tab>
+              <Tab isActive={activeTab === 'map'} onClick={() => handleTabClick('map')}>위치</Tab>
             </Tabs>
             <TabContent isActive={activeTab === 'content'}>
               <h2>{festival.title || '제목 없음'}</h2>
@@ -293,7 +302,7 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
               )}
             </TabContent>
             <TabContent isActive={activeTab === 'map'}>
-              <KakaoMap address={festival.adress} />
+              <KakaoMap key={mapKey} address={festival.address} />
             </TabContent>
           </RightSection>
         </ContentWrapper>

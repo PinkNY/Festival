@@ -91,7 +91,6 @@ const FestivalList = () => {
           <FilterSelect value={filter} onChange={handleFilterChange} disabled={isSearchMode}>
             <option value="view_count">인기순</option>
             <option value="alphabetical">가나다순</option>
-            <option value="ongoing">진행중</option>
           </FilterSelect>
         </FilterContainer>
         <FestivalGrid>

@@ -18,23 +18,19 @@ const FestivalList = () => {
   const [page, setPage] = useState(1); 
   const [hasMore, setHasMore] = useState(true);
   
-  // 모달 관련 상태 추가
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFestival, setSelectedFestival] = useState(null);
   
-  // 검색 모드 확인 상태 추가
   const [isSearchMode, setIsSearchMode] = useState(!!searchResults);
 
-  // 축제 카드 클릭 시 호출되는 함수
   const handleCardClick = (festival) => {
-    setSelectedFestival(festival); // 선택한 축제 정보 저장
-    setIsModalOpen(true); // 모달 열기
+    setSelectedFestival(festival);
+    setIsModalOpen(true);
   };
 
-  // 모달 닫기 함수
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedFestival(null); // 축제 정보 초기화
+    setSelectedFestival(null);
   };
 
   useEffect(() => {
@@ -45,7 +41,7 @@ const FestivalList = () => {
           `${process.env.REACT_APP_API_URL}/api/festivals/?filter=${filter}&page=${pageNum}`
         );
         const newFestivals = response.data;
-  
+
         setFestivals(prev => (pageNum === 1 ? newFestivals : [...prev, ...newFestivals]));
         setHasMore(newFestivals.length === 8);
       } catch (error) {
@@ -54,22 +50,16 @@ const FestivalList = () => {
         setLoading(false);
       }
     };
-  
-    if (isSearchMode) {
-      // 검색 모드일 때 새로운 검색 결과가 없다면 festivals를 비워서 이전 검색 결과를 지움
-      if (searchResults && searchResults.length > 0) {
-        setFestivals(searchResults);
-        setLoading(false);
-        setHasMore(false);
-      } else {
-        setFestivals([]); // 검색 결과가 없으면 festivals를 비움
-        setLoading(false);
-        setHasMore(false);
-      }
-    } else {
-      fetchFestivals(page);
+
+    if (isSearchMode && searchResults) {
+      // 검색 결과가 있을 때만 초기 설정
+      setFestivals(searchResults);
+      setLoading(false);
+      setHasMore(false); 
+    } else if (!isSearchMode) {
+      fetchFestivals(page); // 검색 모드가 아닐 때만 fetchFestivals 호출
     }
-  }, [filter, page, searchResults, isSearchMode, festivals.length]);
+  }, [filter, page, isSearchMode, searchResults]);
 
   const handleFilterChange = (e) => {
     setFilter(e.target.value);
@@ -103,7 +93,7 @@ const FestivalList = () => {
               festivals.map((festival, index) => (
                 <FestivalCard
                   key={index}
-                  onClick={() => handleCardClick(festival)} // 클릭 시 모달 열기
+                  onClick={() => handleCardClick(festival)}
                   style={{ textDecoration: 'none' }}
                 >
                   <FestivalImage
@@ -132,7 +122,6 @@ const FestivalList = () => {
         )}
       </Main>
 
-      {/* 모달 컴포넌트 추가 */}
       {isModalOpen && selectedFestival && (
         <Modal 
           isOpen={isModalOpen} 

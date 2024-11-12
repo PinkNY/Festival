@@ -10,6 +10,7 @@ import SignUp from "./pages/components/Signup";
 import NoticeBoard from "./pages/components/NoticeBoard";
 import NoticeDetail from "./pages/components/NoticeDetail";
 import FestivalList from './pages/components/List';
+import Footer from "./pages/components/Footer";
 
 const App = () => {
   const AuthRoutes = () => {
@@ -31,6 +32,7 @@ const App = () => {
       <Router>
         <Navbar />
         <AuthRoutes />
+        <Footer />
       </Router>
     </AuthProvider>
   );

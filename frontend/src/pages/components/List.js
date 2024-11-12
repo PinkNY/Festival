@@ -104,6 +104,7 @@ const FestivalList = () => {
                 <FestivalCard
                   key={index}
                   onClick={() => handleCardClick(festival)} // 클릭 시 모달 열기
+                  style={{ textDecoration: 'none' }}
                 >
                   <FestivalImage
                     src={festival.imageUrl || '/placeholder.svg'}

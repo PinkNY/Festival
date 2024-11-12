@@ -44,7 +44,8 @@ jobs:
       - name: Build React app without stopping on warnings
         run: |
           cd frontend
-          CI=false npm run build
+          export CI=false && npm run build
+
           
       - name: Build And Deploy
         id: builddeploy

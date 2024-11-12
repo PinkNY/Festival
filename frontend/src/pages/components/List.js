@@ -11,7 +11,7 @@ import {
 const FestivalList = () => {
   const location = useLocation();
   const { results: searchResults, query } = location.state || {};
-  
+
   const [festivals, setFestivals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('view_count');
@@ -21,6 +21,9 @@ const FestivalList = () => {
   // 모달 관련 상태 추가
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFestival, setSelectedFestival] = useState(null);
+  
+  // 검색 모드 확인 상태 추가
+  const [isSearchMode, setIsSearchMode] = useState(!!searchResults);
 
   // 축제 카드 클릭 시 호출되는 함수
   const handleCardClick = (festival) => {
@@ -42,25 +45,31 @@ const FestivalList = () => {
           `${process.env.REACT_APP_API_URL}/api/festivals/?filter=${filter}&page=${pageNum}`
         );
         const newFestivals = response.data;
-        
+  
         setFestivals(prev => (pageNum === 1 ? newFestivals : [...prev, ...newFestivals]));
         setHasMore(newFestivals.length === 8);
       } catch (error) {
-        console.error('축제 정보를 불러오는 중 오류 발생:', error);
+        console.error('Error fetching festivals:', error);
       } finally {
         setLoading(false);
       }
     };
-
-    // 검색 결과가 없으면 전체 축제 목록 불러오기
-    if (!searchResults) {
-      fetchFestivals(page);
+  
+    if (isSearchMode) {
+      // 검색 모드일 때 새로운 검색 결과가 없다면 festivals를 비워서 이전 검색 결과를 지움
+      if (searchResults && searchResults.length > 0) {
+        setFestivals(searchResults);
+        setLoading(false);
+        setHasMore(false);
+      } else {
+        setFestivals([]); // 검색 결과가 없으면 festivals를 비움
+        setLoading(false);
+        setHasMore(false);
+      }
     } else {
-      setFestivals(searchResults);
-      setLoading(false);
-      setHasMore(false); // 검색 결과에서는 '더 보기' 비활성화
+      fetchFestivals(page);
     }
-  }, [filter, searchResults, page]);
+  }, [filter, page, searchResults, isSearchMode, festivals.length]);
 
   const handleFilterChange = (e) => {
     setFilter(e.target.value);
@@ -79,7 +88,7 @@ const FestivalList = () => {
           축제 {query && `- "${query}" 검색 결과`}
         </SectionTitle>
         <FilterContainer>
-          <FilterSelect value={filter} onChange={handleFilterChange} disabled={!!searchResults}>
+          <FilterSelect value={filter} onChange={handleFilterChange} disabled={isSearchMode}>
             <option value="view_count">인기순</option>
             <option value="alphabetical">가나다순</option>
             <option value="ongoing">진행중</option>
@@ -88,6 +97,8 @@ const FestivalList = () => {
         <FestivalGrid>
           {loading ? (
             <p>Loading...</p>
+          ) : isSearchMode && festivals.length === 0 ? (
+            <p>검색 결과가 없습니다.</p>
           ) : (
             festivals.length > 0 ? (
               festivals.map((festival, index) => (
@@ -112,11 +123,11 @@ const FestivalList = () => {
                 </FestivalCard>
               ))
             ) : (
-              <p>검색 결과가 없습니다.</p>
+              <p>등록된 축제가 없습니다.</p>
             )
           )}
         </FestivalGrid>
-        {!searchResults && hasMore && !loading && (
+        {!isSearchMode && hasMore && !loading && (
           <MoreButton onClick={handleLoadMore}>더 보기</MoreButton>
         )}
       </Main>

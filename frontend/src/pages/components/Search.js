@@ -60,7 +60,7 @@ const SearchBar = () => {
       <SearchIcon size={20} />
       <Button onClick={handleSearch}>검색</Button>
 
-      {loading && <LoadingSpinner>검색 중...</LoadingSpinner>}
+      {/* {loading && <LoadingSpinner>검색 중...</LoadingSpinner>} */}
       {error && <ErrorMessage>{error}</ErrorMessage>}
     </SearchWrapper>
   );

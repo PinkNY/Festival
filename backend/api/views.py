@@ -1,5 +1,6 @@
 import jwt
 import datetime
+import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -7,7 +8,7 @@ from django.contrib.auth.hashers import check_password
 from django.conf import settings
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated  # JWT 인증을 위해 추가
-from .models import ActivityLog, Festival, User, Comment, Hashtag  # 필요한 모델만 임포트
+from .models import ActivityLog, Festival, User, Comment, Hashtag, ChatLog  # 필요한 모델만 임포트
 from .serializers import ActivityLogSerializer, FestivalSerializer, UserSerializer, CommentSerializer, HashtagSerializer  # 직렬화기 임포트
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -165,6 +166,29 @@ class CheckAuthView(APIView):
 
     def get(self, request):
         return Response({'message': 'User is authenticated'}, status=status.HTTP_200_OK)
+
+
+# 챗봇과 상호작용하는 뷰 추가
+class ChatWithBotView(APIView):
+    def post(self, request):
+        user_input = request.data.get("input", "")
+        if not user_input:
+            return Response({"error": "No input provided"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # 챗봇 API 호출
+            url = f"{settings.CHATBOT_API_URL}/chat"
+            response = requests.post(url, json={"input": user_input})
+            response_data = response.json()
+
+            # 대화 기록 저장
+            chatbot_response = response_data.get("response", "")
+            ChatLog.objects.create(user_input=user_input, chatbot_response=chatbot_response)
+
+            return Response({"response": chatbot_response}, status=status.HTTP_200_OK)
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Error communicating with chatbot: {e}")
+            return Response({"error": "Failed to communicate with chatbot"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # #축제뷰

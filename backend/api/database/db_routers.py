@@ -10,8 +10,10 @@ class MyDBRouter:
                 return 'festival_db'
             elif model.__name__ == 'User':
                 return 'user_db'
-            elif model.__name__ in ['Comment', 'Hashtag']:  # 추가된 부분
-                return 'festival_db'  # Comment와 Hashtag는 festival_db로 설정
+            elif model.__name__ == 'ChatLog':  # ChatLog는 chatbot_db로 설정
+                return 'chatbot_db'
+            elif model.__name__ in ['Comment', 'Hashtag']:
+                return 'festival_db'
             else:
                 return 'default'
         return 'default'
@@ -23,8 +25,10 @@ class MyDBRouter:
                 return 'festival_db'
             elif model.__name__ == 'User':
                 return 'user_db'
-            elif model.__name__ in ['Comment', 'Hashtag']:  # 추가된 부분
-                return 'festival_db'  # Comment와 Hashtag는 festival_db로 설정
+            elif model.__name__ == 'ChatLog':  # ChatLog는 chatbot_db로 설정
+                return 'chatbot_db'
+            elif model.__name__ in ['Comment', 'Hashtag']:
+                return 'festival_db'
             else:
                 return 'default'
         return 'default'
@@ -38,10 +42,12 @@ class MyDBRouter:
     def allow_migrate(self, db, app_label, model_name=None, **hints):
         """Ensure models migrate only to their appropriate databases."""
         if app_label == 'api':
-            if model_name in ['festival', 'comment', 'hashtag']:  # 추가된 부분
-                return db == 'festival_db'  # Comment와 Hashtag를 festival_db에 추가
+            if model_name in ['festival', 'comment', 'hashtag']:
+                return db == 'festival_db'
             elif model_name == 'user':
                 return db == 'user_db'
+            elif model_name == 'chatlog':  # ChatLog는 chatbot_db로 설정
+                return db == 'chatbot_db'
             elif model_name in ['activitylog', 'globalsetting', 'statistic']:
                 return db == 'default'
         elif app_label in ['auth', 'admin', 'contenttypes', 'sessions']:

@@ -37,7 +37,7 @@ urlpatterns = [
     path('check-auth/', CheckAuthView.as_view(), name='check_auth'),
 
     # 챗봇과 상호작용하는 URL 추가
-    path('chat_with_bot/', ChatWithBotView.as_view(), name='chat_with_bot'),  # 챗봇 엔드포인트 추가
+    path('chat_with_bot/<int:festival_id>/', ChatWithBotView.as_view(), name='chat_with_bot'),  # 챗봇 엔드포인트 추가
 
     # path('festivals_view/', SortedFestivalsView.as_view(), name='sorted_festivals_view'),
     # path('festivals_search/', SortedFestivalsSearch.as_view(), name='sorted_festivals_search'),

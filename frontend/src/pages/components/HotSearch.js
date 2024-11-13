@@ -70,7 +70,7 @@ const Searchlist = () => {
                 onClick={() => openModal(festival, index)}
               >
                 <CardContent>
-                  <img src={festival.imageUrl || "./AppleFesta.jpeg"} style={{ width: '200px', height: '150px' }} alt='FestivalImage' />
+                <img src={festival.imageUrl} style={{ width: '200px', height: '150px' }} alt='FestivalImage' />
                   <h3 style={{ fontWeight: 'bold', fontSize: '1.125rem', marginBottom: '0.5rem' }}>{festival.title}</h3>
                   <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>{festival.start_date} - {festival.end_date}</p>
                 </CardContent>

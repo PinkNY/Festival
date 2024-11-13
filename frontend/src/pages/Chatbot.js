@@ -1,10 +1,64 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { ChatbotButton, ChatbotWindow, ChatbotMessages, SearchInput, SendWindow, ChatBubble, StyledButton } from './ChatbotSt';
 import { MessageCircle, X } from 'lucide-react';
+import axios from 'axios';
 
-
-const Chatbot = () => {
+const Chatbot = ({ festivalId }) => {
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
+  const [messages, setMessages] = useState([{ text: "안녕하세요! 무엇을 도와드릴까요?", isUser: false }]);
+  const [input, setInput] = useState("");
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === 'Escape' && isChatbotOpen) {
+        setIsChatbotOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscKey);
+    return () => {
+      document.removeEventListener('keydown', handleEscKey);
+    };
+  }, [isChatbotOpen]);
+
+  const handleSendMessage = async () => {
+    if (input.trim()) {
+      console.log("Sending message:", input); // 입력된 메시지 확인
+      console.log("Festival ID:", festivalId); // festivalId 확인
+      
+      setMessages(prevMessages => [...prevMessages, { text: input, isUser: true }]);
+      try {
+        const url = `${process.env.REACT_APP_API_URL}/api/chat_with_bot/${festivalId}/`;
+        console.log("Request URL:", url); // 요청 URL 확인
+
+        // festivalId 포함하여 백엔드에 메시지 전송
+        const response = await axios.post(url, { input });
+        console.log("Response data:", response.data); // 백엔드 응답 데이터 확인
+
+        setMessages(prevMessages => [...prevMessages, { text: response.data.response, isUser: false }]);
+      } catch (error) {
+        console.error("챗봇 응답 오류:", error); // 오류 메시지 출력
+        console.log("Error config:", error.config); // 오류 설정 확인
+        console.log("Error response:", error.response); // 서버 응답 확인
+      }
+      setInput("");
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+    }
+  };
 
   return (
     <>
@@ -13,13 +67,22 @@ const Chatbot = () => {
       </ChatbotButton>
       {isChatbotOpen && (
         <ChatbotWindow>
-          <h3 style={{ fontWeight: 'bold', fontSize: '1.125rem', marginBottom: '0.5rem' }}>챗봇</h3>
+          <h3 style={{ fontWeight: 'bold', fontSize: '1.125rem', marginBottom: '0.5rem' }}>축제 도우미</h3>
           <ChatbotMessages>
-            <ChatBubble>안녕하세요! 무엇을 도와드릴까요?</ChatBubble>
+            {messages.map((msg, index) => (
+              <ChatBubble key={index} isUser={msg.isUser}>{msg.text}</ChatBubble>
+            ))}
+            <div ref={messagesEndRef} />
           </ChatbotMessages>
           <SendWindow>
-            <SearchInput type="text" placeholder="메시지를 입력하세요..." />
-            <StyledButton primary style={{ width: '20%' }}>전송</StyledButton>
+            <SearchInput 
+              type="text" 
+              placeholder="메시지를 입력하세요..." 
+              value={input} 
+              onChange={(e) => setInput(e.target.value)} 
+              onKeyPress={handleKeyPress} 
+            />
+            <StyledButton primary onClick={handleSendMessage} style={{ width: '20%' }}>전송</StyledButton>
           </SendWindow>
         </ChatbotWindow>
       )}

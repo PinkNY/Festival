@@ -24,35 +24,49 @@ export const ChatbotWindow = styled.div`
 `;
 
 export const ChatbotMessages = styled.div`
-  flex-grow: 1;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   margin-bottom: 1rem;
   background-color: white;
   padding: 0.5rem;
   border-radius: 0.25rem;
+  height: 100%;
+  overflow-y: auto;
+
+  // border: 2px solid black;
 `;
 
 // 새롭게 추가된 말풍선 스타일
 export const ChatBubble = styled.div`
   position: relative;
-  background: #f1f0f0; /* 말풍선 배경색 */
+  background: ${(props) => (props.isUser ? '#d0e7ff' : '#f1f0f0')}; /* 사용자와 챗봇에 따라 배경색 변경 */
   border-radius: 15px;
   padding: 10px 15px;
   margin-bottom: 10px;
-  max-width: 80%;
+  max-width: ${(props) => (props.isUser ? '70%' : '70%' )};
   color: #333;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  align-self: ${(props) => (props.isUser ? 'flex-end' : 'flex-start')};
 
   &::after {
     content: '';
     position: absolute;
     top: 10px;
-    left: -10px;
-    width: 0;
-    height: 0;
-    border: 10px solid transparent;
-    border-right-color: #f1f0f0;
-    border-left: 0;
+    ${(props) =>
+      props.isUser
+        ? `
+          right: -10px;
+          border: 10px solid transparent;
+          border-left-color: #d0e7ff;
+          border-right: 0;
+        `
+        : `
+          left: -10px;
+          border: 10px solid transparent;
+          border-right-color: #f1f0f0;
+          border-left: 0;
+        `}
     margin-top: 0;
   }
 `;

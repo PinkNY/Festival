@@ -24,7 +24,7 @@ const ModalContent = styled.div`
   border-radius: 8px;
   width: 800px;
   max-width: 900px;
-  max-height: 450px;
+  height: 450px;
   overflow-y: auto;
   transform: ${(props) =>
     props.$initialPosition ? `translate(${props.$initialPosition.x}px, ${props.$initialPosition.y}px) scale(0)` : 'scale(0)'};

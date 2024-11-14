@@ -244,7 +244,7 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
             </ImageWrapper>
           </LeftSection>
           <RightSection>
-            <Chatbot />
+            <Chatbot festivalId={festival.id} />
             <Tabs>
               <Tab isActive={activeTab === 'content'} onClick={() => setActiveTab('content')}>내용</Tab>
               <Tab isActive={activeTab === 'info'} onClick={() => setActiveTab('info')}>정보</Tab>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Card = styled.div`
   background-color: white;
   border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   overflow: hidden;
 `;
 
@@ -30,7 +30,7 @@ export const BottomRightText = styled.div`
 `;
 
 export const CardContent = styled.div`
-  padding: 1.5rem;
+  padding: 1rem;
 `;
 
 export const FestivalGrid = styled.div`

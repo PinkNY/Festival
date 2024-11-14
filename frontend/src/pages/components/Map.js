@@ -108,7 +108,7 @@ const KakaoMap = ({ address }) => {
   
   return (
     <Card>
-      <div id="map" style={{ width: '100%', height: '300px', position: 'relative' }}>
+      <div id="map" style={{ width: '100%', height: '370px', position: 'relative' }}>
         <FaLocationCrosshairs
           onClick={() => geocodeAddress(address)}
           style={{

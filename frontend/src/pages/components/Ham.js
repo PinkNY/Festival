@@ -53,7 +53,6 @@ const Ham = ({ menuOpen, toggleMenu }) => {
         <p style={{ cursor: 'pointer' }} onClick={handleListClick}>축제 목록</p>
         <p style={{ cursor: 'pointer' }} onClick={handleNoticeClick}>공지사항</p>
       </MiddleContainer>
-      <Chatbot />
     </MobileMenu>
   );
 };

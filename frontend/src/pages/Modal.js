@@ -23,9 +23,8 @@ const ModalContent = styled.div`
   padding: 2rem;
   border-radius: 8px;
   width: 800px;
-  max-width: 90%;
-  max-height: 90%;
-  height: 50%;
+  max-width: 900px;
+  max-height: 450px;
   overflow-y: auto;
   transform: ${(props) =>
     props.$initialPosition ? `translate(${props.$initialPosition.x}px, ${props.$initialPosition.y}px) scale(0)` : 'scale(0)'};
@@ -244,7 +243,7 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
             </ImageWrapper>
           </LeftSection>
           <RightSection>
-            <Chatbot festivalId={festival.id} />
+            <Chatbot />
             <Tabs>
               <Tab isActive={activeTab === 'content'} onClick={() => setActiveTab('content')}>내용</Tab>
               <Tab isActive={activeTab === 'info'} onClick={() => setActiveTab('info')}>정보</Tab>

@@ -3,7 +3,7 @@ import { ChatbotButton, ChatbotWindow, ChatbotMessages, SearchInput, SendWindow,
 import { MessageCircle, X } from 'lucide-react';
 import axios from 'axios';
 
-const Chatbot = ({ festivalId }) => {
+const Chatbot = () => {
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const [messages, setMessages] = useState([{ text: "안녕하세요! 무엇을 도와드릴까요?", isUser: false }]);
   const [input, setInput] = useState("");
@@ -33,15 +33,18 @@ const Chatbot = ({ festivalId }) => {
   const handleSendMessage = async () => {
     if (input.trim()) {
       console.log("Sending message:", input); // 입력된 메시지 확인
-      console.log("Festival ID:", festivalId); // festivalId 확인
-      
+
+      console.log("Clearing input"); // 입력창 비우기 확인
+      setInput("");
+
       setMessages(prevMessages => [...prevMessages, { text: input, isUser: true }]);
       try {
-        const url = `${process.env.REACT_APP_API_URL}/api/chat_with_bot/${festivalId}/`;
+        const url = `${process.env.REACT_APP_API_URL}/api/chat_with_bot/`;
         console.log("Request URL:", url); // 요청 URL 확인
+        console.log("Request Payload:", { input_user: input }); // 요청 페이로드 확인
 
-        // festivalId 포함하여 백엔드에 메시지 전송
-        const response = await axios.post(url, { input });
+        // 백엔드에 메시지 전송
+        const response = await axios.post(url, { input_user: input });
         console.log("Response data:", response.data); // 백엔드 응답 데이터 확인
 
         setMessages(prevMessages => [...prevMessages, { text: response.data.response, isUser: false }]);
@@ -49,8 +52,7 @@ const Chatbot = ({ festivalId }) => {
         console.error("챗봇 응답 오류:", error); // 오류 메시지 출력
         console.log("Error config:", error.config); // 오류 설정 확인
         console.log("Error response:", error.response); // 서버 응답 확인
-      }
-      setInput("");
+      }      
     }
   };
 

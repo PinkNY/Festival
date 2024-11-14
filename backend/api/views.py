@@ -2,6 +2,7 @@ import jwt
 import datetime
 import requests
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.hashers import check_password
@@ -9,7 +10,7 @@ from django.conf import settings
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import ActivityLog, Festival, User, Comment, Hashtag, ChatLog
-from .serializers import ActivityLogSerializer, FestivalSerializer, UserSerializer, CommentSerializer, HashtagSerializer
+from .serializers import ActivityLogSerializer, FestivalSerializer, UserSerializer, CommentSerializer, HashtagSerializer, ChatLogSerializer
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.views.decorators.csrf import csrf_exempt
@@ -129,27 +130,31 @@ class CheckAuthView(APIView):
 # 챗봇과 상호작용하는 뷰
 class ChatWithBotView(APIView):
     def post(self, request):
-        # 사용자 입력 받기
         user_input = request.data.get("input_user", "")
         if not user_input:
             return Response({"error": "No input provided"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # 챗봇 API URL 가져오기
+            # 챗봇 API 호출
             url = settings.CHATBOT_API_URL
-
-            # 챗봇에 POST 요청 보내기
             response = requests.post(url, json={"input_user": user_input})
             response_data = response.json()
 
-            # 챗봇 응답 확인 및 반환
             chatbot_response = response_data.get("response", "")
+
+            # ChatLog에 기록 저장
+            chat_log = ChatLog(user_input=user_input, chatbot_response=chatbot_response)
+            chat_log.save()
+
             return Response({"response": chatbot_response}, status=status.HTTP_200_OK)
 
         except requests.exceptions.RequestException as e:
-            # 오류 로깅 및 응답
             logger.error(f"Error communicating with chatbot: {e}")
             return Response({"error": "Failed to communicate with chatbot"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+class ChatLogListView(ListAPIView):
+    queryset = ChatLog.objects.all()
+    serializer_class = ChatLogSerializer
+
 # #축제뷰
 # class SortedFestivalsView(APIView):
 #     permission_classes = [permissions.AllowAny]

@@ -13,6 +13,7 @@ from .views import (
     FestivalDetailView,
     FestivalSearchView,
     ChatWithBotView, # 챗봇과 상호작용할 뷰 추가
+    ChatLogListView,
     # SortedFestivalsView,
     # SortedFestivalsSearch,
 )
@@ -38,7 +39,7 @@ urlpatterns = [
 
     # 챗봇과 상호작용하는 URL 추가
     path('chat_with_bot/', ChatWithBotView.as_view(), name='chat_with_bot'),  # 챗봇 엔드포인트 추가요
-
+    path('chatlogs/', ChatLogListView.as_view(), name='chat-log-list'),
 
 
     # path('festivals_view/', SortedFestivalsView.as_view(), name='sorted_festivals_view'),

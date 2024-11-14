@@ -16,3 +16,6 @@ DATABASES['festival_db']['PASSWORD'] = '9P@ssw0rd'
 
 DATABASES['user_db']['USER'] = 'skdudgns'
 DATABASES['user_db']['PASSWORD'] = '9P@ssw0rd'
+
+DATABASES['chatbot_db']['USER'] = 'skdudgns'
+DATABASES['chatbot_db']['PASSWORD'] = '9P@ssw0rd'

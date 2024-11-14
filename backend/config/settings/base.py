@@ -149,3 +149,5 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
+
+CHATBOT_API_URL = os.getenv('CHATBOT_API_URL')

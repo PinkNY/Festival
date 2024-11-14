@@ -42,9 +42,11 @@ jobs:
           echo "PORT=3008" >> frontend/.env
 
       - name: Build React app without stopping on warnings
+        env:
+          CI: false
         run: |
           cd frontend
-          export CI=false && npm run build
+          npm run build
 
           
       - name: Build And Deploy

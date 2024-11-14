@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import Chatbot from './Chatbot';
 import KakaoMap from './components/Map';
 
+import { SpeechBubble } from './ChatbotSt';
+
 const ModalWrapper = styled.div`
   position: fixed;
   top: 0;
@@ -244,6 +246,7 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
           </LeftSection>
           <RightSection>
             <Chatbot />
+            <SpeechBubble>챗봇을 사용해보세요!</SpeechBubble>
             <Tabs>
               <Tab isActive={activeTab === 'content'} onClick={() => setActiveTab('content')}>내용</Tab>
               <Tab isActive={activeTab === 'info'} onClick={() => setActiveTab('info')}>정보</Tab>

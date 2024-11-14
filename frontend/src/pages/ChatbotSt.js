@@ -137,3 +137,28 @@ export const SearchInput = styled.input`
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
   }
 `;
+
+export const SpeechBubble = styled.div`
+  position: absolute;
+  bottom: 20px; /* 챗봇 버튼 위치에 맞게 조정 */
+  right: 80px; /* 말풍선을 챗봇 버튼 왼쪽으로 배치 */
+  background-color: white;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -15px;
+    border-width: 7px;
+    border-style: solid;
+    border-color: transparent transparent transparent #ccc;
+    transform: translateY(-50%);
+  }
+`;

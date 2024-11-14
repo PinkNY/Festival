@@ -126,29 +126,30 @@ class CheckAuthView(APIView):
     def get(self, request):
         return Response({'message': 'User is authenticated'}, status=status.HTTP_200_OK)
 
-# 챗봇과 상호작용하는 뷰 (축제 ID 기반)
+# 챗봇과 상호작용하는 뷰
 class ChatWithBotView(APIView):
-    def post(self, request, festival_id):
-        user_input = request.data.get("input", "")
+    def post(self, request):
+        # 사용자 입력 받기
+        user_input = request.data.get("input_user", "")
         if not user_input:
             return Response({"error": "No input provided"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # 챗봇 API 호출 (축제 ID 포함)
-            url = f"{settings.CHATBOT_API_URL}/chat/{festival_id}"
-            response = requests.post(url, json={"input": user_input})
+            # 챗봇 API URL 가져오기
+            url = settings.CHATBOT_API_URL
+
+            # 챗봇에 POST 요청 보내기
+            response = requests.post(url, json={"input_user": user_input})
             response_data = response.json()
 
-            # 대화 기록 저장
+            # 챗봇 응답 확인 및 반환
             chatbot_response = response_data.get("response", "")
-            ChatLog.objects.create(festival_id=festival_id, user_input=user_input, chatbot_response=chatbot_response)
-
             return Response({"response": chatbot_response}, status=status.HTTP_200_OK)
+
         except requests.exceptions.RequestException as e:
+            # 오류 로깅 및 응답
             logger.error(f"Error communicating with chatbot: {e}")
             return Response({"error": "Failed to communicate with chatbot"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
 # #축제뷰
 # class SortedFestivalsView(APIView):
 #     permission_classes = [permissions.AllowAny]

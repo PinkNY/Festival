@@ -20,7 +20,8 @@ const FestivalList = () => {
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFestival, setSelectedFestival] = useState(null);
-  
+  const [favorites, setFavorites] = useState({}); // 즐겨찾기 상태 관리 객체
+
   const [isSearchMode, setIsSearchMode] = useState(!!searchResults);
 
   const handleCardClick = (festival) => {
@@ -31,6 +32,13 @@ const FestivalList = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedFestival(null);
+  };
+
+  const toggleFavorite = (festivalId) => {
+    setFavorites((prev) => ({
+      ...prev,
+      [festivalId]: !prev[festivalId], // 즐겨찾기 상태 토글
+    }));
   };
 
   useEffect(() => {
@@ -52,12 +60,11 @@ const FestivalList = () => {
     };
 
     if (isSearchMode && searchResults) {
-      // 검색 결과가 있을 때만 초기 설정
       setFestivals(searchResults);
       setLoading(false);
       setHasMore(false); 
     } else if (!isSearchMode) {
-      fetchFestivals(page); // 검색 모드가 아닐 때만 fetchFestivals 호출
+      fetchFestivals(page);
     }
   }, [filter, page, isSearchMode, searchResults]);
 
@@ -103,7 +110,22 @@ const FestivalList = () => {
                     height={200}
                   />
                   <FestivalInfo>
-                    <FestivalName>{festival.title || '내용없음'}</FestivalName>
+                    <FestivalName>
+                      {festival.title || '내용없음'}
+                      <button
+                        type="button"
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          fontSize: '1.2rem',
+                          color: favorites[festival.id] ? 'gold' : '#ccc',
+                          marginLeft: '8px',
+                          pointerEvents: 'none', // 클릭 불가
+                        }}
+                      >
+                        ★
+                      </button>
+                    </FestivalName>
                     <FestivalDate>
                       {festival.start_date && festival.end_date ? 
                         `${festival.start_date} ~ ${festival.end_date}` : 
@@ -127,6 +149,8 @@ const FestivalList = () => {
           isOpen={isModalOpen} 
           onClose={closeModal} 
           festival={selectedFestival}
+          isFavorite={favorites[selectedFestival.id] || false} // 선택한 축제의 즐겨찾기 상태 전달
+          onFavoriteClick={() => toggleFavorite(selectedFestival.id)} // 모달에서 즐겨찾기 토글 가능
         />
       )}
     </PageContainer>

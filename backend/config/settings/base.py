@@ -128,6 +128,9 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+# 정적 파일이 수집될 디렉토리 경로 설정
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 

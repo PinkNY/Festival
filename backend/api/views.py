@@ -230,14 +230,18 @@ class CheckAuthView(APIView):
 class ChatWithBotView(APIView):
     """
     사용자 입력을 받아 챗봇과 상호작용하는 뷰.
-    사용자의 입력을 챗봇 API로 전달하고, 응답을 반환하며 로그로 기록.
     """
     def post(self, request):
-        user_input = request.data.get("input_user", "")
+        # 사용자 입력값 가져오기
+        user_input = request.data.get("input_user", "").strip()
         
+        # 사용자 입력이 없는 경우 기본 응답 처리
         if not user_input:
             logger.warning("ChatWithBotView: No input provided by user.")
-            return Response({"error": "No input provided"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "No input provided"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         try:
             # 챗봇 API 호출
@@ -246,22 +250,43 @@ class ChatWithBotView(APIView):
             response.raise_for_status()
             response_data = response.json()
 
-            chatbot_response = response_data.get("response", "")
+            # 챗봇 응답 처리
+            chatbot_response = response_data.get("response", "No response from chatbot.")
             chat_log = ChatLog(user_input=user_input, chatbot_response=chatbot_response)
             chat_log.save()
 
             logger.info(f"ChatWithBotView: Successfully retrieved chatbot response: {chatbot_response}")
-            return Response({"response": chatbot_response}, status=status.HTTP_200_OK)
+            return Response(
+                {"response": chatbot_response},
+                status=status.HTTP_200_OK
+            )
 
         except requests.exceptions.RequestException as e:
-            logger.error(f"ChatWithBotView: Error communicating with chatbot API."
-                         f"\nURL: {url}"
-                         f"\nUser Input: {user_input}"
-                         f"\nException: {e}"
-                         f"\nTraceback: {traceback.format_exc()}")
+            # 챗봇 API 호출 오류 처리
+            logger.error(
+                f"ChatWithBotView: Error communicating with chatbot API."
+                f"\nURL: {url}"
+                f"\nUser Input: {user_input}"
+                f"\nException: {e}"
+                f"\nTraceback: {traceback.format_exc()}"
+            )
+            return Response(
+                {"error": "Failed to communicate with chatbot"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
-            return Response({"error": "Failed to communicate with chatbot"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+        except Exception as e:
+            # 기타 예상치 못한 오류 처리
+            logger.error(
+                f"ChatWithBotView: Unexpected error occurred."
+                f"\nUser Input: {user_input}"
+                f"\nException: {e}"
+                f"\nTraceback: {traceback.format_exc()}"
+            )
+            return Response(
+                {"error": "An unexpected error occurred"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 class ChatLogListView(ListAPIView):
     """

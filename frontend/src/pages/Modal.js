@@ -139,7 +139,26 @@ const PaginationButton = styled.button`
   border-radius: 4px;
 `;
 
-const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; // 제목과 즐겨찾기 버튼 사이의 간격
+`;
+
+const FavoriteButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: ${(props) => (props.isFavorite ? 'gold' : '#ccc' )};
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: gold;
+  }
+`;
+
+const Modal = ({ isOpen, onClose, festival, initialPosition, isFavorite, onFavoriteClick }) => {
   const [comments, setComments] = useState([]);
   const [hashtags, setHashtags] = useState([]);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -147,12 +166,15 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
   const [activeTab, setActiveTab] = useState('content');
   const [commentsPage, setCommentsPage] = useState(1);
   const [mapKey, setMapKey] = useState(0);
+  
+  const [showSpeechBubble, setShowSpeechBubble] = useState(true);
 
   const COMMENTS_PER_PAGE = 3;
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'; // 모달이 열릴 때 배경 스크롤 비활성화
+      setShowSpeechBubble(true); // 모달 열릴 때 SpeechBubble 표시
     } else {
       document.body.style.overflow = 'auto'; // 모달이 닫힐 때 배경 스크롤 활성화
     }
@@ -230,6 +252,11 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
 
   if (!isOpen || !festival) return null;
 
+  const handleFavoriteClick = () => {
+    onFavoriteClick();
+    // 즐겨찾기 API 호출이나 로컬 스토리지 저장 등 추가 동작을 여기에 추가 가능
+  };
+
   return (
     <ModalWrapper onClick={onClose}>
       <ModalContent
@@ -254,7 +281,12 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
               <Tab isActive={activeTab === 'map'} onClick={() => handleTabClick('map')}>위치</Tab>
             </Tabs>
             <TabContent isActive={activeTab === 'content'}>
-              <h2>{festival.title || '제목 없음'}</h2>
+              <TitleWrapper>
+                <h2>{festival.title || '제목 없음'}</h2>
+                <FavoriteButton onClick={handleFavoriteClick} isFavorite={isFavorite}>
+                  ★
+                </FavoriteButton>
+              </TitleWrapper>
               <div style={{ display: 'flex', gap: '10px', margin: '10px 0' }}>
                 {festival.intro_image1 && <img src={festival.intro_image1} alt='Introduction 1' style={{ width: '150px', height: 'auto' }} />}
                 {festival.intro_image2 && <img src={festival.intro_image2} alt='Introduction 2' style={{ width: '150px', height: 'auto' }} />}
@@ -264,7 +296,12 @@ const Modal = ({ isOpen, onClose, festival, initialPosition }) => {
               <p>{hashtags.length > 0 ? hashtags.map((tag, index) => `${index === 0 ? `#${tag.tag.replace(/^#+/, '')}` : `#${tag.tag}`}`).join(' ') : '태그 없음'}</p>
             </TabContent>
             <TabContent isActive={activeTab === 'info'}>
-              <h2>{festival.title || '제목 없음'}</h2>
+              <TitleWrapper>
+                <h2>{festival.title || '제목 없음'}</h2>
+                <FavoriteButton onClick={handleFavoriteClick} isFavorite={isFavorite}>
+                  ★
+                </FavoriteButton>
+              </TitleWrapper>
               <p>{festival.start_date && festival.end_date ? `${festival.start_date} ~ ${festival.end_date}` : '내용 없음'}</p>
               <p>입장료: {festival.entry_fee || '정보 없음'}</p>
               <p>주소: {festival.address || '주소 없음'}</p>

@@ -228,3 +228,9 @@ Traceback (most recent call last):
 requests.exceptions.ConnectTimeout: HTTPConnectionPool(host='10.1.1.4', port=5000): Max retries exceeded with url: /chat (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x71c961643050>, 'Connection to 10.1.1.4 timed out. (connect timeout=None)'))
 
 2024-11-15 09:53:26 [ERROR] django.request (log): Internal Server Error: /api/chat_with_bot/
+2024-11-16 01:18:06 [INFO] django.utils.autoreload (autoreload): Watching for file changes with StatReloader
+2024-11-16 01:18:10 [WARNING] django.request (log): Not Found: /
+2024-11-16 01:18:10 [WARNING] django.request (log): Not Found: /favicon.ico
+2024-11-16 01:18:12 [WARNING] django.request (log): Not Found: /
+2024-11-16 01:18:25 [WARNING] django.request (log): Not Found: /api/
+2024-11-16 01:18:39 [WARNING] django.request (log): Method Not Allowed: /api/chat_with_bot/

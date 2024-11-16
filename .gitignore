@@ -5,3 +5,5 @@ __pycache__/
 # 가상환경 관련
 venv/
 .env
+
+.log

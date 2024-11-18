@@ -45,6 +45,32 @@ export const FestivalGrid = styled.div`
   }
 `;
 
+// export const FestivalCard = styled(Card)`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   align-items: flex-start;
+//   cursor: pointer;
+//   transition: box-shadow 0.2s;
+//   padding: 1rem;
+
+//   h3 {
+//     font-size: 1.125rem;
+//     font-weight: bold;
+//     margin-bottom: 0.5rem;
+//   }
+
+//   p {
+//     font-size: 0.875rem;
+//     font-weight: bold;
+//     margin-bottom: 0.5rem;
+//   }
+
+//   &:hover {
+//     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+//   }
+// `;
+
 export const FestivalCard = styled(Card)`
   cursor: pointer;
   

@@ -14,6 +14,7 @@ from django.utils.decorators import method_decorator
 from django.db.models import Q
 import logging
 import traceback
+from api.ai import generate_response  
 
 from .models import ActivityLog, Festival, User, Comment, Hashtag, ChatLog
 from .serializers import ActivityLogSerializer, FestivalSerializer, UserSerializer, CommentSerializer, HashtagSerializer, ChatLogSerializer
@@ -299,6 +300,24 @@ class ChatLogListView(ListAPIView):
         logger.info("Fetching all chat logs.")
         return super().list(request, *args, **kwargs)
 
+#맛집챗봇뷰
+class ChatbotAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        try:
+            # 요청 데이터에서 질문 추출
+            question = request.data.get("question", "")
+
+            if not question:
+                return Response({"error": "Question is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+            # AI 모델 호출
+            answer = generate_response(question)
+
+            # 응답 반환
+            return Response({"answer": answer}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({"error": f"An error occurred: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # #축제뷰
 # class SortedFestivalsView(APIView):

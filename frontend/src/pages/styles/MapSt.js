@@ -27,7 +27,6 @@ export const CardTitle = styled.h2`
   display: flex;
   justify-content: center;
   margin: 0;
-
   color: white;
 `;
 

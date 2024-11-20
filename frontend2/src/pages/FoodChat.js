@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Utensils } from 'lucide-react';
 
-import { Container, Title, Subtitle, InputContainer, Input, SubmitButton } from './ChatSt';
+import { Container, Title, Subtitle, InputContainer, Input, SubmitButton } from './FoodChatSt';
 
 const FoodChat = () => {
   const [question, setQuestion] = useState(""); // 질문을 관리하는 상태

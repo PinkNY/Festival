@@ -8,4 +8,10 @@ venv/
 
 .log
 node_modules
+<<<<<<< HEAD
 project_debug.log
+=======
+Dockerfile
+docker-compose.yml
+project_debug.log
+>>>>>>> fe0be015b4628ed81c138ebad743f6bab3d88b02

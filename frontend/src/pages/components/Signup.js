@@ -227,7 +227,7 @@ const SignUp = () => {
         };
   
         // 서버로 데이터 전송
-        const response = await axios.post('http://127.0.0.1:8000/api/signup/', signupData);
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/signup/`, signupData);
         if (response.status === 200 || response.status === 201 ) {
           navigate('/login'); // 성공 시 로그인 페이지로 이동
         }

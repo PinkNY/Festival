@@ -8,6 +8,7 @@ export const SearchWrapper = styled.div`
   width: 30rem;
   justify-content: center;
   gap: 10px;
+  margin-right: 10px;
   
   // border: 3px solid black;
 

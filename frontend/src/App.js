@@ -1,8 +1,7 @@
-// src/App.js
+// import React, { useState } from "react";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./AuthContext";
-// import './App.css';
 
 import MainPage from "./pages/components/Main";
 import Navbar from './pages/components/Nav';
@@ -13,7 +12,15 @@ import NoticeDetail from "./pages/components/NoticeDetail";
 import FestivalList from './pages/components/List';
 import Footer from "./pages/components/Footer";
 
+// import ChatbotIcon from "./pages/components/ChatCon"; // 챗봇 아이콘 컴포넌트
+// import ChatComponent from "./pages/components/Chat"; // 챗봇 채팅창 컴포넌트
+
 const App = () => {
+  // const [chatOpen, setChatOpen] = useState(false); // 챗봇 상태 관리
+
+  // const openChat = () => setChatOpen(true); // 챗봇 열기
+  // const closeChat = () => setChatOpen(false); // 챗봇 닫기
+
   const AuthRoutes = () => {
     const { isLoggedIn } = useAuth();
     return (
@@ -34,6 +41,8 @@ const App = () => {
         <Navbar />
         <AuthRoutes />
         <Footer />
+        {/* <ChatbotIcon onClick={openChat} />
+        {chatOpen && <ChatComponent closeChat={closeChat} />} */}
       </Router>
     </AuthProvider>
   );

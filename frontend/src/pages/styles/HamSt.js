@@ -35,11 +35,13 @@ export const MobileMenu = styled.div`
   position: fixed;
   top: 0;
   right: 0;
-  width: 50%;
+  width: 35%;
   height: 100vh;
   display: ${({ open }) => (open ? 'block' : 'none')};
   z-index: 9999;
   background-color: white;
+
+  // border: 1px solid black;
   // background-color: transparent;
 
   .close-button {
@@ -51,13 +53,14 @@ export const MobileMenu = styled.div`
 
 export const TopContainer = styled.div`
   display: flex;
-  width: 80%;
+  width: 75%;
   align-items: center;
   justify-content: flex-end;
   height: 90px;
   z-index: 999;
+  gap: 5px;
 
-  // border: 3px solid black;
+  // border: 1px solid black;
 `;
 
 export const MiddleContainer = styled.div`
@@ -71,5 +74,5 @@ export const MiddleContainer = styled.div`
   justify-content: flex-start;
   flex-direction: column;
   
-  // border: 3px solid black; 
+  // border: 1px solid black; 
 `;

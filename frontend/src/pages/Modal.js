@@ -26,7 +26,7 @@ const ModalContent = styled.div`
   border-radius: 8px;
   width: 800px;
   max-width: 900px;
-  height: 450px;
+  height: 500px;
   overflow-y: auto;
   transform: ${(props) =>
     props.$initialPosition ? `translate(${props.$initialPosition.x}px, ${props.$initialPosition.y}px) scale(0)` : 'scale(0)'};
@@ -202,11 +202,11 @@ const Modal = ({ isOpen, onClose, festival, initialPosition, isFavorite, onFavor
 
       const fetchAdditionalData = async () => {
         try {
-          const commentsUrl = `${process.env.REACT_APP_API_URL}/api/comments/?festa=${festival.id}`;
+          const commentsUrl = `${process.env.REACT_APP_API_URL}/comments/?festa=${festival.id}`;
           const commentsResponse = await axios.get(commentsUrl);
           setComments(commentsResponse.data.filter(comment => Number(comment.festa) === Number(festival.id)));
 
-          const hashtagsUrl = `${process.env.REACT_APP_API_URL}/api/hashtags/?festa=${festival.id}`;
+          const hashtagsUrl = `${process.env.REACT_APP_API_URL}/hashtags/?festa=${festival.id}`;
           const hashtagsResponse = await axios.get(hashtagsUrl);
           setHashtags(hashtagsResponse.data.filter(hashtag => Number(hashtag.festa) === Number(festival.id)));
         } catch (error) {

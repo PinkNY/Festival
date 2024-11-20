@@ -5,7 +5,7 @@ export const PageWrapper = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #f9fafb;
+  background-color: #DFF2EB;
 `;
 
 export const MainContent = styled.main`

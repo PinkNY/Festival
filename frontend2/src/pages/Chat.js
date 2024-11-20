@@ -19,7 +19,7 @@ const FoodChat = () => {
 
     try {
       // 백엔드 API에 POST 요청 보내기
-      const response = await axios.post('http://127.0.0.1:8001/api/restaurant_chatbot/', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/restaurant_chatbot/`, {
         question: question,
       });
 

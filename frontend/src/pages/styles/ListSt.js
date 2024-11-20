@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const PageContainer = styled.div`
   min-height: 100vh;
-  background-color: #f3f4f6;
+  background-color: #DFF2EB;
 `;
 
 export const Main = styled.main`

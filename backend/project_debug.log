@@ -233,3 +233,325 @@
 2024-11-18 08:52:43 [INFO] api.views (views): Fetching all comments.
 2024-11-18 08:52:43 [INFO] api.views (views): Fetched festival with ID 19. View count incremented.
 2024-11-18 08:52:43 [INFO] api.views (views): Fetching all hashtags.
+2024-11-18 08:55:15 [INFO] api.views (views): Fetching all comments.
+2024-11-18 08:55:15 [INFO] api.views (views): Fetched festival with ID 19. View count incremented.
+2024-11-18 08:55:15 [INFO] api.views (views): Fetching all hashtags.
+2024-11-19 00:13:52 [INFO] django.utils.autoreload (autoreload): Watching for file changes with StatReloader
+2024-11-19 00:13:53 [DEBUG] faiss.loader (loader): Environment variable FAISS_OPT_LEVEL is not set, so let's pick the instruction set according to the current CPU
+2024-11-19 00:13:53 [INFO] faiss.loader (loader): Loading faiss with AVX2 support.
+2024-11-19 00:13:53 [INFO] faiss.loader (loader): Successfully loaded faiss with AVX2 support.
+2024-11-19 00:14:12 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 00:19:14 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 00:39:11 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 01:34:33 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 01:34:37 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 01:35:03 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 01:41:13 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 01:45:58 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 01:47:24 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 01:47:25 [INFO] api.views (views): Fetching all comments.
+2024-11-19 01:47:25 [INFO] api.views (views): Fetched festival with ID 19. View count incremented.
+2024-11-19 01:47:25 [INFO] api.views (views): Fetching all hashtags.
+2024-11-19 01:48:10 [INFO] api.views (views): Fetching all comments.
+2024-11-19 01:48:10 [INFO] api.views (views): Fetched festival with ID 19. View count incremented.
+2024-11-19 01:48:10 [INFO] api.views (views): Fetching all hashtags.
+2024-11-19 01:51:08 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 01:51:10 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 02:13:27 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 02:13:58 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 02:20:30 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 02:27:58 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 02:27:59 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 02:45:19 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 02:48:10 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 02:49:00 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 02:52:37 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 02:52:41 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 06:07:51 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 06:14:04 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 06:14:06 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 06:15:20 [WARNING] django.request (log): Bad Request: /api/restaurant_chatbot/
+2024-11-19 06:15:41 [WARNING] django.request (log): Not Found: /
+2024-11-19 06:15:43 [WARNING] django.request (log): Not Found: /
+2024-11-19 06:15:44 [WARNING] django.request (log): Not Found: /
+2024-11-19 06:16:05 [WARNING] django.request (log): Not Found: /admin/restourant-chatbot
+2024-11-19 06:16:15 [WARNING] django.request (log): Not Found: /
+2024-11-19 06:16:16 [WARNING] django.request (log): Method Not Allowed: /api/restaurant_chatbot/
+2024-11-19 06:16:31 [ERROR] django.request (log): Internal Server Error: /api/restaurant_chatbot/
+2024-11-19 06:17:06 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 06:17:13 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 06:20:12 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 06:20:13 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 06:20:27 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 06:20:33 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 06:43:10 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 06:43:15 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 06:43:21 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:05:37 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:05:40 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:05:57 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:06:01 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:17:13 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:17:15 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:21:12 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:21:16 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:22:33 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:23:07 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:23:08 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:23:10 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:23:12 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:23:16 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:23:53 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:23:53 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:24:09 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:24:12 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:41:29 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:41:30 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:51:14 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 07:51:19 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:05:06 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:08:20 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:08:24 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:10:04 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:10:07 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:10:10 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:10:27 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:10:28 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:10:29 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:10:53 [INFO] api.views (views): Fetched festival with ID 20. View count incremented.
+2024-11-19 08:10:53 [INFO] api.views (views): Fetching all comments.
+2024-11-19 08:10:53 [INFO] api.views (views): Fetching all hashtags.
+2024-11-19 08:10:59 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:11:00 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:11:01 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:11:51 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:12:31 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:12:33 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:12:52 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:14:30 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:14:31 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:14:32 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:15:13 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:20:56 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:24:23 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:25:33 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:25:37 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:25:54 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:25:56 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:25:57 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:27:31 [WARNING] django.request (log): Bad Request: /api/restaurant_chatbot/
+2024-11-19 08:35:56 [WARNING] django.request (log): Bad Request: /api/restaurant_chatbot/
+2024-11-19 08:36:46 [WARNING] django.request (log): Not Found: /
+2024-11-19 08:36:49 [WARNING] django.request (log): Not Found: /
+2024-11-19 08:36:54 [WARNING] django.request (log): Method Not Allowed: /api/restaurant_chatbot/
+2024-11-19 08:36:58 [WARNING] django.request (log): Not Found: /api/
+2024-11-19 08:37:06 [WARNING] django.request (log): Method Not Allowed: /api/restaurant_chatbot/
+2024-11-19 08:37:24 [ERROR] django.request (log): Internal Server Error: /api/restaurant_chatbot/
+2024-11-19 08:42:57 [WARNING] django.request (log): Bad Request: /api/restaurant_chatbot/
+2024-11-19 08:43:01 [WARNING] django.request (log): Bad Request: /api/restaurant_chatbot/
+2024-11-19 08:43:11 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:43:16 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:43:27 [WARNING] django.request (log): Bad Request: /api/restaurant_chatbot/
+2024-11-19 08:43:36 [WARNING] django.request (log): Bad Request: /api/restaurant_chatbot/
+2024-11-19 08:43:38 [WARNING] django.request (log): Bad Request: /api/restaurant_chatbot/
+2024-11-19 08:46:07 [WARNING] django.request (log): Bad Request: /api/restaurant_chatbot/
+2024-11-19 08:46:32 [WARNING] django.request (log): Bad Request: /api/restaurant_chatbot/
+2024-11-19 08:46:56 [INFO] sentence_transformers.SentenceTransformer (SentenceTransformer): Use pytorch device_name: cpu
+2024-11-19 08:46:56 [INFO] sentence_transformers.SentenceTransformer (SentenceTransformer): Load pretrained SentenceTransformer: intfloat/multilingual-e5-large-instruct
+2024-11-19 08:46:56 [DEBUG] urllib3.connectionpool (connectionpool): Starting new HTTPS connection (1): huggingface.co:443
+2024-11-19 08:46:57 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/modules.json HTTP/11" 200 0
+2024-11-19 08:46:57 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/config_sentence_transformers.json HTTP/11" 200 0
+2024-11-19 08:46:57 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/README.md HTTP/11" 200 0
+2024-11-19 08:46:57 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/modules.json HTTP/11" 200 0
+2024-11-19 08:46:58 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_bert_config.json HTTP/11" 404 0
+2024-11-19 08:46:58 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_roberta_config.json HTTP/11" 404 0
+2024-11-19 08:46:58 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_distilbert_config.json HTTP/11" 404 0
+2024-11-19 08:46:58 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_camembert_config.json HTTP/11" 404 0
+2024-11-19 08:46:58 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_albert_config.json HTTP/11" 404 0
+2024-11-19 08:46:59 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_xlm-roberta_config.json HTTP/11" 404 0
+2024-11-19 08:46:59 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_xlnet_config.json HTTP/11" 404 0
+2024-11-19 08:46:59 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/adapter_config.json HTTP/11" 404 0
+2024-11-19 08:46:59 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/config.json HTTP/11" 200 0
+2024-11-19 08:47:01 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/tokenizer_config.json HTTP/11" 200 0
+2024-11-19 08:47:02 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "GET /api/models/intfloat/multilingual-e5-large-instruct/revision/main HTTP/11" 200 285799
+2024-11-19 08:47:02 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "GET /api/models/intfloat/multilingual-e5-large-instruct HTTP/11" 200 285799
+2024-11-19 08:48:52 [WARNING] django.request (log): Bad Request: /api/restaurant_chatbot/
+2024-11-19 08:51:43 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:52:01 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:52:07 [WARNING] django.request (log): Bad Request: /api/restaurant_chatbot/
+2024-11-19 08:57:04 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:58:52 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 08:59:05 [INFO] sentence_transformers.SentenceTransformer (SentenceTransformer): Use pytorch device_name: cpu
+2024-11-19 08:59:05 [INFO] sentence_transformers.SentenceTransformer (SentenceTransformer): Load pretrained SentenceTransformer: intfloat/multilingual-e5-large-instruct
+2024-11-19 08:59:05 [DEBUG] urllib3.connectionpool (connectionpool): Starting new HTTPS connection (1): huggingface.co:443
+2024-11-19 08:59:06 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/modules.json HTTP/11" 200 0
+2024-11-19 08:59:06 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/config_sentence_transformers.json HTTP/11" 200 0
+2024-11-19 08:59:06 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/README.md HTTP/11" 200 0
+2024-11-19 08:59:07 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/modules.json HTTP/11" 200 0
+2024-11-19 08:59:07 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_bert_config.json HTTP/11" 404 0
+2024-11-19 08:59:07 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_roberta_config.json HTTP/11" 404 0
+2024-11-19 08:59:07 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_distilbert_config.json HTTP/11" 404 0
+2024-11-19 08:59:08 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_camembert_config.json HTTP/11" 404 0
+2024-11-19 08:59:08 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_albert_config.json HTTP/11" 404 0
+2024-11-19 08:59:08 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_xlm-roberta_config.json HTTP/11" 404 0
+2024-11-19 08:59:08 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_xlnet_config.json HTTP/11" 404 0
+2024-11-19 08:59:09 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/adapter_config.json HTTP/11" 404 0
+2024-11-19 08:59:09 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/config.json HTTP/11" 200 0
+2024-11-19 08:59:10 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/tokenizer_config.json HTTP/11" 200 0
+2024-11-19 08:59:11 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "GET /api/models/intfloat/multilingual-e5-large-instruct/revision/main HTTP/11" 200 285799
+2024-11-19 08:59:11 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "GET /api/models/intfloat/multilingual-e5-large-instruct HTTP/11" 200 285799
+2024-11-19 08:59:21 [INFO] sentence_transformers.SentenceTransformer (SentenceTransformer): Use pytorch device_name: cpu
+2024-11-19 08:59:21 [INFO] sentence_transformers.SentenceTransformer (SentenceTransformer): Load pretrained SentenceTransformer: intfloat/multilingual-e5-large-instruct
+2024-11-19 08:59:21 [DEBUG] urllib3.connectionpool (connectionpool): Starting new HTTPS connection (1): huggingface.co:443
+2024-11-19 08:59:22 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/modules.json HTTP/11" 200 0
+2024-11-19 08:59:22 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/config_sentence_transformers.json HTTP/11" 200 0
+2024-11-19 08:59:22 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/README.md HTTP/11" 200 0
+2024-11-19 08:59:22 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/modules.json HTTP/11" 200 0
+2024-11-19 08:59:23 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_bert_config.json HTTP/11" 404 0
+2024-11-19 08:59:23 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_roberta_config.json HTTP/11" 404 0
+2024-11-19 08:59:23 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_distilbert_config.json HTTP/11" 404 0
+2024-11-19 08:59:23 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_camembert_config.json HTTP/11" 404 0
+2024-11-19 08:59:24 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_albert_config.json HTTP/11" 404 0
+2024-11-19 08:59:24 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_xlm-roberta_config.json HTTP/11" 404 0
+2024-11-19 08:59:24 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_xlnet_config.json HTTP/11" 404 0
+2024-11-19 08:59:24 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/adapter_config.json HTTP/11" 404 0
+2024-11-19 08:59:25 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/config.json HTTP/11" 200 0
+2024-11-19 08:59:26 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/tokenizer_config.json HTTP/11" 200 0
+2024-11-19 08:59:27 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "GET /api/models/intfloat/multilingual-e5-large-instruct/revision/main HTTP/11" 200 285799
+2024-11-19 08:59:27 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "GET /api/models/intfloat/multilingual-e5-large-instruct HTTP/11" 200 285799
+2024-11-19 09:02:45 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:02:49 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:02:56 [INFO] sentence_transformers.SentenceTransformer (SentenceTransformer): Use pytorch device_name: cpu
+2024-11-19 09:02:56 [INFO] sentence_transformers.SentenceTransformer (SentenceTransformer): Load pretrained SentenceTransformer: intfloat/multilingual-e5-large-instruct
+2024-11-19 09:02:56 [DEBUG] urllib3.connectionpool (connectionpool): Starting new HTTPS connection (1): huggingface.co:443
+2024-11-19 09:02:56 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/modules.json HTTP/11" 200 0
+2024-11-19 09:02:57 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/config_sentence_transformers.json HTTP/11" 200 0
+2024-11-19 09:02:57 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/README.md HTTP/11" 200 0
+2024-11-19 09:02:57 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/modules.json HTTP/11" 200 0
+2024-11-19 09:02:57 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_bert_config.json HTTP/11" 404 0
+2024-11-19 09:02:57 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_roberta_config.json HTTP/11" 404 0
+2024-11-19 09:02:58 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_distilbert_config.json HTTP/11" 404 0
+2024-11-19 09:02:58 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_camembert_config.json HTTP/11" 404 0
+2024-11-19 09:02:58 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_albert_config.json HTTP/11" 404 0
+2024-11-19 09:02:58 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_xlm-roberta_config.json HTTP/11" 404 0
+2024-11-19 09:02:58 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/sentence_xlnet_config.json HTTP/11" 404 0
+2024-11-19 09:02:59 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/adapter_config.json HTTP/11" 404 0
+2024-11-19 09:02:59 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/config.json HTTP/11" 200 0
+2024-11-19 09:03:02 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "HEAD /intfloat/multilingual-e5-large-instruct/resolve/main/tokenizer_config.json HTTP/11" 200 0
+2024-11-19 09:03:04 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "GET /api/models/intfloat/multilingual-e5-large-instruct/revision/main HTTP/11" 200 285799
+2024-11-19 09:03:05 [DEBUG] urllib3.connectionpool (connectionpool): https://huggingface.co:443 "GET /api/models/intfloat/multilingual-e5-large-instruct HTTP/11" 200 285799
+2024-11-19 09:03:15 [WARNING] django.request (log): Not Found: /
+2024-11-19 09:03:19 [WARNING] django.request (log): Not Found: /
+2024-11-19 09:03:21 [WARNING] django.request (log): Method Not Allowed: /api/restaurant_chatbot/
+2024-11-19 09:14:15 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:18 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:19 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:23 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:23 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:24 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:25 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:26 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:26 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:27 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:28 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:28 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:29 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:30 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:31 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:31 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:32 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:33 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:34 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:34 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:35 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:37 [INFO] api.views (views): Fetched festival with ID 20. View count incremented.
+2024-11-19 09:14:37 [INFO] api.views (views): Fetching all comments.
+2024-11-19 09:14:37 [INFO] api.views (views): Fetching all hashtags.
+2024-11-19 09:14:41 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:42 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:43 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:14:44 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:15:09 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:15:10 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:15:10 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:15:12 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:15:13 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 09:15:14 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 23:52:04 [INFO] django.utils.autoreload (autoreload): Watching for file changes with StatReloader
+2024-11-19 23:52:05 [DEBUG] faiss.loader (loader): Environment variable FAISS_OPT_LEVEL is not set, so let's pick the instruction set according to the current CPU
+2024-11-19 23:52:05 [INFO] faiss.loader (loader): Loading faiss with AVX2 support.
+2024-11-19 23:52:05 [INFO] faiss.loader (loader): Successfully loaded faiss with AVX2 support.
+2024-11-19 23:52:25 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 23:54:35 [INFO] api.views (views): Fetching all festivals.
+2024-11-19 23:54:38 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 00:04:56 [WARNING] django.request (log): Not Found: /festivals/
+2024-11-20 00:05:03 [WARNING] django.request (log): Not Found: /festivals/
+2024-11-20 00:07:55 [WARNING] django.request (log): Not Found: /festivals/
+2024-11-20 00:08:34 [WARNING] django.request (log): Not Found: /festivals/
+2024-11-20 00:08:37 [WARNING] django.request (log): Not Found: /festivals/
+2024-11-20 00:11:29 [INFO] django.utils.autoreload (autoreload): Watching for file changes with StatReloader
+2024-11-20 00:11:30 [DEBUG] faiss.loader (loader): Environment variable FAISS_OPT_LEVEL is not set, so let's pick the instruction set according to the current CPU
+2024-11-20 00:11:30 [INFO] faiss.loader (loader): Loading faiss with AVX2 support.
+2024-11-20 00:11:30 [INFO] faiss.loader (loader): Successfully loaded faiss with AVX2 support.
+2024-11-20 00:11:37 [WARNING] django.request (log): Not Found: /festivals/
+2024-11-20 00:12:28 [WARNING] django.request (log): Not Found: /festivals/
+2024-11-20 00:12:31 [WARNING] django.request (log): Not Found: /festivals
+2024-11-20 00:12:33 [WARNING] django.request (log): Not Found: /festivals/
+2024-11-20 00:13:28 [WARNING] django.request (log): Not Found: /festivals/
+2024-11-20 00:13:33 [INFO] django.utils.autoreload (autoreload): Watching for file changes with StatReloader
+2024-11-20 00:13:34 [DEBUG] faiss.loader (loader): Environment variable FAISS_OPT_LEVEL is not set, so let's pick the instruction set according to the current CPU
+2024-11-20 00:13:34 [INFO] faiss.loader (loader): Loading faiss with AVX2 support.
+2024-11-20 00:13:34 [INFO] faiss.loader (loader): Successfully loaded faiss with AVX2 support.
+2024-11-20 00:13:42 [WARNING] django.request (log): Not Found: /festivals/
+2024-11-20 00:15:00 [INFO] django.utils.autoreload (autoreload): Watching for file changes with StatReloader
+2024-11-20 00:15:01 [DEBUG] faiss.loader (loader): Environment variable FAISS_OPT_LEVEL is not set, so let's pick the instruction set according to the current CPU
+2024-11-20 00:15:01 [INFO] faiss.loader (loader): Loading faiss with AVX2 support.
+2024-11-20 00:15:01 [INFO] faiss.loader (loader): Successfully loaded faiss with AVX2 support.
+2024-11-20 00:15:11 [WARNING] django.request (log): Not Found: /festivals/
+2024-11-20 00:16:27 [INFO] django.utils.autoreload (autoreload): Watching for file changes with StatReloader
+2024-11-20 00:16:27 [DEBUG] faiss.loader (loader): Environment variable FAISS_OPT_LEVEL is not set, so let's pick the instruction set according to the current CPU
+2024-11-20 00:16:27 [INFO] faiss.loader (loader): Loading faiss with AVX2 support.
+2024-11-20 00:16:27 [INFO] faiss.loader (loader): Successfully loaded faiss with AVX2 support.
+2024-11-20 00:16:34 [WARNING] django.request (log): Not Found: /festivals/
+2024-11-20 00:16:58 [INFO] django.utils.autoreload (autoreload): Watching for file changes with StatReloader
+2024-11-20 00:16:59 [DEBUG] faiss.loader (loader): Environment variable FAISS_OPT_LEVEL is not set, so let's pick the instruction set according to the current CPU
+2024-11-20 00:16:59 [INFO] faiss.loader (loader): Loading faiss with AVX2 support.
+2024-11-20 00:16:59 [INFO] faiss.loader (loader): Successfully loaded faiss with AVX2 support.
+2024-11-20 00:17:08 [WARNING] django.request (log): Not Found: /festivals/
+2024-11-20 00:38:46 [WARNING] django.request (log): Not Found: /festivals/
+2024-11-20 00:39:37 [WARNING] django.request (log): Not Found: /festivals/
+2024-11-20 00:40:59 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 00:41:01 [WARNING] django.request (log): Not Found: /apifestivals/
+2024-11-20 00:41:04 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 01:07:00 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 01:08:12 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 01:11:55 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 01:27:52 [INFO] api.views (views): Searching festivals with query '광주'. Found 1 results.
+2024-11-20 01:27:54 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 02:31:21 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 02:31:22 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 02:31:56 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 02:31:58 [INFO] api.views (views): Fetched festival with ID 19. View count incremented.
+2024-11-20 02:31:58 [WARNING] django.request (log): Not Found: /comments/
+2024-11-20 02:32:04 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 02:32:10 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 02:32:17 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 03:50:24 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 03:50:25 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 03:51:36 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 03:51:51 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 03:52:10 [INFO] api.views (views): Fetched festival with ID 19. View count incremented.
+2024-11-20 03:52:10 [WARNING] django.request (log): Not Found: /comments/
+2024-11-20 03:52:20 [WARNING] django.request (log): Not Found: /comments/
+2024-11-20 03:52:20 [INFO] api.views (views): Fetched festival with ID 19. View count incremented.
+2024-11-20 03:52:49 [WARNING] django.request (log): Not Found: /comments/
+2024-11-20 03:52:49 [INFO] api.views (views): Fetched festival with ID 4. View count incremented.
+2024-11-20 03:53:16 [INFO] api.views (views): Fetching all festivals.
+2024-11-20 03:53:22 [INFO] api.views (views): Fetched festival with ID 6. View count incremented.
+2024-11-20 03:53:22 [WARNING] django.request (log): Not Found: /comments/
+2024-11-20 03:53:40 [WARNING] django.request (log): Not Found: /comments/
+2024-11-20 03:53:40 [INFO] api.views (views): Fetched festival with ID 6. View count incremented.
+2024-11-20 04:32:04 [WARNING] django.request (log): Not Found: /comments/
+2024-11-20 04:32:04 [INFO] api.views (views): Fetched festival with ID 6. View count incremented.
+2024-11-20 04:32:06 [WARNING] django.request (log): Not Found: /comments/
+2024-11-20 04:32:06 [INFO] api.views (views): Fetched festival with ID 6. View count incremented.

@@ -27,10 +27,22 @@ const Ham = ({ menuOpen, toggleMenu }) => {
     toggleMenu(); // 메뉴 닫기
     navigate('/login');
   };
+
   const handleListClick = () => {
     toggleMenu();
     navigate('/list')
-  }
+  };
+
+  const handleFoodChatClick = () => {
+    toggleMenu();
+    navigate('/foodchat')
+  };
+
+  // 축제 추천 챗봇페이지
+  const handleRecommendChatClick = () => {
+    toggleMenu();
+    navigate('/recommendchat')
+  };
 
   return (
     <MobileMenu open={menuOpen} ref={menuRef}>
@@ -45,8 +57,8 @@ const Ham = ({ menuOpen, toggleMenu }) => {
       </Button>
       <MiddleContainer>
         <p style={{ cursor: 'pointer' }} onClick={handleListClick}>축제 목록</p>
-        <a style={{ cursor: 'pointer', textDecoration: 'none', color: 'black' }} href="http://localhost:3030" target="_blank" rel="noopener noreferrer">맛집피티</a>
-        {/* <p style={{ cursor: 'pointer' }} onClick={handleFestivalChatClick}>맞춤 축제</p> */}
+        <p style={{ cursor: 'pointer' }} onClick={handleFoodChatClick}>맛집피티</p>
+        <p style={{ cursor: 'pointer' }} onClick={handleRecommendChatClick}>축제피티</p>
       </MiddleContainer>
     </MobileMenu>
   );

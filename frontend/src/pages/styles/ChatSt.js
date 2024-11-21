@@ -1,3 +1,6 @@
+
+// 현재 사용 X
+
 import styled from "styled-components";
 
 export const ChatContainer = styled.div`

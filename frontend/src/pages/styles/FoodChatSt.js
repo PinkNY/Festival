@@ -28,7 +28,7 @@ export const Subtitle = styled.h2`
 
 export const InputContainer = styled.div`
   position: relative;
-  width: 100%;
+  width: 70%;
 `;
 
 export const Input = styled.input`

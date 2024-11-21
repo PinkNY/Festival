@@ -86,7 +86,7 @@ export const MobileMenu = styled.div`
   width: 50%;
   height: 100vh;
   background-color: white;
-  display: ${({ open }) => (open ? 'block' : 'none')};
+  display: ${({ open }) => (open ? "block" : "none")};
   z-index: 9999;
 
   .close-button {

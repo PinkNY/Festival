@@ -202,11 +202,11 @@ const Modal = ({ isOpen, onClose, festival, initialPosition, isFavorite, onFavor
 
       const fetchAdditionalData = async () => {
         try {
-          const commentsUrl = `${process.env.REACT_APP_API_URL}/comments/?festa=${festival.id}`;
+          const commentsUrl = `${process.env.REACT_APP_API_URL}/api/comments/?festa=${festival.id}`;
           const commentsResponse = await axios.get(commentsUrl);
           setComments(commentsResponse.data.filter(comment => Number(comment.festa) === Number(festival.id)));
 
-          const hashtagsUrl = `${process.env.REACT_APP_API_URL}/hashtags/?festa=${festival.id}`;
+          const hashtagsUrl = `${process.env.REACT_APP_API_URL}/api/hashtags/?festa=${festival.id}`;
           const hashtagsResponse = await axios.get(hashtagsUrl);
           setHashtags(hashtagsResponse.data.filter(hashtag => Number(hashtag.festa) === Number(festival.id)));
         } catch (error) {
@@ -310,9 +310,6 @@ const Modal = ({ isOpen, onClose, festival, initialPosition, isFavorite, onFavor
                   공식 사이트: <a href={festival.official_site_url} target="_blank" rel="noopener noreferrer">{festival.official_site_url}</a>
                 </p>
               )}
-              <p>
-                맛집 추천: <a href='http://localhost:3030' target='_blank' rel='noreferrer'>http://localhost:3030</a>
-              </p>
             </TabContent>
             <TabContent isActive={activeTab === 'comments'}>
               <h3>댓글</h3>

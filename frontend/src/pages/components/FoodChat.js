@@ -1,29 +1,31 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Utensils } from 'lucide-react';
 
-import { Container, Title, Subtitle, InputContainer, Input, SubmitButton } from '../styles/RecommendSt';
-import { FaRegThumbsUp } from "react-icons/fa";
+import { Container, Title, Subtitle, InputContainer, Input, SubmitButton } from '../styles/FoodChatSt';
 
-const RecommendChat = () => {
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
-  const [history, setHistory] = useState([]);
+const FoodChat = () => {
+  const [question, setQuestion] = useState(""); // 질문 상태
+  const [answer, setAnswer] = useState(""); // 응답 상태
+  const [history, setHistory] = useState([]); // 입력한 질문과 응답을 관리하는 상태
 
+  // 질문 제출 핸들러
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!question.trim()) {
-    alert("질문을 입력해주세요");
-    return;
+      alert("질문을 입력해주세요.");
+      return;
     }
 
     try {
       // 백엔드 API에 POST 요청
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/recommend_chatbot/`,
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/restaurant_chatbot/`,
         { question }
       );
 
-      // 새로운 history를 기존 history에 저장
+      // 새로운 히스토리를 기존 히스토리에 추가
       setHistory([
         ...history,
         { question: question, answer: response.data.answer }, // 입력과 응답 저장
@@ -32,28 +34,29 @@ const RecommendChat = () => {
       // 질문 초기화
       setQuestion("");
     } catch (error) {
-      console.error("오류가 발생했습니다.");
+      console.error("오류가 발생했습니다:", error);
       setHistory([
         ...history,
-        { question: question, answer: "오류가 발생했습니다. 다시 시도해주세요" },
+        { question: question, answer: "오류가 발생했습니다. 다시 시도해주세요." },
       ]);
     }
   };
 
   return (
     <Container>
-      <Title>축제피티</Title>
-      <Subtitle>전국팔도 축제찾아 삼만리</Subtitle>
+      <Title>전국팔도 맛집피티</Title>
+      <Subtitle>맛따라 멋따라 금강산도 식후경</Subtitle>
       <InputContainer>
         <Input
           type="text"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          onKeyPress={(e) => e.key === "Enter" && handleSubmit(e)} // 키보드 Enter 키 감지
-          placeholder="축제 테마를 입력해주세요."
+          onKeyPress={(e) => e.key === "Enter" && handleSubmit(e)} // 엔터 키 입력 감지
+          placeholder="맛집 테마를 입력해주세요."
+          aria-label="금강산도 식후경"
         />
         <SubmitButton type="submit" aria-label="검색" onClick={handleSubmit}>
-          <FaRegThumbsUp className="w-6 h-6" />
+          <Utensils className="w-6 h-6" />
         </SubmitButton>
       </InputContainer>
 
@@ -105,4 +108,4 @@ const RecommendChat = () => {
   );
 };
 
-export default RecommendChat;
+export default FoodChat;

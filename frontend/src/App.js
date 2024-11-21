@@ -11,6 +11,8 @@ import NoticeBoard from "./pages/components/NoticeBoard";
 import NoticeDetail from "./pages/components/NoticeDetail";
 import FestivalList from './pages/components/List';
 import Footer from "./pages/components/Footer";
+import FoodChat from "./pages/components/FoodChat";
+import RecommendChat from "./pages/components/Recommend";
 
 // import ChatbotIcon from "./pages/components/ChatCon"; // 챗봇 아이콘 컴포넌트
 // import ChatComponent from "./pages/components/Chat"; // 챗봇 채팅창 컴포넌트
@@ -31,6 +33,8 @@ const App = () => {
         <Route path='/notice' element={<NoticeBoard />} />
         <Route path='/notice-detail' element={<NoticeDetail />} />
         <Route path="/list" element={<FestivalList />} />
+        <Route path='/foodchat' element={<FoodChat />} />
+        <Route path='/recommendchat' element={<RecommendChat />} />
       </Routes>
     );
   };

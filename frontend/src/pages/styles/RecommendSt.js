@@ -1,57 +1,75 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
+
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
-  border: 1px solid #ddd;
-  background-color: #1c1c1c; /* 검은 배경 */
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  color: white;
-  text-align: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #1a1a1a;
+  padding: 2rem;
 `;
 
 export const Title = styled.h1`
-  font-size: 24px;
-  margin-bottom: 8px;
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-align: center;
 `;
 
-export const Subtitle = styled.p`
-  font-size: 14px;
-  margin-bottom: 16px;
-  color: #aaa;
+export const Subtitle = styled.h2`
+  color: #a1a1a1;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  text-align: center;
 `;
 
-export const InputWrapper = styled.div`
+export const InputContainer = styled.div`
   position: relative;
-  width: 100%;
+  width: 70%;
 `;
 
 export const Input = styled.input`
   width: 100%;
-  padding: 8px 40px 8px 16px;
-  font-size: 14px;
-  border: 1px solid #555;
-  border-radius: 4px;
-  background-color: #333;
-  color: white;
+  padding: 1rem;
+  padding-right: 3rem;
+  background-color: #2d2d2d;
+  border: 1px solid #404040;
+  border-radius: 0.5rem;
+  color: #ffffff;
+  font-size: 1rem;
   outline: none;
+  transition: border-color 0.2s;
 
-  ::placeholder {
-    color: #888;
+  &:focus {
+    border-color: #666666;
+  }
+
+  &::placeholder {
+    color: #666666;
   }
 `;
 
-export const SearchIcon = styled.div`
+export const SubmitButton = styled.button`
   position: absolute;
-  right: 12px;
+  right: 0.75rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 16px;
-  color: #aaa;
+  background: none;
+  border: none;
+  color: #666666;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #ffffff;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 `;

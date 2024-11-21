@@ -5,7 +5,7 @@ export const ChatbotWindow = styled.div`
   position: fixed;
   bottom: 5rem;
   right: 1rem;
-  width: 40%;
+  width: 50%;
   height: 60%;
   background-color: white;
   // border: 5px solid #e5e7eb;

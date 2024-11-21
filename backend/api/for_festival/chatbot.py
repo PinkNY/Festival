@@ -42,7 +42,6 @@ columns: 축제이름, 축제소개, 시작일, 마감일, 주소, 비용
     try:
         result_df = ps.sqldf(query, {'df': data_})
     except:
-        exit()
         result_df, _ = response_1(question)
     print("-----query_result-----")
     print(result_df)

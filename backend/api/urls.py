@@ -15,6 +15,7 @@ from .views import (
     ChatWithBotView,  # 챗봇과 상호작용할 뷰 추가
     ChatLogListView,
     ChatbotAPIView,
+    festival_ChatbotAPIView,
     # SortedFestivalsView,
     # SortedFestivalsSearch,
 )
@@ -50,6 +51,8 @@ urlpatterns = [
     path('chat_with_bot/', ChatWithBotView.as_view(), name='chat_with_bot'),  # 챗봇과 상호작용
     path('chatlogs/', ChatLogListView.as_view(), name='chat_log_list'),  # 챗봇 대화 로그 조회
     path("restaurant_chatbot/", ChatbotAPIView.as_view(), name="restaurant_chatbot"), # 맛집챗봇
+    path("recommend_chatbot/", festival_ChatbotAPIView.as_view(), name="restaurant_festival_chatbot"), # 추천챗봇
+    
 
     # # 정렬된 축제 관련 URL (추후 필요 시 활성화)
     # path('festivals_view/', SortedFestivalsView.as_view(), name='sorted_festivals_view'),  # 정렬된 축제 리스트 조회

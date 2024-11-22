@@ -171,28 +171,29 @@ class SignupView(APIView):
     """
     사용자 회원가입을 처리하는 뷰.
     """
+    @method_decorator(csrf_exempt, name='dispatch')
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save()  # 비밀번호가 해싱된 상태로 저장됨
             logger.info("New user signup successful.")
             return Response({'message': '회원가입이 성공적으로 완료되었습니다.'}, status=status.HTTP_201_CREATED)
         logger.error("Signup failed due to validation errors.")
         return Response({'error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@method_decorator(csrf_exempt, name='dispatch')
+
 class LoginView(APIView):
     """
     사용자 로그인을 처리하는 뷰.
     """
     def post(self, request):
-        data = request.data
-        username = data.get('username')
-        password = data.get('password')
-        try:
-            user = User.objects.get(username=username)
-            if check_password(password, user.password):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        if username and password:
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
                 refresh = RefreshToken.for_user(user)
                 logger.info(f"User {username} logged in successfully.")
                 return Response({
@@ -202,9 +203,9 @@ class LoginView(APIView):
             else:
                 logger.warning(f"Failed login attempt for user {username}.")
                 return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-        except User.DoesNotExist:
-            logger.warning(f"Failed login attempt for nonexistent user {username}.")
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        logger.error("Login failed due to missing username or password.")
+        return Response({'error': '유효하지 않은 데이터입니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LogoutView(APIView):
@@ -227,7 +228,6 @@ class CheckAuthView(APIView):
     def get(self, request):
         logger.info("Authenticated user checked.")
         return Response({'message': 'User is authenticated'}, status=status.HTTP_200_OK)
-
 
 class ChatWithBotView(APIView):
     """

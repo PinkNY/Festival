@@ -193,3 +193,6 @@ LOGGING = {
         },
     },
 }
+
+# Custom User model 설정
+AUTH_USER_MODEL = 'api.User'  # 'api'는 User 모델이 정의된 앱 이름, 'User'는 사용자 모델의 클래스 이름입니다.

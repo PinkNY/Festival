@@ -67,11 +67,15 @@ class UserSerializer(serializers.ModelSerializer):
         """
         if len(value) < 8:
             raise serializers.ValidationError("Password must be at least 8 characters long.")
-        return make_password(value)
+        return value
 
     def create(self, validated_data):
-        validated_data['password'] = self.validate_password(validated_data['password'])
-        return super(UserSerializer, self).create(validated_data)
+        password = validated_data.pop('password')
+        user = User(**validated_data)
+        user.set_password(password)  # 비밀번호 해싱
+        user.save()
+        return user
+
 
 
 class ChatLogSerializer(serializers.ModelSerializer):

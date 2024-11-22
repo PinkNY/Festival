@@ -18,7 +18,7 @@ def response_1(question):
     formatted_time = now.strftime("%m-%d-%A-%p-%I-%M")
     print(f"현재 시간: {formatted_time}")
     print("---------------------------------------------response_1-----------------------------------------")
-    with open('/home/jiwoo/Festival/backend/api/for_festival/data/festival.pkl', 'rb') as file:  # 'rb'는 바이너리 읽기 모드
+    with open('/home/skdudgns/Festival/backend/api/for_festival/data/festival.pkl', 'rb') as file:  # 'rb'는 바이너리 읽기 모드
         data_ = pickle.load(file)
     response1 = assistant.generate_content(f"""system: 너는 축제 추천을 위한 데이터 filter야. 주어진 질문을 보고 이 중 답변에 필요한 사전정보를 얻기 위한 pandasql에 적용 가능한 쿼리를 작성하고, 왜 그렇게 생각했는지 이유를 "reason"태그를 달아서 작성해줘
 
